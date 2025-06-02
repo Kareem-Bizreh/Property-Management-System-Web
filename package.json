@@ -1,0 +1,49 @@
+{
+  "name": "property-management-system",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": [
+    "dashboard-admin",
+    "dashboard-real-estate-office",
+    "dashboard-service-provider"
+  ],
+  "scripts": {
+    "dev:admin": "npm --workspace dashboard-admin run dev",
+    "dev:re": "npm --workspace dashboard-real-estate-office run dev",
+    "dev:sp": "npm --workspace dashboard-service-provider run dev",
+
+    "dev": "concurrently \"npm run dev:admin\" \"npm run dev:re\" \"npm run dev:sp\"",
+
+    "build:admin": "npm --workspace dashboard-admin run build",
+    "build:re": "npm --workspace dashboard-real-estate-office run build",
+    "build:sp": "npm --workspace dashboard-service-provider run build",
+    "build": "concurrently \"npm run build:admin\" \"npm run build:re\" \"npm run build:sp\""
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.1.0",
+    "@tailwindcss/vite": "^4.1.8",
+    "axios": "^1.9.0",
+    "concurrently": "^9.1.2",
+    "lucide-react": "^0.511.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.56.4",
+    "react-router": "^7.6.1",
+    "tailwindcss": "^4.1.8",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.0",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "eslint": "^9.25.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "vite": "^6.3.5"
+  }
+}
