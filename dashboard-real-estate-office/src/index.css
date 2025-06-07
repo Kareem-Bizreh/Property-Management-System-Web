@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.custom-hover:hover {
+    background-color: var(--hover-bg);
+}

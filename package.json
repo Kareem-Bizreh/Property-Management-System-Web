@@ -12,26 +12,31 @@
     "dev:admin": "npm --workspace dashboard-admin run dev",
     "dev:re": "npm --workspace dashboard-real-estate-office run dev",
     "dev:sp": "npm --workspace dashboard-service-provider run dev",
-
     "dev": "concurrently \"npm run dev:admin\" \"npm run dev:re\" \"npm run dev:sp\"",
-
     "build:admin": "npm --workspace dashboard-admin run build",
     "build:re": "npm --workspace dashboard-real-estate-office run build",
     "build:sp": "npm --workspace dashboard-service-provider run build",
     "build": "concurrently \"npm run build:admin\" \"npm run build:re\" \"npm run build:sp\""
   },
   "dependencies": {
+    "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.1.1",
     "@mui/material": "^7.1.0",
+    "@mui/stylis-plugin-rtl": "^7.1.0",
     "@tailwindcss/vite": "^4.1.8",
     "axios": "^1.9.0",
+    "clsx": "^2.1.1",
     "concurrently": "^9.1.2",
+    "framer-motion": "^12.16.0",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.56.4",
     "react-router": "^7.6.1",
+    "stylis": "^4.3.6",
+    "stylis-plugin-rtl": "^2.1.1",
     "tailwindcss": "^4.1.8",
     "zustand": "^5.0.5"
   },
