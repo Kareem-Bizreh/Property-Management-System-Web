@@ -13,10 +13,15 @@ const Items = ({isSidebarOpen}) => {
             initial={{top: topPosition}}
             animate={{top: topPosition}}
             transition={{duration: 0.35, ease: 'easeInOut'}}
-            className="absolute grid grid-flow-row"
+            className="absolute flex flex-col overflow-x-hidden overflow-y-auto"
+            style={{
+                height: `calc(100vh - ${topPosition})`,
+                scrollbarWidth: 'thin',
+                scrollbarColor: `${BACKGROUND_COLORS['hover']} transparent`,
+            }}
         >
             {SIDEBAR_ITEMS.map((item) => {
-                const isActive = location.pathname.endsWith(item.href);
+                const isActive = location.pathname.includes(item.href);
                 const backgroundColor = isActive ? BACKGROUND_COLORS['primary'] : undefined;
                 const textColor = isActive ? TEXT_COLORS['white'] : TEXT_COLORS['primary'];
 

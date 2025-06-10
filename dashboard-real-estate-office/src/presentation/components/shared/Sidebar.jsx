@@ -13,13 +13,14 @@ const Sidebar = () => {
     return (
         <div className="flex h-screen">
             <motion.div
-                animate={{ width }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="relative h-full flex flex-col overflow-hidden"
-                style={{ backgroundColor: BACKGROUND_COLORS["sidebar"] }}
+                animate={{width}}
+                initial={{width}}
+                transition={{duration: 0.3, ease: "easeInOut"}}
+                className="relative h-screen flex flex-col overflow-hidden"
+                style={{backgroundColor: BACKGROUND_COLORS["sidebar"]}}
             >
 
-            <MenuButton isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
+                <MenuButton isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
                 <AnimatePresence>
                     {isSidebarOpen && (
                         <motion.div
