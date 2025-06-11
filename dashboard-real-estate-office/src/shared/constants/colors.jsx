@@ -4,7 +4,8 @@ export const TEXT_COLORS = {
     white: '#FFFFFF',
     black: '#000000',
     logo: '#215F83',
-    firstThree: '#2790A3'
+    firstThree: '#2790A3',
+    select: '#7D7F88',
 };
 
 export const BACKGROUND_COLORS = {
@@ -14,6 +15,7 @@ export const BACKGROUND_COLORS = {
     app: "#FFFFFF",
     secondary1: '#EAF3F4',
     secondary2: '#EFF4F6',
+    filter: '#F2F4F4',
     picture: '#D9D9D9',
     card: '#2790A3',
     unavailable: '#E94235',
