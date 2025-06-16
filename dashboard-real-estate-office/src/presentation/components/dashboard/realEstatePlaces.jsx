@@ -26,7 +26,7 @@ const RealEstatePlaces = ({color, bgColor, title, icon}) => {
             </span>
 
             {/*Number and icon*/}
-            <div className="flex flex-row items-center justify-center mb-4 mt-2 ml-4 gap-8">
+            <div className="flex flex-row items-end justify-center mb-4 mt-2 ml-4 gap-8">
                 {
                     NumberAndDetail('بيع', 16, color)
                 }

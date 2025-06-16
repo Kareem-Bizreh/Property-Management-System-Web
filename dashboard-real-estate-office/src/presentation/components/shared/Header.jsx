@@ -2,7 +2,7 @@ import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/constants/colors.j
 
 const Header = ({title}) => {
     return (
-        <div className="w-full h-[95px]">
+        <div className="relative w-full h-[95px]">
             <span
                 className="absolute p-6"
                 style={{

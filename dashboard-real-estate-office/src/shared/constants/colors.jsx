@@ -19,7 +19,9 @@ export const BACKGROUND_COLORS = {
     picture: '#D9D9D9',
     card: '#2790A3',
     unavailable: '#E94235',
-    pending: '#F9A000'
+    pending: '#F9A000',
+    upload: '#EEF8FF',
+    button: '#30B0C7'
 }
 
 export const DASHBOARD_CARDS_COLORS = {

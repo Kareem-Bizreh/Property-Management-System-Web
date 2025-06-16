@@ -1,4 +1,3 @@
-import React from 'react'
 import Button from "@mui/material/Button";
 import {BACKGROUND_COLORS} from "../../../shared/constants/colors.jsx";
 

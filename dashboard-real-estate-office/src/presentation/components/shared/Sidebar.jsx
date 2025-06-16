@@ -48,7 +48,7 @@ const Sidebar = () => {
                 <Items isSidebarOpen={isSidebarOpen}/>
             </motion.div>
 
-            <div className="flex-1 overflow-auto">
+            <div className="flex-1 overflow-auto mb-4">
                 <Outlet/>
             </div>
         </div>

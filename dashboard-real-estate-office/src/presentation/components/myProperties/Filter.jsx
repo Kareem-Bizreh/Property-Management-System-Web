@@ -16,14 +16,20 @@ const Filter = () => {
                 <SelectInput
                     title="النوع"
                     options={['بيع', 'إيجار']}
+                    maxWidth={'124px'}
+                    height={'48px'}
                 />
                 <SelectInput
                     title="المحافظة"
                     options={[]}
+                    maxWidth={'124px'}
+                    height={'48px'}
                 />
                 <SelectInput
                     title="المنطقة"
                     options={[]}
+                    maxWidth={'124px'}
+                    height={'48px'}
                 />
                 <SelectInput
                     title="حالة"
@@ -32,6 +38,8 @@ const Filter = () => {
                         'غير متوفر', 'متوفر', 'في الصيانة',
                         'قيد الإنتظار', 'مرفوض'
                     ]}
+                    maxWidth={'124px'}
+                    height={'48px'}
                 />
             </div>
         </div>

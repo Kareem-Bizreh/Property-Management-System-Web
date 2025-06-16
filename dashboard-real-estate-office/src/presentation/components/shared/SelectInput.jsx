@@ -3,7 +3,7 @@ import {ChevronDown} from "lucide-react";
 import {motion, AnimatePresence} from "framer-motion";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/constants/colors.jsx";
 
-const SelectInput = ({title, options = [], onChange}) => {
+const SelectInput = ({title, options = [], onChange, maxWidth, height, style = {}}) => {
     const [selected, setSelected] = useState(title);
     const [open, setOpen] = useState(false);
     const containerRef = useRef(null);
@@ -26,23 +26,35 @@ const SelectInput = ({title, options = [], onChange}) => {
     };
 
     return (
-        <div ref={containerRef} className="relative h-[48px] w-full max-w-[124px]">
-            <button
-                onClick={() => setOpen((o) => !o)}
-                className="w-full h-full flex justify-center items-center gap-4 py-2 px-3 rounded-[16px]"
-                style={{
-                    backgroundColor: BACKGROUND_COLORS.app,
-                    color: TEXT_COLORS.select,
-                    fontFamily: "Cairo",
-                    fontWeight: 700,
-                    fontSize: "16px",
-                    lineHeight: "100%",
-                    letterSpacing: "3%",
-                }}
-            >
-                {selected}
-                <ChevronDown size={20} className={`${open ? "rotate-180" : ""} transition-transform duration-200`}/>
-            </button>
+        <div ref={containerRef} className="relative h-full w-full" style={{maxWidth, height}}>
+            <div className="relative w-full h-full">
+                <button
+                    onClick={() => setOpen((o) => !o)}
+                    className="w-full h-full flex justify-center items-center py-2 pl-3 rounded-[16px] relative"
+                    style={{
+                        backgroundColor: BACKGROUND_COLORS.app,
+                        color: TEXT_COLORS.select,
+                        borderColor: TEXT_COLORS.secondary,
+                        fontFamily: "Cairo",
+                        fontWeight: 700,
+                        fontSize: "16px",
+                        lineHeight: "100%",
+                        letterSpacing: "3%",
+                        ...style,
+                    }}
+                >
+                    {selected}
+
+                    {/* ChevronDown fixed to the right side */}
+                    <ChevronDown
+                        size={20}
+                        className={`absolute left-3 top-1/2 -translate-y-1/2 transition-transform duration-200 ${
+                            open ? "rotate-180" : ""
+                        }`}
+                    />
+                </button>
+            </div>
+
 
             <AnimatePresence>
                 {open && (
