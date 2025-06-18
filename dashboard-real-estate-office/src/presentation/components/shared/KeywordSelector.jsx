@@ -2,10 +2,13 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BACKGROUND_COLORS, TEXT_COLORS } from "../../../shared/constants/colors.jsx";
 
-const KeywordSelector = ({ options = [], onChange, title }) => {
-    const [selected, setSelected] = useState([]);
+const KeywordSelector = ({ options = [], select = [], onChange, title, readOnly = false }) => {
+    const [selected, setSelected] = useState(select);
 
     const toggleKeyword = (word) => {
+        if(readOnly) {
+            return;
+        }
         let next;
         if (selected.includes(word)) {
             next = selected.filter(w => w !== word);

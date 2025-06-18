@@ -1,6 +1,7 @@
 import DashboardPage from "../pages/DashboardPage.jsx";
 import MyPropertiesPage from "../pages/MyPropertiesPage.jsx";
 import AddPropertyPage from "../pages/AddPropertyPage.jsx";
+import PropertyPage from "../pages/PropertyPage.jsx";
 
 export const PrivateRoutes = [
     {
@@ -14,5 +15,9 @@ export const PrivateRoutes = [
     {
         path: "my-properties/add",
         element: <AddPropertyPage/>,
+    },
+    {
+        path: "my-properties/:id",
+        element: <PropertyPage/>,
     }
 ]

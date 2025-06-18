@@ -1,50 +1,27 @@
-import AddCard from '../myProperties/AddCard.jsx'
+import AddCard from '../shared/AddCard.jsx'
 import CardPropertyRent from "../shared/CardPropertyRent.jsx";
 import CardPropertySaleTourist from "../shared/CardPropertySaleTourist.jsx";
-
+// import {saleAndRentProperties} from "../../../shared/constants/properties.jsx";
+import EmptyBox from '../../../assets/shared/EmptyBox.svg'
 
 const PropertiesList = () => {
-    const properties = [
-        { name: 'شقة', location: 'دمشق, شعلان', price: '$1.500', rate: '4.2', duration: 'شهري' },
-        { type: 'sale', name: 'بيت أبو العود', location: 'ريف دمشق, قدسيا', price: '30K $', space: '120' },
-        { name: 'شقة', location: 'دمشق, شعلان', price: '$1.500', rate: '4.2', duration: 'شهري' },
-        { name: 'شقة', location: 'دمشق, شعلان', price: '$1.500', rate: '4.2', duration: 'شهري' },
-        { type: 'sale', name: 'بيت أبو العود', location: 'ريف دمشق, قدسيا', price: '30K $', space: '120' },
-        { name: 'شقة', location: 'دمشق, شعلان', price: '$1.500', rate: '4.2', duration: 'شهري' },
-        { name: 'شقة', location: 'دمشق, شعلان', price: '$1.500', rate: '4.2', duration: 'شهري' },
-        { type: 'sale', name: 'بيت أبو العود', location: 'ريف دمشق, قدسيا', price: '30K $', space: '120' },
-        { name: 'شقة', location: 'دمشق, شعلان', price: '$1.500', rate: '4.2', duration: 'شهري' },
-        { name: 'شقة', location: 'دمشق, شعلان', price: '$1.500', rate: '4.2', duration: 'شهري' },
-    ];
-
+    const saleAndRentProperties = []
     return (
         <div
             className="p-4 flex flex-row flex-wrap gap-4 md:gap-6"
         >
-            <AddCard />
-            {properties.map((property, index) => (
+            <AddCard title={'إضافة عقار'} />
+            {(saleAndRentProperties && saleAndRentProperties.length > 0) ? saleAndRentProperties.map((property, index) => (
                 <div key={index} className="flex-shrink-0">
                     {Object.prototype.hasOwnProperty.call(property, 'duration') ? (
-                        <CardPropertyRent
-                            state={'متوفر'}
-                            name={property.name}
-                            location={property.location}
-                            price={property.price}
-                            rate={property.rate}
-                            duration={'شهري'}
-                        />
+                        <CardPropertyRent property={property}/>
                     ) : (
-                        <CardPropertySaleTourist
-                            type={'sale'}
-                            state={'متوفر'}
-                            name={property.name}
-                            location={property.location}
-                            price={property.price}
-                            space={property.space}
-                        />
+                        <CardPropertySaleTourist property={property}/>
                     )}
                 </div>
-            ))}
+            )) :
+            (<img src={EmptyBox} alt="empty" className="flex-shrink-0" />)
+            }
         </div>
     )
 }

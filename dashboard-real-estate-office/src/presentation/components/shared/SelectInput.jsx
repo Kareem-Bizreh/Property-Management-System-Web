@@ -3,7 +3,7 @@ import {ChevronDown} from "lucide-react";
 import {motion, AnimatePresence} from "framer-motion";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/constants/colors.jsx";
 
-const SelectInput = ({title, options = [], onChange, maxWidth, height, style = {}}) => {
+const SelectInput = ({title, options = [], onChange, maxWidth, height, style = {}, readOnly = false}) => {
     const [selected, setSelected] = useState(title);
     const [open, setOpen] = useState(false);
     const containerRef = useRef(null);
@@ -29,7 +29,7 @@ const SelectInput = ({title, options = [], onChange, maxWidth, height, style = {
         <div ref={containerRef} className="relative h-full w-full" style={{maxWidth, height}}>
             <div className="relative w-full h-full">
                 <button
-                    onClick={() => setOpen((o) => !o)}
+                    onClick={() => setOpen((o) =>  !readOnly ? !o : false)}
                     className="w-full h-full flex justify-center items-center py-2 pl-3 rounded-[16px] relative"
                     style={{
                         backgroundColor: BACKGROUND_COLORS.app,

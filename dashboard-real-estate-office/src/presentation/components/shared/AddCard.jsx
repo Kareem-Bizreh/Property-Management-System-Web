@@ -2,7 +2,7 @@ import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/constants/colors.j
 import {Link} from "react-router";
 import add from "../../../assets/cards/add-square.svg"
 
-const AddCard = () => {
+const AddCard = ({ title }) => {
     return (
         <Link to="add">
             <div className="relative w-[212px] h-[363px] rounded-[25px]"
@@ -25,7 +25,7 @@ const AddCard = () => {
 
                     }}
                 >
-               إضافة عقار
+               {title}
             </span>
             </div>
         </Link>

@@ -1,24 +1,43 @@
 import Header from "../components/shared/Header.jsx";
-import PostDetails from "../components/addProperty/PostDetails.jsx";
-import PropertyImages from "../components/addProperty/PropertyImages.jsx";
-import PropertyDetails from "../components/addProperty/PropertyDetails.jsx";
+import PostDetails from "../components/shared/PostDetails.jsx";
+import PropertyImages from "../components/shared/PropertyImages.jsx";
+import PropertyDetails from "../components/myProperties/PropertyDetails.jsx";
 
 const AddPropertyPage = () => {
-    return (
-        <div className="flex flex-col gap-4">
-            <div className="-mb-6">
-                <Header title={'إضافة عقار'}/>
-            </div>
-            <PostDetails/>
-            <div className="flex flex-row gap-4 mx-6 flex-wrap">
-                <div className="flex-5">
-                    <PropertyDetails/>
-                </div>
-                <div className="flex-2">
-                    <PropertyImages/>
-                </div>
-            </div>
+  const tags = [
+    {
+      id: 1,
+      name: "بيع",
+    },
+    {
+      id: 2,
+      name: "فيلا",
+    },
+    {
+      id: 3,
+      name: "ارض",
+    },
+    {
+      id: 4,
+      name: "عمارة",
+    },
+  ];
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="-mb-6">
+        <Header title={"إضافة عقار"} />
+      </div>
+      <PostDetails options={tags} />
+      <div className="flex flex-row gap-4 mx-6 flex-wrap">
+        <div className="flex-5">
+          <PropertyDetails />
         </div>
-    )
-}
-export default AddPropertyPage
+        <div className="flex-2">
+          <PropertyImages />
+        </div>
+      </div>
+    </div>
+  );
+};
+export default AddPropertyPage;
