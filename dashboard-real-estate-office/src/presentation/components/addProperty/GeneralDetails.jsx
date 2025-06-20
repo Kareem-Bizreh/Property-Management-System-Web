@@ -93,7 +93,7 @@ const GeneralDetails = ({
                       fontFamily: "Cairo",
                       fontWeight: "400",
                       fontSize: "18px",
-                      lineHeight: "130%",
+                      lineHeight: "150%",
                       letterSpacing: "2%",
                       textAlign: item.type === "number" ? "center" : "right",
                       verticalAlign: "middle",

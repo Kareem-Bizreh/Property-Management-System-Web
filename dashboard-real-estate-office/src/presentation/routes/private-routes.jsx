@@ -2,6 +2,11 @@ import DashboardPage from "../pages/DashboardPage.jsx";
 import MyPropertiesPage from "../pages/MyPropertiesPage.jsx";
 import AddPropertyPage from "../pages/AddPropertyPage.jsx";
 import PropertyPage from "../pages/PropertyPage.jsx";
+import MyTouristsPage from "../pages/MyTouristsPage.jsx";
+import AddTouristPage from "../pages/AddTouristPage.jsx";
+import TourismPage from "../pages/TourismPage.jsx";
+import ReservationsPage from "../pages/ReservationsPage.jsx";
+import BookingPage from "../pages/BookingPage.jsx";
 
 export const PrivateRoutes = [
     {
@@ -19,5 +24,25 @@ export const PrivateRoutes = [
     {
         path: "my-properties/:id",
         element: <PropertyPage/>,
+    },
+    {
+        path: "tourism",
+        element: <MyTouristsPage/>,
+    },
+    {
+        path: "tourism/add",
+        element: <AddTouristPage/>,
+    },
+    {
+        path: "tourism/:id",
+        element: <TourismPage/>,
+    },
+    {
+        path: "booking",
+        element: <ReservationsPage/>,
+    },
+    {
+        path: "booking/:id",
+        element: <BookingPage/>,
     }
 ]

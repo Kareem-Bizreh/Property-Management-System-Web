@@ -6,6 +6,9 @@ export const TEXT_COLORS = {
     logo: '#215F83',
     firstThree: '#2790A3',
     select: '#7D7F88',
+    reserved: '#FA712D',
+    sold: '#34A853',
+    cancelled: '#E94235',
 };
 
 export const BACKGROUND_COLORS = {

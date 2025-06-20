@@ -30,7 +30,7 @@ const TextInput = ({ title, type = "text", register, readOnly = false }) => {
           fontFamily: "Cairo",
           fontWeight: "400",
           fontSize: "24px",
-          lineHeight: "130%",
+          lineHeight: "150%",
           textAlign: type === "number" ? "center" : "right",
           letterSpacing: "2%",
         }}

@@ -1,11 +1,10 @@
 import AddCard from '../shared/AddCard.jsx'
 import CardPropertyRent from "../shared/CardPropertyRent.jsx";
 import CardPropertySaleTourist from "../shared/CardPropertySaleTourist.jsx";
-// import {saleAndRentProperties} from "../../../shared/constants/properties.jsx";
+import {saleAndRentProperties} from "../../../shared/constants/properties.jsx";
 import EmptyBox from '../../../assets/shared/EmptyBox.svg'
 
 const PropertiesList = () => {
-    const saleAndRentProperties = []
     return (
         <div
             className="p-4 flex flex-row flex-wrap gap-4 md:gap-6"
@@ -20,7 +19,7 @@ const PropertiesList = () => {
                     )}
                 </div>
             )) :
-            (<img src={EmptyBox} alt="empty" className="flex-shrink-0" />)
+            (<img src={EmptyBox} alt="empty" className="flex-shrink-0 mt-20" />)
             }
         </div>
     )
