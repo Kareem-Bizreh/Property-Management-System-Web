@@ -7,6 +7,8 @@ import AddTouristPage from "../pages/AddTouristPage.jsx";
 import TourismPage from "../pages/TourismPage.jsx";
 import ReservationsPage from "../pages/ReservationsPage.jsx";
 import BookingPage from "../pages/BookingPage.jsx";
+import RentalPage from "../pages/RentalPage.jsx";
+import RentalsPage from "../pages/RentalsPage.jsx";
 
 export const PrivateRoutes = [
     {
@@ -44,5 +46,13 @@ export const PrivateRoutes = [
     {
         path: "booking/:id",
         element: <BookingPage/>,
+    },
+    {
+        path: "rentals",
+        element: <RentalsPage/>,
+    },
+    {
+        path: "rentals/:id",
+        element: <RentalPage/>,
     }
 ]

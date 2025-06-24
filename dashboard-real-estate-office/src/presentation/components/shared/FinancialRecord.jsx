@@ -40,22 +40,24 @@ const FinancialRecord = ({record: {id, type, date, paymentType, price, status, d
                     </span>
                     {status === 'قيد الإنتظار' && <span>{formatDate(date)}</span>}
                 </div>
-                {status !== 'لم يتم الدفع' && <Button variant="contained"
-                                                      onClick={onPress}
-                                                      sx={{
-                                                          width: 115,
-                                                          height: 46,
-                                                          backgroundColor: document ? BACKGROUND_COLORS.sidebar : BACKGROUND_COLORS.card,
-                                                          color: document ? TEXT_COLORS.primary : TEXT_COLORS.white,
-                                                          borderRadius: '15px',
-                                                          fontWeight: 700,
-                                                          fontSize: '16px',
-                                                          lineHeight: '100%',
-                                                          letterSpacing: '3%',
-                                                          textAlign: 'center'
-                                                      }}>
-                    {document ? 'عرض وثيقة' : 'رفع وثيقة'}
-                </Button>}
+                {status !== 'لم يتم الدفع' &&
+                    <Button variant="contained"
+                            onClick={onPress}
+                            sx={{
+                                width: 115,
+                                height: 46,
+                                backgroundColor: document ? BACKGROUND_COLORS.sidebar : BACKGROUND_COLORS.card,
+                                color: document ? TEXT_COLORS.primary : TEXT_COLORS.white,
+                                borderRadius: '15px',
+                                fontWeight: 700,
+                                fontSize: '16px',
+                                lineHeight: '100%',
+                                letterSpacing: '3%',
+                                textAlign: 'center'
+                            }}>
+                        {document ? 'عرض وثيقة' : 'رفع وثيقة'}
+                    </Button>
+                }
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 import {BACKGROUND_COLORS} from "../../../shared/constants/colors.jsx";
 import SearchBar from "../shared/SearchBar.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
-import PropertyReservation from "./PropertyReservation.jsx";
+import PropertyRental from "./PropertyRental.jsx";
 
 const Filter = () => {
     return (
@@ -20,12 +20,12 @@ const Filter = () => {
                     />
                     <SelectInput
                         title="حالة"
-                        options={['محجوز', 'تم إلغاء البيع', 'تم البيع']}
+                        options={['مؤجر', 'تم إلغاء العقد', 'انتهى الإيجار']}
                         maxWidth={'124px'}
                         height={'48px'}
                     />
                 </div>
-                <PropertyReservation/>
+                <PropertyRental/>
             </div>
         </div>
     )
