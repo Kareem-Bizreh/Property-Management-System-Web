@@ -5,6 +5,7 @@ export const TEXT_COLORS = {
     black: '#000000',
     logo: '#215F83',
     firstThree: '#2790A3',
+    post: '#252B5C',
     select: '#7D7F88',
     reserved: '#FA712D',
     sold: '#34A853',

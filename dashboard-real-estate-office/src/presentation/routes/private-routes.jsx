@@ -9,6 +9,7 @@ import ReservationsPage from "../pages/ReservationsPage.jsx";
 import BookingPage from "../pages/BookingPage.jsx";
 import RentalPage from "../pages/RentalPage.jsx";
 import RentalsPage from "../pages/RentalsPage.jsx";
+import UserRequestsPage from "../pages/UserRequestsPage.jsx";
 
 export const PrivateRoutes = [
     {
@@ -54,5 +55,9 @@ export const PrivateRoutes = [
     {
         path: "rentals/:id",
         element: <RentalPage/>,
+    },
+    {
+        path: "user-requests",
+        element: <UserRequestsPage/>,
     }
 ]
