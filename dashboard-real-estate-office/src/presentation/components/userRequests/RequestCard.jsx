@@ -3,14 +3,14 @@ import placeMarker from "../../../assets/user-requests/place-marker.svg"
 import budgetIcon from '../../../assets/user-requests/budget.svg'
 import {Clock} from "lucide-react";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
-import PropertySuggestion from "./PropertySuggestion.jsx";
 import {formatDate} from "../../../shared/utils/formatDate.js";
+import PropertySuggestion from "./PropertySuggestion.jsx";
 
 const RequestCard = ({post: {title, type, area, budget, date, isProposed}}) => {
     const data = [
         {key: 'النوع', value: type, icon: null},
         {key: 'المنطقة', value: area, icon: placeMarker},
-        {key: 'الميزانية', value: formatPrice(budget), icon: budgetIcon},
+        {key: 'الميزانية', value: `${formatPrice(budget)} $`, icon: budgetIcon},
     ]
 
     return (
