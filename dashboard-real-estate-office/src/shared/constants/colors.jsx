@@ -25,7 +25,8 @@ export const BACKGROUND_COLORS = {
     unavailable: '#E94235',
     pending: '#F9A000',
     upload: '#EEF8FF',
-    button: '#30B0C7'
+    button: '#30B0C7',
+    notification: '#FFF8EB'
 }
 
 export const DASHBOARD_CARDS_COLORS = {

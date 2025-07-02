@@ -11,6 +11,10 @@ import RentalPage from "../pages/RentalPage.jsx";
 import RentalsPage from "../pages/RentalsPage.jsx";
 import UserRequestsPage from "../pages/UserRequestsPage.jsx";
 import AdvertisementsPage from "../pages/AdvertisementsPage.jsx";
+import ServicesPage from "../pages/ServicesPage.jsx";
+import NotificationsPage from "../pages/NotificationsPage.jsx";
+import SupportPage from "../pages/SupportPage.jsx";
+import OfficeInfoPage from "../pages/OfficeInfoPage.jsx";
 
 export const PrivateRoutes = [
     {
@@ -64,5 +68,21 @@ export const PrivateRoutes = [
     {
         path: "ads",
         element: <AdvertisementsPage/>,
+    },
+    {
+        path: "office-info",
+        element: <OfficeInfoPage/>,
+    },
+    {
+        path: "services",
+        element: <ServicesPage/>,
+    },
+    {
+        path: 'notifications',
+        element: <NotificationsPage/>,
+    },
+    {
+        path: "support",
+        element: <SupportPage/>,
     }
 ]

@@ -2,7 +2,6 @@ import ButtonCard from "./ButtonCard.jsx";
 import officer from "../../../assets/ads/marketing-officer.svg";
 import {BACKGROUND_COLORS, DASHBOARD_CARDS_COLORS, TEXT_COLORS} from "../../../shared/constants/colors.jsx";
 import Header from "../shared/Header.jsx";
-import UploadImage from "../shared/UploadImage.jsx";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
 import Popup from "reactjs-popup";
