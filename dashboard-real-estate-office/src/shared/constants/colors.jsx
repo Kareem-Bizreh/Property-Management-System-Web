@@ -21,6 +21,7 @@ export const BACKGROUND_COLORS = {
     secondary2: '#EFF4F6',
     filter: '#F2F4F4',
     picture: '#D9D9D9',
+    table: '#E5E5E5',
     card: '#2790A3',
     unavailable: '#E94235',
     pending: '#F9A000',

@@ -66,12 +66,12 @@ const PropertyDetails = ({property = {}, status, readOnly = false}) => {
                                 verticalAlign: "middle",
                             }}
                         >
-              <span
-                  style={{color: TEXT_COLORS.primary}}
-                  className="min-w-[120px]"
-              >
-                الحالة
-              </span>
+                            <span
+                                style={{color: TEXT_COLORS.primary}}
+                                className="min-w-[120px]"
+                            >
+                                الحالة
+                            </span>
                             {status === "مرفوض" || status === "قيد الإنتظار" ? (
                                 <span
                                     className="h-[50px] max-w-[200px] w-full rounded-[16px] py-3"
@@ -83,8 +83,8 @@ const PropertyDetails = ({property = {}, status, readOnly = false}) => {
                                         color: TEXT_COLORS.white,
                                     }}
                                 >
-                  {status}
-                </span>
+                                    {status}
+                                </span>
                             ) : (
                                 <SelectInput
                                     readOnly={readOnly}
