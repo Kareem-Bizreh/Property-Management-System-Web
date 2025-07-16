@@ -3,20 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "workspaces": [
-    "dashboard-admin",
-    "dashboard-real-estate-office",
-    "dashboard-service-provider"
-  ],
   "scripts": {
-    "dev:admin": "npm --workspace dashboard-admin run dev",
-    "dev:re": "npm --workspace dashboard-real-estate-office run dev",
-    "dev:sp": "npm --workspace dashboard-service-provider run dev",
-    "dev": "concurrently \"npm run dev:admin\" \"npm run dev:re\" \"npm run dev:sp\"",
-    "build:admin": "npm --workspace dashboard-admin run build",
-    "build:re": "npm --workspace dashboard-real-estate-office run build",
-    "build:sp": "npm --workspace dashboard-service-provider run build",
-    "build": "concurrently \"npm run build:admin\" \"npm run build:re\" \"npm run build:sp\""
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
