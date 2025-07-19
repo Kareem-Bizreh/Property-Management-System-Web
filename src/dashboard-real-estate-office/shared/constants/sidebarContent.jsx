@@ -23,5 +23,5 @@ export const SIDEBAR_ITEMS = [
     { name: 'الخدمات', icon: services, href: 'services' },
     { name: 'مركز الإشعارات', icon: notifications, href: 'notifications' },
     { name: 'مركز الدعم', icon: support, href: 'support' },
-    { name: 'تسجيل الخروج', icon: logout, href: 'logout' },
+    { name: 'تسجيل الخروج', icon: logout, href: '/logout' },
 ];

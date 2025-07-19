@@ -2,8 +2,11 @@ import Header from "../components/shared/Header.jsx";
 import PostDetails from "../components/shared/PostDetails.jsx";
 import PropertyImages from "../components/shared/PropertyImages.jsx";
 import PropertyDetails from "../components/myProperties/PropertyDetails.jsx";
+import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
+import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
 
 const AddPropertyPage = () => {
+  const {isLoading} = useLoadingStore()
   const tags = [
     {
       id: 1,
@@ -37,6 +40,7 @@ const AddPropertyPage = () => {
           <PropertyImages />
         </div>
       </div>
+      {(isLoading ? (<Spinner/>) : null)}
     </div>
   );
 };

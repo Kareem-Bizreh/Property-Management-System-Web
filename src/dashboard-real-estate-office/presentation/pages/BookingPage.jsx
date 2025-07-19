@@ -5,8 +5,11 @@ import img from "../../assets/cards/property_sale.jpg";
 import Reservation from "../components/booking/Reservation.jsx";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/colors.jsx";
 import FinancialRecord from "../components/shared/FinancialRecord.jsx";
+import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 
 const BookingPage = () => {
+    const {isLoading} = useLoadingStore()
     const {id} = useParams();
     const reservation =
         {
@@ -70,6 +73,7 @@ const BookingPage = () => {
                     ))}
                 </div>
             </div>
+            {(isLoading ? (<Spinner/>) : null)}
         </div>
     )
 }

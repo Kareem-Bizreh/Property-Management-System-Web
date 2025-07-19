@@ -1,21 +1,42 @@
 import Header from "./Header.jsx";
 import CardPropertySaleTourist from "../shared/CardPropertySaleTourist.jsx";
 import CardPropertyRent from "../shared/CardPropertyRent.jsx";
-import {saleAndRentProperties} from "../../../shared/constants/properties.jsx";
+// import {saleAndRentProperties} from "../../../shared/constants/properties.jsx";
+import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import usePropertiesStore from "../../../application/state/usePropertiesStore.jsx";
+import {useEffect} from "react";
+import {getAll} from "../../../application/useCases/residentialOffice/getPropertiesUseCase.jsx";
 
 const MostRatedProperties = () => {
+    const {setIsLoading} = useLoadingStore();
+    const {properties, setProperties} = usePropertiesStore();
+
+    useEffect(() => {
+        setIsLoading(true);
+        const fetchData = async () => {
+            const {success, response} = await getAll();
+            if (success) {
+                setProperties(response.data);
+            } else {
+                setProperties([]);
+            }
+        }
+
+        fetchData();
+        setIsLoading(false);
+    }, []);
 
     return (
         <div className="flex flex-col max-w-screen mr-4">
             <Header name={'العقارات الأكثر تقييماً'} />
 
             <div className="flex overflow-x-auto p-2 gap-3.5">
-                {saleAndRentProperties.map((property, index) => (
+                {properties.map((property, index) => (
                     <div key={index} className="flex-shrink-0">
-                        {Object.prototype.hasOwnProperty.call(property, 'duration') ? (
+                        {(property.listingType === 'أجار') ? (
                             <CardPropertyRent property={property}/>
                         ) : (
-                            <CardPropertySaleTourist property={property}/>
+                            <CardPropertySaleTourist property={property} type={'sale'}/>
                         )}
                     </div>
                 ))}

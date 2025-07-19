@@ -6,8 +6,11 @@ import TableHead from "../components/rentals/TableHead.jsx";
 import FinancialRecord from "../components/shared/FinancialRecord.jsx";
 import Rental from "../components/rentals/Rental.jsx";
 import ContractExtension from "../components/rentals/ContractExtension.jsx";
+import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
+import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
 
 const RentalPage = () => {
+    const {isLoading} = useLoadingStore()
     const {id} = useParams();
     const rental =
         {
@@ -73,6 +76,7 @@ const RentalPage = () => {
                     ))}
                 </div>
             </div>
+            {(isLoading ? (<Spinner/>) : null)}
         </div>
     )
 }

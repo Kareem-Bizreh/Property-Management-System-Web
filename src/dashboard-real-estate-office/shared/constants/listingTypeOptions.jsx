@@ -1,0 +1,1 @@
+export const LISTING_TYPE_OPTIONS = ["أجار", "بيع"];

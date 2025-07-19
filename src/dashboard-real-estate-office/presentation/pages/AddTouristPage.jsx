@@ -1,8 +1,11 @@
 import Header from "../components/shared/Header.jsx";
 import PostDetails from "../components/shared/PostDetails.jsx";
 import PropertyImages from "../components/shared/PropertyImages.jsx";
+import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
+import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
 
 const AddTouristPage = () => {
+    const {isLoading} = useLoadingStore()
     const tags = [
         {
             id: 2,
@@ -32,6 +35,7 @@ const AddTouristPage = () => {
                     <PropertyImages />
                 </div>
             </div>
+            {(isLoading ? (<Spinner/>) : null)}
         </div>
     )
 }

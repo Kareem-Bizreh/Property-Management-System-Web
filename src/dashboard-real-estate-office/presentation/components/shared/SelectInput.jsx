@@ -4,7 +4,6 @@ import {motion, AnimatePresence} from "framer-motion";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 
 const SelectInput = ({title, options = [], onChange, maxWidth, height, style = {}, readOnly = false}) => {
-    const [selected, setSelected] = useState(title);
     const [open, setOpen] = useState(false);
     const containerRef = useRef(null);
 
@@ -20,17 +19,19 @@ const SelectInput = ({title, options = [], onChange, maxWidth, height, style = {
     }, []);
 
     const handleSelect = (value) => {
-        setSelected(value);
         setOpen(false);
         onChange?.(value);
+        if (value === "إلغاء") {
+            onChange?.(null);
+        }
     };
 
     return (
         <div ref={containerRef} className="relative h-full w-full" style={{maxWidth, height}}>
             <div className="relative w-full h-full">
                 <button
-                    onClick={() => setOpen((o) =>  !readOnly ? !o : false)}
-                    className="w-full h-full flex justify-center items-center py-2 pl-3 rounded-[16px] relative"
+                    onClick={() => setOpen((o) => !readOnly ? !o : false)}
+                    className="min-w-full h-full flex flex-row flex-nowrap justify-between items-center py-2 px-3 rounded-[16px] relative"
                     style={{
                         backgroundColor: BACKGROUND_COLORS.app,
                         color: TEXT_COLORS.select,
@@ -43,12 +44,14 @@ const SelectInput = ({title, options = [], onChange, maxWidth, height, style = {
                         ...style,
                     }}
                 >
-                    {selected}
+                    <span className="flex-2 flex items-center justify-center">
+                        {title}
+                    </span>
 
                     {/* ChevronDown fixed to the right side */}
                     <ChevronDown
                         size={20}
-                        className={`absolute left-3 top-1/2 -translate-y-1/2 transition-transform duration-200 ${
+                        className={`transition-transform duration-200 mr-1 flex-1 ${
                             open ? "rotate-180" : ""
                         }`}
                     />

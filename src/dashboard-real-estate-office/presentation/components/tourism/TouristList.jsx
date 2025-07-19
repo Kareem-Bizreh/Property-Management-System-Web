@@ -12,11 +12,7 @@ const TouristList = () => {
             <AddCard title={'إضافة مكان سياحي'} />
             {(touristProperties && touristProperties.length > 0) ? touristProperties.map((property, index) => (
                     <div key={index} className="flex-shrink-0">
-                        {Object.prototype.hasOwnProperty.call(property, 'duration') ? (
-                            <CardPropertyRent property={property}/>
-                        ) : (
-                            <CardPropertySaleTourist property={property}/>
-                        )}
+                        <CardPropertySaleTourist property={property} type={'tourist'} />
                     </div>
                 )) :
                 (<img src={EmptyBox} alt="empty" className="flex-shrink-0 mt-20" />)

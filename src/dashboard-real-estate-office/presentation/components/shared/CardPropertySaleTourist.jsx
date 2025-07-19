@@ -6,29 +6,31 @@ import map from "../../../assets/cards/map.svg"
 import spaceIcon from "../../../assets/cards/space.svg"
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 
-const CardPropertySaleTourist = ({property: {id, state, title, location, space, price, type}}) => {
+const CardPropertySaleTourist = ({
+                                     property: {id, status, title, location, area, sellDetails = {}, postImage}, type
+                                 }) => {
     const image = {
         'property_tourist': property_tourist,
         'property_sale': property_sale,
     }
 
     return (
-        <Link to={`/real-estate-office/${type ==='sale' ? 'my-properties' : 'tourism'}/${id}`}>
+        <Link to={`/real-estate-office/${type === 'sale' ? 'my-properties' : 'tourism'}/${id}`}>
             <div className="relative w-[212px] h-[363px] rounded-[25px]"
                  style={{backgroundColor: BACKGROUND_COLORS.secondary1}}>
                 <div
                     className="absolute w-[189px] h-[177px] top-[8px] rounded-[18px] right-1/2 transform translate-x-1/2 overflow-hidden">
                     <img
                         className="w-full h-full object-cover"
-                        src={image[`property_${type}`]}
+                        src={(postImage && postImage.length > 0) ? postImage : image[`property_${type}`]}
                         alt="image"
                     />
                 </div>
                 <span
                     className="absolute w-[111px] h-[22px] top-[159px] right-[80px] rounded-[5px] z-1"
                     style={{
-                        backgroundColor: (state === 'متوفر' ? BACKGROUND_COLORS.card :
-                            (state !== 'قيد الإنتظار' ? BACKGROUND_COLORS.unavailable : BACKGROUND_COLORS.pending)),
+                        backgroundColor: (status === 'متوفر' ? BACKGROUND_COLORS.card :
+                            (status !== 'قيد الإنتظار' ? BACKGROUND_COLORS.unavailable : BACKGROUND_COLORS.pending)),
                         borderColor: 'white',
                         borderWidth: (type !== 'sale' ? '1px' : '0px'),
                         fontFamily: 'Cairo',
@@ -40,7 +42,7 @@ const CardPropertySaleTourist = ({property: {id, state, title, location, space, 
                         color: TEXT_COLORS.white,
                     }}
                 >
-                    {state}
+                    {status}
             </span>
                 {type === 'sale' && (
                     <span
@@ -97,34 +99,34 @@ const CardPropertySaleTourist = ({property: {id, state, title, location, space, 
                         src={spaceIcon}
                         alt="space"
                     />
-                    <span
-                        style={{
-                            color: TEXT_COLORS.primary,
-                            fontFamily: 'Montserrat',
-                            fontWeight: '700',
-                            fontSize: '14px',
-                            lineHeight: '100%',
-                            letterSpacing: '0%'
-                        }}
+                    <span className="pt-1"
+                          style={{
+                              color: TEXT_COLORS.primary,
+                              fontFamily: 'Montserrat',
+                              fontWeight: '700',
+                              fontSize: '14px',
+                              lineHeight: '100%',
+                              letterSpacing: '0%'
+                          }}
                     >
-                     {space}
+                     {area}
                 </span>
-                    <span
-                        style={{
-                            color: TEXT_COLORS.primary,
-                            fontFamily: 'Cairo',
-                            fontWeight: '400',
-                            fontSize: '14px',
-                            lineHeight: '100%',
-                            letterSpacing: '0%'
-                        }}
+                    <span className="pt-1"
+                          style={{
+                              color: TEXT_COLORS.primary,
+                              fontFamily: 'Cairo',
+                              fontWeight: '400',
+                              fontSize: '14px',
+                              lineHeight: '100%',
+                              letterSpacing: '0%'
+                          }}
                     >
                      متر
                 </span>
 
                 </div>
                 <span
-                    className="absolute top-[325px] right-1/2 transform translate-x-1/2"
+                    className="absolute top-[325px] right-1/2 transform translate-x-1/2 whitespace-nowrap"
                     style={{
                         color: TEXT_COLORS.primary,
                         fontFamily: 'Montserrat',
@@ -134,7 +136,7 @@ const CardPropertySaleTourist = ({property: {id, state, title, location, space, 
                         letterSpacing: '3%'
                     }}
                 >
-                {formatPrice(price)} $
+                {formatPrice(sellDetails.selling_price)} $
             </span>
             </div>
         </Link>

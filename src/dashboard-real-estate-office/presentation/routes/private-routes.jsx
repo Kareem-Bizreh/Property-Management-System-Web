@@ -17,10 +17,13 @@ import SupportPage from "../pages/SupportPage.jsx";
 import OfficeInfoPage from "../pages/OfficeInfoPage.jsx";
 import Sidebar from "../../../shared/presentation/components/Sidebar.jsx";
 import {SIDEBAR_ITEMS} from "../../shared/constants/sidebarContent.jsx";
+import RequireAuth from "../../../shared/presentation/components/RequireAuth.jsx";
 
 export const PrivateRoutes = [{
     path: "/real-estate-office/",
-    element: <Sidebar items={SIDEBAR_ITEMS} />,
+    element: <RequireAuth>
+        <Sidebar items={SIDEBAR_ITEMS}/>
+    </RequireAuth>,
     children: [
         {
             index: true,

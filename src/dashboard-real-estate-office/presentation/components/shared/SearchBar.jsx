@@ -1,7 +1,8 @@
 import search from "../../../assets/shared/search-normal.svg";
 import { BACKGROUND_COLORS } from "../../../../shared/colors.jsx";
 
-const SearchBar = () => {
+const SearchBar = ({register}) => {
+
     return (
         <div className="relative h-[48px] w-full max-w-[400px]">
             <img
@@ -10,6 +11,7 @@ const SearchBar = () => {
                 src={search}
             />
             <input
+                {...register("search")}
                 type="text"
                 placeholder="ابحث"
                 className='rounded-full pl-6 pr-12 h-full w-full'

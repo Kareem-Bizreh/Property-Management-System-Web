@@ -1,7 +1,10 @@
 import Header from "../components/shared/Header.jsx";
 import Notification from "../components/notifications/Notification.jsx";
+import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 
 const NotificationsPage = () => {
+    const {isLoading} = useLoadingStore()
     const notifications = [
         {
             id: 1,
@@ -41,6 +44,7 @@ const NotificationsPage = () => {
                     <Notification notification={notification}/>
                 ))}
             </div>
+            {(isLoading ? (<Spinner/>) : null)}
         </div>
     )
 }

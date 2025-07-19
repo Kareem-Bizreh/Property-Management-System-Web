@@ -1,45 +1,68 @@
-import { BACKGROUND_COLORS } from "../../../../shared/colors.jsx";
+import {BACKGROUND_COLORS} from "../../../../shared/colors.jsx";
 import SearchBar from "../shared/SearchBar.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
+import {STATUS_OPTIONS} from "../../../shared/constants/statusOptions.jsx";
+import {LISTING_TYPE_OPTIONS} from "../../../shared/constants/listingTypeOptions.jsx";
+import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import useCityStore from "../../../application/state/residentialOffice/useCityStore.jsx";
+import useRegionStore from "../../../application/state/residentialOffice/useRegionStore.jsx";
+import useListingTypeStore from "../../../application/state/residentialOffice/useListingTypeStore.jsx";
+import useStatusStore from "../../../application/state/residentialOffice/useStatusStore.jsx";
 
-const Filter = () => {
+const Filter = ({register}) => {
+    const {city, setCity} = useCityStore();
+    const {regions, setRegions, region, setRegion} = useRegionStore();
+    const {listingType, setListingType} = useListingTypeStore();
+    const {status, setStatus} = useStatusStore();
+
+    const handleCityChange = (cityName) => {
+        const selectedGovernorate = SyrianGovernorates.find((gov) => gov.name === cityName);
+        setCity(cityName);
+        setRegions(selectedGovernorate?.regions || []);
+        setRegion(null);
+    };
+
     return (
         <div
             className="w-full py-4 px-2 md:px-4"
-            style={{ backgroundColor: BACKGROUND_COLORS.filter }}
+            style={{backgroundColor: BACKGROUND_COLORS.filter}}
         >
             <div
                 className="flex flex-wrap gap-4 md:gap-6 items-center"
-                style={{ minHeight: "48px" }}
+                style={{minHeight: "48px"}}
             >
-                <SearchBar />
+                <SearchBar register={register}/>
                 <SelectInput
-                    title="النوع"
-                    options={['بيع', 'إيجار']}
-                    maxWidth={'124px'}
-                    height={'48px'}
+                    key={0}
+                    title={listingType || "النوع"}
+                    options={["إلغاء", ...LISTING_TYPE_OPTIONS]}
+                    maxWidth={"124px"}
+                    height={"48px"}
+                    onChange={setListingType}
                 />
                 <SelectInput
-                    title="المحافظة"
-                    options={[]}
-                    maxWidth={'124px'}
-                    height={'48px'}
+                    key={1}
+                    title={city || "المحافظة"}
+                    options={["إلغاء", ...SyrianGovernorates.map((gov) => gov.name)]}
+                    maxWidth={"124px"}
+                    height={"48px"}
+                    onChange={handleCityChange}
                 />
                 <SelectInput
-                    title="المنطقة"
-                    options={[]}
-                    maxWidth={'124px'}
-                    height={'48px'}
+                    key={city}
+                    title={region || "المنطقة"}
+                    options={["إلغاء", ...regions.map((reg) => reg.name)]}
+                    maxWidth={"124px"}
+                    height={"48px"}
+                    onChange={setRegion}
                 />
                 <SelectInput
-                    title="حالة"
-                    options={[
-                        'محجوز', 'تم التأجير', 'تم البيع',
-                        'غير متوفر', 'متوفر', 'في الصيانة',
-                        'قيد الإنتظار', 'مرفوض'
-                    ]}
-                    maxWidth={'124px'}
-                    height={'48px'}
+                    key={2}
+                    title={status || "حالة"}
+                    options={["إلغاء", ...STATUS_OPTIONS]}
+                    maxWidth={"124px"}
+                    height={"48px"}
+                    onChange={setStatus}
                 />
             </div>
         </div>
