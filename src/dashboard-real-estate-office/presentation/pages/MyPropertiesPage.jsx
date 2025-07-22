@@ -32,18 +32,19 @@ const MyPropertiesPage = () => {
                 setProperties([]);
                 alert(response);
             }
+            setIsLoading(false);
         }
 
         fetchData();
-        setIsLoading(false);
     }, [city, region, listingType, status]);
+
+    if (isLoading) return <Spinner/>;
 
     return (
         <div className="flex flex-col">
             <Header title={'عقاراتي'}/>
             <Filter register={register}/>
             <PropertiesList/>
-            {isLoading ? <Spinner/> : null}
         </div>
     )
 }

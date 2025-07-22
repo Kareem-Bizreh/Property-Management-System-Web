@@ -14,7 +14,7 @@ const PropertiesList = () => {
             <AddCard title={'إضافة عقار'}/>
             {(properties && properties.length > 0) ? properties.map((property) => (
                     <div key={property.id} className="flex-shrink-0">
-                        {(property.listingType === 'أجار') ? (
+                        {(property.listing_type === 'أجار') ? (
                             <CardPropertyRent property={property}/>
                         ) : (
                             <CardPropertySaleTourist property={property} type={'sale'}/>

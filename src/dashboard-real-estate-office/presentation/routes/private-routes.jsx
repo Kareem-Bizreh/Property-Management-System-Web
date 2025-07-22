@@ -21,9 +21,10 @@ import RequireAuth from "../../../shared/presentation/components/RequireAuth.jsx
 
 export const PrivateRoutes = [{
     path: "/real-estate-office/",
-    element: <RequireAuth>
-        <Sidebar items={SIDEBAR_ITEMS}/>
-    </RequireAuth>,
+    element:
+        <RequireAuth>
+            <Sidebar items={SIDEBAR_ITEMS}/>
+        </RequireAuth>,
     children: [
         {
             index: true,

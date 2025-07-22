@@ -1,10 +1,10 @@
 import ResidentialOfficeRepository from "../../../domain/repositories/residentialOfficeRepository.jsx";
 import {Property} from "../../../domain/entities/Property.jsx";
 
-export const getAll = async () => {
+export const getProperty = async (propertyId) => {
     try {
-        const response = await ResidentialOfficeRepository.getAll();
-        response.data = response.data.map((item) => new Property(item));
+        const response = await ResidentialOfficeRepository.getProperty(propertyId);
+        response.data = new Property(response.data);
 
         return {success: true, response: response};
     } catch (error) {

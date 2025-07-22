@@ -7,7 +7,7 @@ import spaceIcon from "../../../assets/cards/space.svg"
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 
 const CardPropertySaleTourist = ({
-                                     property: {id, status, title, location, area, sellDetails = {}, postImage}, type
+                                     property: {id, status, title, location, area, sell_details = {}, postImage}, type
                                  }) => {
     const image = {
         'property_tourist': property_tourist,
@@ -136,7 +136,7 @@ const CardPropertySaleTourist = ({
                         letterSpacing: '3%'
                     }}
                 >
-                {formatPrice(sellDetails.selling_price)} $
+                {formatPrice(sell_details.selling_price)} $
             </span>
             </div>
         </Link>

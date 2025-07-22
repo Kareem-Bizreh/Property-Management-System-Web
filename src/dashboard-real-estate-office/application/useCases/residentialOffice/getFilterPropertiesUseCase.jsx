@@ -15,6 +15,6 @@ export const getFilterProperties = async ({city, region, listingType, status}) =
 
         return {success: true, response: response};
     } catch (error) {
-        return {success: false, response: error.response.error && error.response.message};
+        return {success: false, response: error.response.data.message};
     }
 }

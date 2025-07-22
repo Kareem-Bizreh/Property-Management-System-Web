@@ -1,7 +1,4 @@
-import {
-    BACKGROUND_COLORS,
-    TEXT_COLORS,
-} from "../../../../shared/colors.jsx";
+import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import Header1 from "../addProperty/Header1.jsx";
 import PropertyLocation from "../addProperty/PropertyLocation.jsx";
 import GeneralDetails from "../addProperty/GeneralDetails.jsx";
@@ -11,9 +8,13 @@ import Button from "@mui/material/Button";
 import Header2 from "../addProperty/Header2.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
 import {useNavigate} from "react-router";
+import {STATUS_OPTIONS} from "../../../shared/constants/statusOptions.jsx";
+import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
 
-const PropertyDetails = ({property = {}, status, readOnly = false}) => {
+const PropertyDetails = ({readOnly = false}) => {
     const navigate = useNavigate();
+    const {property, setProperty} = usePropertyStore();
+    const status = property?.postStatus;
 
     const buttons = [
         ...(status !== "مرفوض" && status !== "قيد الإنتظار"
@@ -88,17 +89,11 @@ const PropertyDetails = ({property = {}, status, readOnly = false}) => {
                             ) : (
                                 <SelectInput
                                     readOnly={readOnly}
-                                    options={[
-                                        "محجوز",
-                                        "تم التأجير",
-                                        "تم البيع",
-                                        "غير متوفر",
-                                        "متوفر",
-                                        "في الصيانة",
-                                    ]}
+                                    title={status}
+                                    options={STATUS_OPTIONS}
+                                    onChange={(status) => setProperty({...property, status})}
                                     height={"50px"}
                                     maxWidth={"200px"}
-                                    title={status}
                                     style={{
                                         borderWidth: "1px",
                                         fontWeight: 600,
@@ -111,31 +106,10 @@ const PropertyDetails = ({property = {}, status, readOnly = false}) => {
                     </div>
                 )}
 
-                <PropertyLocation
-                    city={property.city}
-                    region={property.region}
-                    floor_number={property.floor_number}
-                    location={property.location}
-                    readOnly={readOnly}
-                />
-                <GeneralDetails
-                    area={property.area}
-                    ownership={property.ownership_type}
-                    direction={property.direction}
-                    has_furniture={property.has_furniture}
-                    room_number={property.room_counts?.total}
-                    readOnly={readOnly}
-                />
-                <RoomDetails room_counts={property.room_counts} readOnly={readOnly}/>
-                <PaymentDetails
-                    listing_type={property.listing_type}
-                    readOnly={readOnly}
-                    details={
-                        property.listing_type === "بيع"
-                            ? property.sell_details
-                            : property.rent_details
-                    }
-                />
+                <PropertyLocation readOnly={readOnly}/>
+                <GeneralDetails readOnly={readOnly}/>
+                <RoomDetails readOnly={readOnly}/>
+                <PaymentDetails readOnly={readOnly}/>
                 <div className="flex flex-row flex-wrap justify-end gap-4 mt-4">
                     {buttons.map((button) => (
                         <Button

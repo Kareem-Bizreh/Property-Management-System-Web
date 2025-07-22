@@ -1,25 +1,20 @@
 import {Navigate, useLocation} from "react-router";
-import {useEffect} from "react";
-import useLoadingStore from "../../application/state/loadingStore.jsx";
+import {useEffect, useState} from "react";
 import useUserStore from "../../application/state/userStore.jsx";
 import {Spinner} from "./Spinner";
 
 const RequireAuth = ({children}) => {
     const {accessToken, setAccessToken} = useUserStore();
-    const {isLoading, setIsLoading} = useLoadingStore();
     const location = useLocation();
+    const [checkingAuth, setCheckingAuth] = useState(true);
 
     useEffect(() => {
-        setIsLoading(true);
-
         const storedToken = localStorage.getItem("accessToken");
         setAccessToken(storedToken);
-        setIsLoading(false);
+        setCheckingAuth(false);
+    }, []);
 
-        return () => setIsLoading(false);
-    }, [setAccessToken, setIsLoading]);
-
-    if (isLoading) {
+    if (checkingAuth) {
         return <Spinner/>;
     }
 

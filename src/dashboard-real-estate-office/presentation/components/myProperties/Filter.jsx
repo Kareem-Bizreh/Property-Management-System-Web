@@ -1,7 +1,7 @@
 import {BACKGROUND_COLORS} from "../../../../shared/colors.jsx";
 import SearchBar from "../shared/SearchBar.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
-import {STATUS_OPTIONS} from "../../../shared/constants/statusOptions.jsx";
+import {PropertyPostStatus, STATUS_OPTIONS} from "../../../shared/constants/statusOptions.jsx";
 import {LISTING_TYPE_OPTIONS} from "../../../shared/constants/listingTypeOptions.jsx";
 import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
 import useCityStore from "../../../application/state/residentialOffice/useCityStore.jsx";
@@ -59,7 +59,7 @@ const Filter = ({register}) => {
                 <SelectInput
                     key={2}
                     title={status || "حالة"}
-                    options={["إلغاء", ...STATUS_OPTIONS]}
+                    options={["إلغاء", ...STATUS_OPTIONS, ...PropertyPostStatus]}
                     maxWidth={"124px"}
                     height={"48px"}
                     onChange={setStatus}

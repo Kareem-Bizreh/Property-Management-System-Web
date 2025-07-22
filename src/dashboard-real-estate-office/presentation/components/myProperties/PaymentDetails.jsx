@@ -1,29 +1,91 @@
 import Header2 from "../addProperty/Header2.jsx";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {motion, AnimatePresence} from "framer-motion";
 import {useForm} from "react-hook-form";
+import {LISTING_TYPE_OPTIONS} from "../../../shared/constants/listingTypeOptions.jsx";
+import useCommissionStore from "../../../application/state/office/useCommissionStore.jsx";
+import useMeterPriceStore from "../../../application/state/residentialOffice/useMeterPriceStore.jsx";
+import {formatPrice} from "../../../shared/utils/formatPrice.js";
+import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
 
-const PaymentDetails = ({listing_type = 'بيع', details = {}, readOnly = false}) => {
+const PaymentDetails = ({readOnly = false}) => {
+    const {property, setProperty} = usePropertyStore();
+    const listingType = property.listing_type;
+
+    const details = listingType === "بيع"
+        ? property.sell_details || {}
+        : property.rent_details || {};
+
     return (
         <div className='flex flex-col gap-4 mt-4'>
             <Header2 title={'تفاصيل الدفع:'}/>
-            <TypeCard listing_type={listing_type} details={details} readOnly={readOnly}/>
+            <TypeCard
+                listing_type={listingType}
+                details={details}
+                readOnly={readOnly}
+                onChange={(listing_type) => setProperty({...property, listing_type})}
+            />
         </div>
-    )
-}
-export default PaymentDetails
+    );
+};
 
-const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => {
-    const [type, setType] = useState(listing_type);
-    const [option, setOption] = useState((details.installment_allowed ? 'نعم' : 'لا'));
-    const { register } = useForm({
+export default PaymentDetails;
+
+const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false, onChange}) => {
+    const {property, setProperty} = usePropertyStore();
+    const {commission} = useCommissionStore();
+    const {meterPrice} = useMeterPriceStore();
+
+    const isSell = listing_type === 'بيع';
+
+    const [option, setOption] = useState(
+        isSell
+            ? (details.installment_allowed ? 'نعم' : 'لا')
+            : details.rental_period || 'شهري'
+    );
+
+    const {register, watch} = useForm({
         defaultValues: {
-            installment_duration: (details.installment_allowed ? details.installment_duration : 0),
-            price: (details.installment_allowed ? details.selling_price : details.price),
+            installment_duration: isSell && details.installment_allowed ? details.installment_duration : 0,
+            price: isSell ? details.selling_price : details.price,
         }
     });
+
+    const watchInstallmentDuration = watch("installment_duration");
+    const watchPrice = Number(watch("price") || 0);
+
+    useEffect(() => {
+        if (isSell) {
+            // Remove rent_details when switching to sell
+            const {rent_details, ...rest} = property;
+
+            setProperty({
+                ...rest,
+                sell_details: {
+                    ...property.sell_details,
+                    installment_allowed: option === 'نعم',
+                    installment_duration: option === 'نعم' ? Number(watchInstallmentDuration) : 0,
+                    selling_price: Number(watchPrice)
+                }
+            });
+        } else {
+            // Remove sell_details when switching to rent
+            const {sell_details, ...rest} = property;
+
+            setProperty({
+                ...rest,
+                rent_details: {
+                    ...property.rent_details,
+                    rental_period: option,
+                    price: Number(watchPrice)
+                }
+            });
+        }
+
+    }, [option, watchInstallmentDuration, watchPrice]);
+
     return (
         <div className="flex flex-col gap-4 justify-center">
             {/* Type Selector */}
@@ -31,12 +93,13 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
                 <span style={styles} className="min-w-[120px]">نوع</span>
                 <SelectInput
                     readOnly={readOnly}
-                    options={['بيع', 'إيجار']}
+                    options={LISTING_TYPE_OPTIONS}
                     height={'50px'}
-                    title={type}
+                    title={listing_type}
                     maxWidth={'210px'}
                     onChange={(value) => {
-                        setType(value);
+                        onChange(value);
+                        setOption(value === 'بيع' ? 'لا' : 'شهري');
                     }}
                     style={{
                         borderWidth: '1px',
@@ -47,9 +110,9 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
                 />
             </div>
 
-            {/* Conditional Selector */}
+            {/* التقسيط or نوع الإيجار */}
             <motion.div
-                key={type}
+                key={listing_type}
                 initial={{opacity: 0, y: 10}}
                 animate={{opacity: 1, y: 0}}
                 exit={{opacity: 0, y: -10}}
@@ -57,15 +120,15 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
                 className="flex flex-wrap gap-4 items-center w-full"
             >
                 <span style={styles} className="min-w-[120px]">
-                    {type === 'بيع' ? 'التقسيط' : 'نوع الإيجار'}
+                    {isSell ? 'التقسيط' : 'نوع الإيجار'}
                 </span>
                 <SelectInput
                     readOnly={readOnly}
-                    options={type === 'بيع' ? ['نعم', 'لا'] : ['شهري', 'سنوي']}
+                    options={isSell ? ['نعم', 'لا'] : ['شهري', 'سنوي']}
                     height={'50px'}
                     maxWidth={'210px'}
                     title={option}
-                    onChange={(value) => setOption(value)}
+                    onChange={setOption}
                     style={{
                         borderWidth: '1px',
                         fontWeight: 600,
@@ -75,9 +138,9 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
                 />
             </motion.div>
 
-            {/* تقسيط section (animated) */}
+            {/* مدة التقسيط */}
             <AnimatePresence>
-                {type === 'بيع' && option === 'نعم' && (
+                {isSell && option === 'نعم' && (
                     <motion.div
                         key="installment"
                         initial={{opacity: 0, y: 10}}
@@ -107,22 +170,12 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
                 )}
             </AnimatePresence>
 
-            {/* Price Section */}
+            {/* السعر */}
             <div className="flex flex-wrap gap-4 items-center w-full">
                 <span style={styles} className="min-w-[120px]">سعر العقار</span>
-                <div className="relative w-full max-w-[210px]"
-                     style={{
-                         fontFamily: "Cairo",
-                         fontWeight: "400",
-                         fontSize: "18px",
-                         lineHeight: "130%",
-                         textAlign: "center",
-                     }}
-                >
+                <div className="relative w-full max-w-[210px]">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 select-none"
-                          style={{color: TEXT_COLORS.primary}}>
-                        $
-                    </span>
+                          style={{color: TEXT_COLORS.primary}}>$</span>
                     <input
                         readOnly={readOnly}
                         {...register('price')}
@@ -139,18 +192,20 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
                 <div className="flex flex-col justify-center items-center gap-2 text-sm font-medium"
                      style={{...styles, fontSize: '16px'}}>
                     <span>السعر المتوقع</span>
-                    <span>${'25000'}</span>
+                    <span>${formatPrice(meterPrice * property.area)}</span>
                 </div>
             </div>
 
-            {/* Fixed Summary Info */}
+            {/* Summary Info */}
             <div className="flex flex-wrap gap-4 h-[40px] items-center w-full">
                 <span style={styles} className="min-w-[120px]">رسوم المكتب</span>
-                <span style={styles} className="min-w-[100px]">${'35000'}</span>
+                <span style={styles} className="min-w-[100px]">%{commission}</span>
             </div>
             <div className="flex flex-wrap gap-4 h-[40px] items-center w-full">
                 <span style={styles} className="min-w-[120px]">السعر الكامل</span>
-                <span style={styles} className="min-w-[100px]">${'45000'}</span>
+                <span style={styles} className="min-w-[100px]">
+                    ${formatPrice(watchPrice + (watchPrice * commission / 100))}
+                </span>
             </div>
         </div>
     )

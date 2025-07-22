@@ -1,6 +1,6 @@
 import {
     add,
-    addResidential,
+    editResidential,
     filters,
     getAll,
     getExpectedPrice,
@@ -22,8 +22,8 @@ const ResidentialOfficeRepository = {
 
     getExpectedPrice: async (propertyId) => await getExpectedPrice(propertyId),
 
-    addResidential: async (residentialId, data) =>
-        await addResidential(residentialId, data),
+    editResidential: async (residentialId, data) =>
+        await editResidential(residentialId, data),
 };
 
 export default ResidentialOfficeRepository;

@@ -5,7 +5,7 @@ import locationIcon from "../../../assets/cards/location.svg";
 import property_rent from "../../../assets/cards/property_rent.png";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 
-const CardPropertyRent = ({property: {id, title, rate, location, rentDetails, status, postImage}}) => {
+const CardPropertyRent = ({property: {id, title, rate, location, rent_details, status, postImage}}) => {
 
     return (
         <Link to={`/real-estate-office/my-properties/${id}`}>
@@ -111,7 +111,7 @@ const CardPropertyRent = ({property: {id, title, rate, location, rentDetails, st
                             letterSpacing: '3%',
                         }}
                     >
-                        {formatPrice(rentDetails.price)} $
+                        {formatPrice(rent_details.price)} $
                     </span>
                         <span className="mt-1 mr-2"
                               style={{
@@ -122,7 +122,7 @@ const CardPropertyRent = ({property: {id, title, rate, location, rentDetails, st
                                   letterSpacing: '3%',
                               }}
                         >
-                        {rentDetails.rental_period}
+                        {rent_details.rental_period}
                     </span>
                 </div>
             </div>
