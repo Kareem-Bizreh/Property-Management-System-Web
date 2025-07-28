@@ -2,18 +2,25 @@ import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import TextInput from "./TextInput.jsx";
 import UploadImage from "./UploadImage.jsx";
 import KeywordSelector from "./KeywordSelector.jsx";
-import {useForm} from "react-hook-form";
+import {useFormContext} from "react-hook-form";
 import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
 import {useEffect} from "react";
 import {formatDate} from "../../../shared/utils/formatDate.js";
 
 const PostDetails = ({readOnly = false, options}) => {
     const {property, setProperty} = usePropertyStore();
-    const {register, watch} = useForm({defaultValues: {postDescription: property?.postDescription}});
+    const {register, watch, setValue, getValues} = useFormContext();
 
     const setTag = (tag) => {
         setProperty({...property, tag});
     }
+
+    useEffect(() => {
+        const currentValue = getValues("postDescription");
+        if (currentValue !== property.postDescription) {
+            setValue("postDescription", property?.postDescription || "");
+        }
+    }, [property?.postDescription, setValue, getValues]);
 
     const postDescription = watch('postDescription');
     useEffect(() => {
@@ -54,8 +61,9 @@ const PostDetails = ({readOnly = false, options}) => {
                 <div className="flex-4 flex flex-col">
                     <div className="px-8">
                         <TextInput
+                            name={"postDescription"}
                             title={"وصف المنشور"}
-                            register={register("postDescription")}
+                            register={register}
                             multiline={true}
                             readOnly={readOnly}
                         />

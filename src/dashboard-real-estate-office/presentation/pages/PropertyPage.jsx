@@ -13,10 +13,15 @@ import useCommissionStore from "../../application/state/office/useCommissionStor
 import {getOfficeCommission} from "../../application/useCases/office/getCommissionUseCase.jsx";
 import useMeterPriceStore from "../../application/state/residentialOffice/useMeterPriceStore.jsx";
 import {getMeterPrice} from "../../application/useCases/region/getExpectedPriceUseCase.jsx";
+import {FormProvider, useForm} from "react-hook-form";
+import {edit} from "../../application/useCases/residentialOffice/editResidentialUseCase.jsx"
+import {deleteImage} from "../../application/useCases/propertyImage/deleteUseCase.jsx";
+import {upload} from "../../application/useCases/propertyImage/uploadUseCase.jsx";
+import {STATUS_OPTIONS} from "../../shared/constants/statusOptions.jsx";
 
 const PropertyPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
-    const {property, setProperty} = usePropertyStore();
+    const {property, setProperty, newImages, deletedImages, resetImageTracking} = usePropertyStore();
     const {setCommission} = useCommissionStore();
     const {setMeterPrice} = useMeterPriceStore();
     const {id} = useParams();
@@ -68,26 +73,75 @@ const PropertyPage = () => {
         loadAllData();
     }, []);
 
-    if (isLoading)
-        return <Spinner/>;
+    const onSubmit = async () => {
+        setIsLoading(true);
 
-    const readOnly = property.status === "قيد الإنتظار";
+        try {
+            // 1. Update the main property
+            const {success, response} = await edit(property, id);
+
+            if (!success) {
+                alert(response);
+                return;
+            }
+
+            // 2. Upload new images (if any)
+            if (newImages.length > 0) {
+                const formData = new FormData();
+                newImages.forEach((file) => formData.append("images", file));
+
+                const uploadResponse = await upload(id, formData);
+                if (!uploadResponse.success) {
+                    alert("فشل في رفع الصور");
+                    return;
+                }
+            }
+
+            // 3. Delete removed images (if any)
+            for (const imageId of deletedImages) {
+                const deleteResponse = await deleteImage(id, imageId);
+                if (!deleteResponse.success) {
+                    alert('فشل في حذف الصورة');
+                    return;
+                }
+            }
+
+            // 4. Reset temporary tracking
+            resetImageTracking();
+
+            alert("تم حفظ التعديلات بنجاح");
+
+        } catch (err) {
+            alert("حدث خطأ أثناء التعديل");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const methods = useForm();
+
+    if (isLoading) return <Spinner/>;
+
+    const readOnly = property.postStatus === "قيد الانتظار" || STATUS_OPTIONS.findIndex(opt => opt === property.status) < 3;
+
 
     return (
-        <div className="flex flex-col gap-4">
-            <div className="-mb-6">
-                <Header title={"عرض عقار"}/>
-            </div>
-            <PostDetails readOnly={readOnly} options={PropertyTags}/>
-            <div className="flex flex-row gap-4 mx-6 flex-wrap">
-                <div className="flex-5">
-                    <PropertyDetails readOnly={readOnly}/>
+        <FormProvider {...methods}>
+            <div className="flex flex-col gap-4">
+                <div className="-mb-6">
+                    <Header title={"عرض عقار"}/>
                 </div>
-                <div className="flex-2">
-                    <PropertyImages readOnly={readOnly}/>
+                <PostDetails readOnly={readOnly} options={PropertyTags}/>
+                <div className="flex flex-row gap-4 mx-6 flex-wrap">
+                    <div className="flex-5">
+                        <PropertyDetails readOnly={readOnly} onClick={methods.handleSubmit(onSubmit)}/>
+                    </div>
+                    <div className="flex-2">
+                        <PropertyImages readOnly={readOnly}/>
+                    </div>
                 </div>
             </div>
-        </div>
+        </FormProvider>
     );
 };
 export default PropertyPage;

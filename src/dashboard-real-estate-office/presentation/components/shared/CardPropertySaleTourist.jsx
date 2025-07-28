@@ -7,12 +7,23 @@ import spaceIcon from "../../../assets/cards/space.svg"
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 
 const CardPropertySaleTourist = ({
-                                     property: {id, status, title, location, area, sell_details = {}, postImage}, type
+                                     property: {
+                                         id,
+                                         status,
+                                         postStatus,
+                                         postTitle,
+                                         location,
+                                         area,
+                                         sell_details = {},
+                                         postImage
+                                     },
+                                     type
                                  }) => {
     const image = {
         'property_tourist': property_tourist,
         'property_sale': property_sale,
     }
+    const finalStatus = postStatus !== "مقبول" ? postStatus : status;
 
     return (
         <Link to={`/real-estate-office/${type === 'sale' ? 'my-properties' : 'tourism'}/${id}`}>
@@ -29,8 +40,8 @@ const CardPropertySaleTourist = ({
                 <span
                     className="absolute w-[111px] h-[22px] top-[159px] right-[80px] rounded-[5px] z-1"
                     style={{
-                        backgroundColor: (status === 'متوفر' ? BACKGROUND_COLORS.card :
-                            (status !== 'قيد الإنتظار' ? BACKGROUND_COLORS.unavailable : BACKGROUND_COLORS.pending)),
+                        backgroundColor: (finalStatus === 'متوفر' ? BACKGROUND_COLORS.card :
+                            (finalStatus !== 'قيد الانتظار' ? BACKGROUND_COLORS.unavailable : BACKGROUND_COLORS.pending)),
                         borderColor: 'white',
                         borderWidth: (type !== 'sale' ? '1px' : '0px'),
                         fontFamily: 'Cairo',
@@ -42,7 +53,7 @@ const CardPropertySaleTourist = ({
                         color: TEXT_COLORS.white,
                     }}
                 >
-                    {status}
+                    {finalStatus}
             </span>
                 {type === 'sale' && (
                     <span
@@ -72,7 +83,7 @@ const CardPropertySaleTourist = ({
                         textAlign: 'right'
                     }}
                 >
-                {title}
+                {postTitle}
             </span>
                 <div className="absolute flex flex-row top-[250px] mr-5 gap-0.5">
                     <img

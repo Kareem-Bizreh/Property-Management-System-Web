@@ -18,3 +18,11 @@ export const Region = {
     baseURL: 'region/',
     getMeterPrice: (regionId) => `${regionId}/expected-price`,
 }
+
+export const PropertyImage = {
+    baseURL: 'property-image/',
+    upload: (propertyId) => `${propertyId}/images`,              // POST
+    getAll: (propertyId) => `${propertyId}/images`,
+    update: (propertyId, imageId) => `${propertyId}/images/${imageId}`,// PUT
+    delete: (propertyId, imageId) => `${propertyId}/images/${imageId}`,// DELETE
+};

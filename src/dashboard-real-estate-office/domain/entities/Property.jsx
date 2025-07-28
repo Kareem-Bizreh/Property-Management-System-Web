@@ -30,8 +30,7 @@ export class Property {
         if (this.listing_type === 'أجار') {
             this.rate = data.rate;
             this.rent_details = data.rent_details;
-        }
-        else {
+        } else {
             this.sell_details = data.sell_details;
         }
     }
@@ -64,11 +63,11 @@ export class Property {
             },
             has_furniture: PropertyFurnishingTypes[0],
             location: 'دمشق, المزة',
-            region: {
+            city: {
                 id: 1,
                 name: 'دمشق'
             },
-            city: {
+            region: {
                 id: 1,
                 name: 'المزة'
             },
@@ -82,5 +81,49 @@ export class Property {
                 selling_price: 0
             },
         });
+    }
+
+    static toFormData(property) {
+        const formData = new FormData();
+
+        formData.append('postDescription', property.postDescription ?? '');
+        formData.append('postTitle', property.postTitle ?? '');
+
+        if (property.postImage instanceof File) {
+            formData.append('postImage', property.postImage);
+        }
+
+        formData.append('tag', property.tag ?? '');
+        formData.append('regionId', property.region?.id ?? '');
+        formData.append('floor_number', property.floor_number ?? '');
+        formData.append('latitude', property.coordinates?.latitude ?? '');
+        formData.append('longitude', property.coordinates?.longitude ?? '');
+        formData.append('area', property.area ?? '');
+        formData.append('ownership_type', property.ownership_type ?? '');
+        formData.append('direction', property.direction ?? '');
+        formData.append('has_furniture', property.has_furniture);
+        formData.append('status', property.status ?? 'متوفر');
+
+        const room = property.room_counts ?? {};
+        formData.append('room_details[room_count]', room.total ?? '');
+        formData.append('room_details[bedroom_count]', room.bedroom ?? '');
+        formData.append('room_details[living_room_count]', room.living_room ?? '');
+        formData.append('room_details[kitchen_count]', room.kitchen ?? '');
+        formData.append('room_details[bathroom_count]', room.bathroom ?? '');
+
+        formData.append('listing_type', property.listing_type ?? '');
+
+
+        if (property.listing_type === 'أجار') {
+            // formData.append('rent_details', property.rent_details ?? {});
+            formData.append('rent_details[rentalPrice]', property.rent_details?.rentalPrice ?? 0);
+            formData.append('rent_details[rental_period]', property.rent_details?.rental_period ?? 0);
+        } else {
+            // formData.append('sell_details', property.sell_details ?? {});
+            formData.append('sell_details[installment_allowed]', property.sell_details?.installment_allowed ?? false);
+            formData.append('sell_details[installment_duration]', property.sell_details?.installment_duration ?? 1);
+            formData.append('sell_details[selling_price]', property.sell_details?.selling_price ?? 0);
+        }
+        return formData;
     }
 }

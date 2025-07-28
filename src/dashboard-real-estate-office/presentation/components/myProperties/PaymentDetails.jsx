@@ -3,7 +3,7 @@ import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
 import {useEffect, useState} from "react";
 import {motion, AnimatePresence} from "framer-motion";
-import {useForm} from "react-hook-form";
+import {useFormContext} from "react-hook-form";
 import {LISTING_TYPE_OPTIONS} from "../../../shared/constants/listingTypeOptions.jsx";
 import useCommissionStore from "../../../application/state/office/useCommissionStore.jsx";
 import useMeterPriceStore from "../../../application/state/residentialOffice/useMeterPriceStore.jsx";
@@ -11,9 +11,8 @@ import {formatPrice} from "../../../shared/utils/formatPrice.js";
 import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
 
 const PaymentDetails = ({readOnly = false}) => {
-    const {property, setProperty} = usePropertyStore();
+    const {property} = usePropertyStore();
     const listingType = property.listing_type;
-
     const details = listingType === "بيع"
         ? property.sell_details || {}
         : property.rent_details || {};
@@ -25,7 +24,6 @@ const PaymentDetails = ({readOnly = false}) => {
                 listing_type={listingType}
                 details={details}
                 readOnly={readOnly}
-                onChange={(listing_type) => setProperty({...property, listing_type})}
             />
         </div>
     );
@@ -33,7 +31,7 @@ const PaymentDetails = ({readOnly = false}) => {
 
 export default PaymentDetails;
 
-const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false, onChange}) => {
+const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => {
     const {property, setProperty} = usePropertyStore();
     const {commission} = useCommissionStore();
     const {meterPrice} = useMeterPriceStore();
@@ -46,49 +44,71 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false, onCh
             : details.rental_period || 'شهري'
     );
 
-    const {register, watch} = useForm({
-        defaultValues: {
-            installment_duration: isSell && details.installment_allowed ? details.installment_duration : 0,
-            price: isSell ? details.selling_price : details.price,
-        }
-    });
-
-    const watchInstallmentDuration = watch("installment_duration");
-    const watchPrice = Number(watch("price") || 0);
+    const {register, setValue, getValues, watch} = useFormContext();
 
     useEffect(() => {
-        if (isSell) {
-            // Remove rent_details when switching to sell
-            const {rent_details, ...rest} = property;
+        setValue("price", isSell ? details.selling_price : (details.rentalPrice || details.price));
+        setValue("installment_duration", isSell ? details.installment_duration : 1);
+    }, [])
 
-            setProperty({
-                ...rest,
+    const price = Number(watch("price") ?? 0);
+    const installment_duration = Number(watch("installment_duration") ?? 1);
+
+    useEffect(() => {
+        setProperty({
+            ...property,
+            ...(isSell ? {
                 sell_details: {
                     ...property.sell_details,
-                    installment_allowed: option === 'نعم',
-                    installment_duration: option === 'نعم' ? Number(watchInstallmentDuration) : 0,
-                    selling_price: Number(watchPrice)
-                }
-            });
-        } else {
-            // Remove sell_details when switching to rent
-            const {sell_details, ...rest} = property;
-
-            setProperty({
-                ...rest,
+                    selling_price: price,
+                    installment_allowed: details.installment_allowed,
+                    installment_duration: installment_duration,
+                },
+            } : {
                 rent_details: {
                     ...property.rent_details,
-                    rental_period: option,
-                    price: Number(watchPrice)
-                }
-            });
-        }
+                    rentalPrice: price,
+                },
+            }),
+        });
+    }, [price, installment_duration, details.installment_allowed]);
 
-    }, [option, watchInstallmentDuration, watchPrice]);
+
+    const handleListingTypeChange = (newType) => {
+        const currentFormPrice = Number(getValues("price") || 0);
+
+        if (newType === 'بيع') {
+            setProperty({
+                ...property,
+                listing_type: newType,
+                sell_details: {
+                    selling_price: currentFormPrice,
+                    installment_allowed: false,
+                    installment_duration: 1
+                },
+                rent_details: {}
+            });
+            setOption('لا');
+        } else {
+            setProperty({
+                ...property,
+                listing_type: newType,
+                rent_details: {
+                    rentalPrice: currentFormPrice,
+                    rental_period: 'شهري'
+                },
+                sell_details: {}
+            });
+
+            setOption('شهري');
+        }
+        setValue("price", currentFormPrice);
+        setValue("installment_duration", 1);
+    };
 
     return (
         <div className="flex flex-col gap-4 justify-center">
-            {/* Type Selector */}
+            {/* نوع */}
             <div className="flex flex-wrap gap-4 items-center w-full">
                 <span style={styles} className="min-w-[120px]">نوع</span>
                 <SelectInput
@@ -97,10 +117,7 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false, onCh
                     height={'50px'}
                     title={listing_type}
                     maxWidth={'210px'}
-                    onChange={(value) => {
-                        onChange(value);
-                        setOption(value === 'بيع' ? 'لا' : 'شهري');
-                    }}
+                    onChange={handleListingTypeChange}
                     style={{
                         borderWidth: '1px',
                         fontWeight: 600,
@@ -110,7 +127,7 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false, onCh
                 />
             </div>
 
-            {/* التقسيط or نوع الإيجار */}
+            {/* التقسيط او نوع الإيجار */}
             <motion.div
                 key={listing_type}
                 initial={{opacity: 0, y: 10}}
@@ -128,7 +145,26 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false, onCh
                     height={'50px'}
                     maxWidth={'210px'}
                     title={option}
-                    onChange={setOption}
+                    onChange={(value) => {
+                        setOption(value);
+                        if (isSell) {
+                            setProperty({
+                                ...property,
+                                sell_details: {
+                                    ...property.sell_details,
+                                    installment_allowed: value === 'نعم'
+                                }
+                            });
+                        } else {
+                            setProperty({
+                                ...property,
+                                rent_details: {
+                                    ...property.rent_details,
+                                    rental_period: value
+                                }
+                            });
+                        }
+                    }}
                     style={{
                         borderWidth: '1px',
                         fontWeight: 600,
@@ -204,7 +240,7 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false, onCh
             <div className="flex flex-wrap gap-4 h-[40px] items-center w-full">
                 <span style={styles} className="min-w-[120px]">السعر الكامل</span>
                 <span style={styles} className="min-w-[100px]">
-                    ${formatPrice(watchPrice + (watchPrice * commission / 100))}
+                    ${formatPrice(price + (price * commission / 100))}
                 </span>
             </div>
         </div>

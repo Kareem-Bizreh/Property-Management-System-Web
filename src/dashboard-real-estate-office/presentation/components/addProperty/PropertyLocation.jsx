@@ -3,7 +3,7 @@ import {TEXT_COLORS} from "../../../../shared/colors.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
 import TextInput from "../shared/TextInput.jsx";
 import map from "../../../assets/shared/map-marker.svg";
-import {useForm} from "react-hook-form";
+import {useFormContext} from "react-hook-form";
 import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
 import useRegionsStore from "../../../application/state/Property/useRegionsStore.jsx";
 import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
@@ -12,7 +12,14 @@ import {useEffect} from "react";
 const PropertyLocation = ({readOnly}) => {
     const {property, setProperty} = usePropertyStore();
     const {regions, setRegions} = useRegionsStore();
-    const {register, watch} = useForm({defaultValues: {floor_number: property.floor_number}});
+    const {register, watch, setValue, getValues} = useFormContext();
+
+    useEffect(() => {
+        const currentValue = getValues("floor_number");
+        if (currentValue !== property.floor_number) {
+            setValue("floor_number", property.floor_number);
+        }
+    }, [property.floor_number, setValue, getValues]);
 
     const handleCityChange = (cityName) => {
         const selectedGovernorate = SyrianGovernorates.find((gov) => gov.name === cityName);
@@ -36,7 +43,7 @@ const PropertyLocation = ({readOnly}) => {
 
     useEffect(() => {
         handleCityChange(property.city?.name);
-    },[])
+    }, [])
 
     useEffect(() => {
         if (floor_number !== property.floor_number) {
@@ -83,9 +90,10 @@ const PropertyLocation = ({readOnly}) => {
                 <div className="flex flex-row justify-between flex-wrap w-full gap-6">
                     <div className="flex-1">
                         <TextInput
+                            name={"floor_number"}
                             title={"الطابق"}
                             type={"number"}
-                            register={register("floor_number")}
+                            register={register}
                             readOnly={readOnly}
                         />
                     </div>

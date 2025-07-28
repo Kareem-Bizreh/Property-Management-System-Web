@@ -4,5 +4,5 @@ export const STATUS_OPTIONS = [
 ];
 
 export const PropertyPostStatus = [
-    'قيد الإنتظار', 'مرفوض', 'مقبول'
+    'قيد الانتظار', 'مرفوض', 'مقبول'
 ]

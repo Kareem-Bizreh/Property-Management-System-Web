@@ -12,7 +12,7 @@ export const getAll = async () => {
 
 export const add = async (data) => {
     const response = await axiosInstance.post(ResidentialOffice.add, data, {
-        baseURL: import.meta.env.VITE_API_BASE_URL + baseURL
+        baseURL: import.meta.env.VITE_API_BASE_URL + baseURL,
     });
     return response.data;
 }
@@ -60,7 +60,7 @@ export const getExpectedPrice = async (propertyId) => {
 
 export const editResidential = async (residentialId, data) => {
     const response = await axiosInstance.post(ResidentialOffice.editResidential(residentialId), data, {
-        baseURL: import.meta.env.VITE_API_BASE_URL + baseURL
+        baseURL: import.meta.env.VITE_API_BASE_URL + baseURL,
     });
     return response.data;
 }

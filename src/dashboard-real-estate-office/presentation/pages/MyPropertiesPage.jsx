@@ -19,7 +19,7 @@ const MyPropertiesPage = () => {
     const {region} = useRegionStore();
     const {listingType} = useListingTypeStore();
     const {status} = useStatusStore();
-    const {register, watch} = useForm();
+    const {register} = useForm();
 
 
     useEffect(() => {

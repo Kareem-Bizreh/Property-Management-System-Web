@@ -11,13 +11,13 @@ import {useNavigate} from "react-router";
 import {STATUS_OPTIONS} from "../../../shared/constants/statusOptions.jsx";
 import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
 
-const PropertyDetails = ({readOnly = false}) => {
+const PropertyDetails = ({readOnly = false, onClick}) => {
     const navigate = useNavigate();
     const {property, setProperty} = usePropertyStore();
     const status = property?.postStatus;
 
     const buttons = [
-        ...(status !== "مرفوض" && status !== "قيد الإنتظار"
+        ...(status !== "مرفوض" && status !== "قيد الانتظار"
             ? [
                 {
                     title: "إلغاء",
@@ -31,7 +31,7 @@ const PropertyDetails = ({readOnly = false}) => {
             title:
                 status === "مرفوض"
                     ? "إعادة طلب"
-                    : status === "قيد الإنتظار"
+                    : status === "قيد الانتظار"
                         ? "عودة"
                         : status
                             ? "تعديل"
@@ -39,7 +39,8 @@ const PropertyDetails = ({readOnly = false}) => {
             color: BACKGROUND_COLORS.app,
             backgroundColor: BACKGROUND_COLORS.primary,
             onClick: () => {
-                if (status === "قيد الإنتظار") navigate(-1);
+                if (status === "قيد الانتظار") navigate(-1);
+                else onClick()
             },
         },
     ];
@@ -73,7 +74,7 @@ const PropertyDetails = ({readOnly = false}) => {
                             >
                                 الحالة
                             </span>
-                            {status === "مرفوض" || status === "قيد الإنتظار" ? (
+                            {status === "مرفوض" || status === "قيد الانتظار" ? (
                                 <span
                                     className="h-[50px] max-w-[200px] w-full rounded-[16px] py-3"
                                     style={{
@@ -89,8 +90,8 @@ const PropertyDetails = ({readOnly = false}) => {
                             ) : (
                                 <SelectInput
                                     readOnly={readOnly}
-                                    title={status}
-                                    options={STATUS_OPTIONS}
+                                    title={property.status}
+                                    options={[STATUS_OPTIONS[3], STATUS_OPTIONS[4], STATUS_OPTIONS[5]]}
                                     onChange={(status) => setProperty({...property, status})}
                                     height={"50px"}
                                     maxWidth={"200px"}

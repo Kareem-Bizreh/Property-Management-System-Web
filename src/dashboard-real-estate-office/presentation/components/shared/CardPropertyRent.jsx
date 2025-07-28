@@ -5,7 +5,8 @@ import locationIcon from "../../../assets/cards/location.svg";
 import property_rent from "../../../assets/cards/property_rent.png";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 
-const CardPropertyRent = ({property: {id, title, rate, location, rent_details, status, postImage}}) => {
+const CardPropertyRent = ({property: {id, postTitle, rate, location, rent_details, postStatus, postImage, status}}) => {
+    const finalStatus = postStatus !== "مقبول" ? postStatus : status;
 
     return (
         <Link to={`/real-estate-office/my-properties/${id}`}>
@@ -22,8 +23,8 @@ const CardPropertyRent = ({property: {id, title, rate, location, rent_details, s
                 <span
                     className="absolute w-[111px] h-[22px] top-[159px] right-[80px] rounded-[5px] z-1"
                     style={{
-                        backgroundColor: (status === 'متوفر' ? BACKGROUND_COLORS.card :
-                            (status !== 'قيد الإنتظار' ? BACKGROUND_COLORS.unavailable : BACKGROUND_COLORS.pending)),
+                        backgroundColor: (finalStatus === 'متوفر' ? BACKGROUND_COLORS.card :
+                            (finalStatus !== "قيد الانتظار" ? BACKGROUND_COLORS.unavailable : BACKGROUND_COLORS.pending)),
                         fontFamily: 'Cairo',
                         fontWeight: '700',
                         fontSize: '14px',
@@ -33,7 +34,7 @@ const CardPropertyRent = ({property: {id, title, rate, location, rent_details, s
                         color: TEXT_COLORS.white,
                     }}
                 >
-                    {status}
+                    {finalStatus}
             </span>
                 <span
                     className="absolute w-[54px] h-[22px] top-[159px] right-[22px] rounded-[5px] z-1"
@@ -61,7 +62,7 @@ const CardPropertyRent = ({property: {id, title, rate, location, rent_details, s
                         textAlign: 'right'
                     }}
                 >
-                {title}
+                {postTitle}
             </span>
                 <div className="absolute flex flex-row top-[250px] mr-5 gap-0.5">
                     <img
@@ -100,7 +101,8 @@ const CardPropertyRent = ({property: {id, title, rate, location, rent_details, s
                     {location}
                 </span>
                 </div>
-                <div className="absolute flex flex-row w-full h-[22px] top-[325px] justify-center items-center whitespace-nowrap">
+                <div
+                    className="absolute flex flex-row w-full h-[22px] top-[325px] justify-center items-center whitespace-nowrap">
                     <span
                         style={{
                             color: TEXT_COLORS.primary,
@@ -113,15 +115,15 @@ const CardPropertyRent = ({property: {id, title, rate, location, rent_details, s
                     >
                         {formatPrice(rent_details.price)} $
                     </span>
-                        <span className="mt-1 mr-2"
-                              style={{
-                                  color: TEXT_COLORS.primary,
-                                  fontFamily: 'Cairo',
-                                  fontWeight: '500',
-                                  fontSize: '14px',
-                                  letterSpacing: '3%',
-                              }}
-                        >
+                    <span className="mt-1 mr-2"
+                          style={{
+                              color: TEXT_COLORS.primary,
+                              fontFamily: 'Cairo',
+                              fontWeight: '500',
+                              fontSize: '14px',
+                              letterSpacing: '3%',
+                          }}
+                    >
                         {rent_details.rental_period}
                     </span>
                 </div>

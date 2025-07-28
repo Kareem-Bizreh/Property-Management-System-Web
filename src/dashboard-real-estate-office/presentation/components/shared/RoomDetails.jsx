@@ -4,33 +4,36 @@ import livingRoom from "../../../assets/properties/livingRoom.svg";
 import shower from "../../../assets/properties/shower.svg";
 import kitchenIcon from "../../../assets/properties/kitchen.svg";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import {useForm} from "react-hook-form";
+import {useFormContext} from "react-hook-form";
 import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
 import {useEffect} from "react";
 
 const RoomDetails = ({readOnly = false}) => {
     const {property, setProperty} = usePropertyStore();
 
-    if (!property.room_counts) return null;
-
-    const {bedroom, living_room, kitchen, bathroom} = property.room_counts;
     const items = [
         {title: "نوم", icon: bed, type: "number", name: "bedroom"},
         {title: "معيشة", icon: livingRoom, type: "number", name: "living_room"},
         {title: "حمام", icon: shower, type: "number", name: "bathroom"},
         {title: "مطبخ", icon: kitchenIcon, type: "number", name: "kitchen"},
     ];
-    const {register, watch} = useForm({
-        defaultValues: {
-            bedroom,
-            living_room,
-            bathroom,
-            kitchen,
-        },
-    });
+    const {register, setValue, getValues, watch} = useFormContext();
+
+    useEffect(() => {
+        const current = getValues();
+        const safeSet = (key, value) => {
+            if (current[key] !== value) {
+                setValue(key, value);
+            }
+        };
+
+        safeSet("bedroom", property.room_counts?.bedroom ?? 0);
+        safeSet("living_room", property.room_counts?.living_room ?? 0);
+        safeSet("kitchen", property.room_counts?.kitchen ?? 0);
+        safeSet("bathroom", property.room_counts?.bathroom ?? 0);
+    }, []);
 
     const values = watch();
-
     useEffect(() => {
         setProperty({
             ...property,

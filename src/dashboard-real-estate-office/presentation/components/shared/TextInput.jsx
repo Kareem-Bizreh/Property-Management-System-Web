@@ -1,22 +1,23 @@
-import {
-    BACKGROUND_COLORS,
-    TEXT_COLORS,
-} from "../../../../shared/colors.jsx";
+import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import TextareaAutosize from "react-textarea-autosize";
 
 const TextInput = ({
+                       name,
                        title,
                        type = "text",
                        register,
                        readOnly = false,
                        inputClassName = "",
                        multiline = false,
-                       minRows = 1,
-                       ...props
+                       required = true,
+                       validation = {},
+                       errors = {}
                    }) => {
+    const hasError = !!errors[name];
+
     const sharedStyles = {
         backgroundColor: BACKGROUND_COLORS.app,
-        borderColor: TEXT_COLORS.primary,
+        borderColor: hasError ? "red" : TEXT_COLORS.primary,
         fontFamily: "Cairo",
         fontWeight: "400",
         fontSize: "24px",
@@ -28,37 +29,45 @@ const TextInput = ({
 
     return (
         <div className="flex flex-col min-h-[97px] py-3 gap-4">
-      <span style={{
-          color: TEXT_COLORS.secondary,
-          fontFamily: "Cairo",
-          fontWeight: 700,
-          fontSize: "16px",
-          lineHeight: "100%",
-          letterSpacing: "3%",
-          textAlign: "right",
-      }}>
-        {title}
-      </span>
+            <span style={{
+                color: TEXT_COLORS.secondary,
+                fontFamily: "Cairo",
+                fontWeight: 700,
+                fontSize: "16px",
+                lineHeight: "100%",
+                letterSpacing: "3%",
+                textAlign: "right",
+            }}>
+                {title}
+            </span>
 
             {multiline ? (
                 <TextareaAutosize
-                    {...register}
+                    {...register(name, {
+                        required: required ? `${title} مطلوب` : false,
+                        ...validation,
+                    })}
                     readOnly={readOnly}
-                    minRows={minRows}
-                    className={`rounded-[15px] border-[1px] min-h-[60px] pl-4 pr-4 pt-2 w-full min-w-[80px] ${inputClassName}`}
+                    minRows={1}
+                    className={`rounded-[15px] border-[1px] min-h-[60px] pl-4 pr-4 pt-2 w-full min-w-[80px] ${hasError ? 'border-red-500' : ''} ${inputClassName}`}
                     style={sharedStyles}
-                    {...props}
                 />
             ) : (
                 <input
-                    {...register}
+                    {...register(name, {
+                        required: required ? `${title} مطلوب` : false,
+                        ...validation,
+                    })}
                     readOnly={readOnly}
                     type={type}
                     min={0}
-                    className={`rounded-[15px] border-[1px] min-h-[60px] pl-4 pr-4 w-full min-w-[80px] ${inputClassName}`}
+                    className={`rounded-[15px] border-[1px] min-h-[60px] pl-4 pr-4 w-full min-w-[80px] ${hasError ? 'border-red-500' : ''} ${inputClassName}`}
                     style={sharedStyles}
-                    {...props}
                 />
+            )}
+
+            {hasError && (
+                <span className="text-red-500 text-sm pr-2">{errors[name]?.message}</span>
             )}
         </div>
     );

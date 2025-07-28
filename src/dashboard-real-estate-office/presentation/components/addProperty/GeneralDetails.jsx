@@ -6,7 +6,7 @@ import furnishings from "../../../assets/properties/furnishings.svg";
 import rooms from "../../../assets/properties/rooms.svg";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
-import {useForm} from "react-hook-form";
+import {useFormContext} from "react-hook-form";
 import {PropertyOwnershipTypes} from "../../../shared/constants/propertyOwnershipType.jsx";
 import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
 import {useEffect} from "react";
@@ -15,31 +15,38 @@ import {PropertyFurnishingTypes} from "../../../shared/constants/propertyFurnish
 const GeneralDetails = ({readOnly}) => {
     const {property, setProperty} = usePropertyStore();
 
-    const {register, watch} = useForm({
-        defaultValues: {
-            area: property.area,
-            direction: property.direction,
-            roomCounts: {total: property.room_counts?.total || 0}
+    const {register, watch, setValue, getValues} = useFormContext();
+    useEffect(() => {
+        const currentValues = getValues();
+
+        if (currentValues.area !== property.area) {
+            setValue("area", property.area);
         }
-    });
 
-    console.log(property.has_furniture);
+        if (currentValues.direction !== property.direction) {
+            setValue("direction", property.direction);
+        }
 
-    const area = watch("area");
-    const direction = watch("direction");
-    const roomCountsTotal = watch("roomCounts.total");
+        if ((currentValues.roomCounts?.total ?? 0) !== (property.room_counts?.total ?? 0)) {
+            setValue("roomCounts", {
+                ...currentValues.roomCounts,
+                total: property.room_counts?.total ?? 0
+            });
+        }
+    }, []);
 
     useEffect(() => {
+        const currentValues = watch();
         setProperty({
             ...property,
-            area,
-            direction,
+            area: currentValues.area,
+            direction: currentValues.direction,
             room_counts: {
                 ...property.room_counts,
-                total: Number(roomCountsTotal)
+                total: Number(currentValues.roomCounts?.total ?? 0),
             }
         });
-    }, [area, direction, roomCountsTotal]);
+    }, [watch("area"), watch("direction"), watch("roomCounts.total")]);
 
     const items = [
         {
@@ -101,6 +108,7 @@ const GeneralDetails = ({readOnly}) => {
                                         readOnly={readOnly}
                                         {...register(item.name)}
                                         type={item.type}
+                                        min={0}
                                         className="rounded-[15px] border-[1px] min-h-[50px] pl-4 pr-4 w-full max-w-[210px]"
                                         style={{
                                             backgroundColor: BACKGROUND_COLORS.app,

@@ -12,13 +12,18 @@ import {getOfficeCommission} from "../../application/useCases/office/getCommissi
 import useMeterPriceStore from "../../application/state/residentialOffice/useMeterPriceStore.jsx";
 import {Property} from "../../domain/entities/Property.jsx";
 import {getMeterPrice} from "../../application/useCases/region/getExpectedPriceUseCase.jsx";
+import {useForm, FormProvider} from "react-hook-form";
+import {add} from "../../application/useCases/residentialOffice/addResidentialUseCase.jsx";
+import {upload} from "../../application/useCases/propertyImage/uploadUseCase.jsx";
+import {useNavigate} from "react-router";
 
 
 const AddPropertyPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
-    const {setProperty} = usePropertyStore();
+    const {property, setProperty, newImages, resetImageTracking} = usePropertyStore();
     const {setCommission} = useCommissionStore();
     const {setMeterPrice} = useMeterPriceStore();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const loadAllData = async () => {
@@ -60,23 +65,62 @@ const AddPropertyPage = () => {
         loadAllData();
     }, []);
 
+    const onSubmit = async () => {
+        setIsLoading(true);
+
+        try {
+            // 1. add the property
+            const {success, response} = await add(property);
+            setProperty(response.data);
+
+            if (!success) {
+                alert(response);
+                return;
+            }
+
+            // 2. Upload images (if any)
+            if (newImages.length > 0) {
+                const formData = new FormData();
+                newImages.forEach((file) => formData.append("images", file));
+
+                const uploadResponse = await upload(property.id, formData);
+                if (!uploadResponse.success) {
+                    alert("فشل في رفع الصور");
+                }
+            }
+
+            // 3. Reset temporary tracking
+            resetImageTracking();
+
+            alert("تم إضافة العقار بنجاح");
+        } catch (err) {
+            alert("حدث خطأ أثناء الإضافة");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const methods = useForm();
+
     if (isLoading) return <Spinner/>;
 
     return (
-        <div className="flex flex-col gap-4">
-            <div className="-mb-6">
-                <Header title={"إضافة عقار"}/>
-            </div>
-            <PostDetails options={PropertyTags}/>
-            <div className="flex flex-row gap-4 mx-6 flex-wrap">
-                <div className="flex-5">
-                    <PropertyDetails/>
+        <FormProvider {...methods}>
+            <div className="flex flex-col gap-4">
+                <div className="-mb-6">
+                    <Header title={"إضافة عقار"}/>
                 </div>
-                <div className="flex-2">
-                    <PropertyImages/>
+                <PostDetails options={PropertyTags}/>
+                <div className="flex flex-row gap-4 mx-6 flex-wrap">
+                    <div className="flex-5">
+                        <PropertyDetails onClick={methods.handleSubmit(onSubmit)}/>
+                    </div>
+                    <div className="flex-2">
+                        <PropertyImages/>
+                    </div>
                 </div>
             </div>
-        </div>
+        </FormProvider>
     );
 };
 export default AddPropertyPage;
