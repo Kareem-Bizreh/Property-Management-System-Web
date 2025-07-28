@@ -1,6 +1,7 @@
 import {PropertyTags} from "../../shared/constants/propertyPostTag.jsx";
 import {PropertyOwnershipTypes} from "../../shared/constants/propertyOwnershipType.jsx";
 import {PropertyFurnishingTypes} from "../../shared/constants/propertyFurnishingTypes.jsx";
+import {Direction} from "../../shared/constants/Direction.jsx";
 
 export class Property {
     constructor(data) {
@@ -28,7 +29,7 @@ export class Property {
         this.tag = data.tag;
         this.listing_type = data.listing_type;
         if (this.listing_type === 'أجار') {
-            this.rate = data.rate;
+            this.rate = data.rate.toFixed(3);
             this.rent_details = data.rent_details;
         } else {
             this.sell_details = data.sell_details;
@@ -40,12 +41,12 @@ export class Property {
             postTitle: '',
             postDescription: '',
             postImage: '',
-            postDate: new Date().toISOString().split('T')[0], // e.g. "2025-07-20"
+            postDate: '',
             postStatus: '',
             area: 0,
             property_type: '',
             ownership_type: PropertyOwnershipTypes[0],
-            direction: '',
+            direction: Direction[0],
             status: 'متوفر',
             coordinates: {
                 latitude: '0.0',
@@ -77,7 +78,7 @@ export class Property {
             listing_type: 'بيع',
             sell_details: {
                 installment_allowed: false,
-                installment_duration: 0,
+                installment_duration: 1,
                 selling_price: 0
             },
         });

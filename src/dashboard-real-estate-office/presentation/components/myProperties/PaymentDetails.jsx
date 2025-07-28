@@ -152,9 +152,10 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
                                 ...property,
                                 sell_details: {
                                     ...property.sell_details,
-                                    installment_allowed: value === 'نعم'
+                                    installment_allowed: value === 'نعم',
                                 }
                             });
+                            setValue("installment_duration", 1)
                         } else {
                             setProperty({
                                 ...property,
@@ -189,7 +190,13 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
                         <input
                             type='number'
                             readOnly={readOnly}
-                            {...register('installment_duration')}
+                            {...register('installment_duration', {
+                                required: "مدة التقسيط مطلوبة",
+                                min: {
+                                    value: 1,
+                                    message: "مدة التقسيط يجب أن تكون على الأقل 1"
+                                }
+                            })}
                             className='rounded-[15px] border-[1px] min-h-[50px] px-4 w-full max-w-[210px]'
                             style={{
                                 backgroundColor: BACKGROUND_COLORS.app,
@@ -214,7 +221,9 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
                           style={{color: TEXT_COLORS.primary}}>$</span>
                     <input
                         readOnly={readOnly}
-                        {...register('price')}
+                        {...register('price', {
+                            required: `السعر مطلوب`,
+                        })}
                         type="number"
                         className="rounded-[15px] border-[1px] min-h-[50px] pl-6 pr-4 w-full"
                         style={{

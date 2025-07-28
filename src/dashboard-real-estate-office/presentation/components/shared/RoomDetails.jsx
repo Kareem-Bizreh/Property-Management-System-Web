@@ -78,7 +78,9 @@ const RoomDetails = ({readOnly = false}) => {
                         <input
                             readOnly={readOnly}
                             type={item.type}
-                            {...register(item.name)}
+                            {...register(item.name, {
+                                required: `${item.name} مطلوب`,
+                            })}
                             className="rounded-[15px] border-[1px] min-h-[50px] pl-4 pr-4 max-w-[150px] w-full text-center"
                             style={{
                                 backgroundColor: BACKGROUND_COLORS.app,

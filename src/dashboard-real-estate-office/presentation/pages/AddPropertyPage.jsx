@@ -15,7 +15,6 @@ import {getMeterPrice} from "../../application/useCases/region/getExpectedPriceU
 import {useForm, FormProvider} from "react-hook-form";
 import {add} from "../../application/useCases/residentialOffice/addResidentialUseCase.jsx";
 import {upload} from "../../application/useCases/propertyImage/uploadUseCase.jsx";
-import {useNavigate} from "react-router";
 
 
 const AddPropertyPage = () => {
@@ -23,7 +22,6 @@ const AddPropertyPage = () => {
     const {property, setProperty, newImages, resetImageTracking} = usePropertyStore();
     const {setCommission} = useCommissionStore();
     const {setMeterPrice} = useMeterPriceStore();
-    const navigate = useNavigate();
 
     useEffect(() => {
         const loadAllData = async () => {
@@ -71,7 +69,6 @@ const AddPropertyPage = () => {
         try {
             // 1. add the property
             const {success, response} = await add(property);
-            setProperty(response.data);
 
             if (!success) {
                 alert(response);
@@ -83,7 +80,7 @@ const AddPropertyPage = () => {
                 const formData = new FormData();
                 newImages.forEach((file) => formData.append("images", file));
 
-                const uploadResponse = await upload(property.id, formData);
+                const uploadResponse = await upload(response.data.id, formData);
                 if (!uploadResponse.success) {
                     alert("فشل في رفع الصور");
                 }

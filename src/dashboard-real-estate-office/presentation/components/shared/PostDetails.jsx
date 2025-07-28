@@ -47,7 +47,7 @@ const PostDetails = ({readOnly = false, options}) => {
                 }}
             >
                 <span>تفاصيل المنشور</span>
-                {property.postDate && property.postDate.length > 0 && (
+                {property.postDate && (
                     <span
                         className="-mb-1.5 mt-1.5"
                         style={{fontSize: "16px", color: TEXT_COLORS.secondary}}

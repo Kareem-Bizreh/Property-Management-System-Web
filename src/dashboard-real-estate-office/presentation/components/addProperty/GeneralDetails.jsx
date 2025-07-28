@@ -11,6 +11,7 @@ import {PropertyOwnershipTypes} from "../../../shared/constants/propertyOwnershi
 import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
 import {useEffect} from "react";
 import {PropertyFurnishingTypes} from "../../../shared/constants/propertyFurnishingTypes.jsx";
+import {Direction} from "../../../shared/constants/Direction.jsx";
 
 const GeneralDetails = ({readOnly}) => {
     const {property, setProperty} = usePropertyStore();
@@ -21,10 +22,6 @@ const GeneralDetails = ({readOnly}) => {
 
         if (currentValues.area !== property.area) {
             setValue("area", property.area);
-        }
-
-        if (currentValues.direction !== property.direction) {
-            setValue("direction", property.direction);
         }
 
         if ((currentValues.roomCounts?.total ?? 0) !== (property.room_counts?.total ?? 0)) {
@@ -40,13 +37,12 @@ const GeneralDetails = ({readOnly}) => {
         setProperty({
             ...property,
             area: currentValues.area,
-            direction: currentValues.direction,
             room_counts: {
                 ...property.room_counts,
                 total: Number(currentValues.roomCounts?.total ?? 0),
             }
         });
-    }, [watch("area"), watch("direction"), watch("roomCounts.total")]);
+    }, [watch("area"), watch("roomCounts.total")]);
 
     const items = [
         {
@@ -69,8 +65,10 @@ const GeneralDetails = ({readOnly}) => {
             icon: side,
             name: "direction",
             title: "الجهة",
-            field: "text",
-            type: "text",
+            field: "select",
+            options: Direction,
+            onChange: (direction) => setProperty({...property, direction}),
+            value: property.direction,
         },
         {
             icon: furnishings,
@@ -106,7 +104,9 @@ const GeneralDetails = ({readOnly}) => {
                                 {item.field === "text" ? (
                                     <input
                                         readOnly={readOnly}
-                                        {...register(item.name)}
+                                        {...register(item.name, {
+                                            required: `${item.name} مطلوب`,
+                                        })}
                                         type={item.type}
                                         min={0}
                                         className="rounded-[15px] border-[1px] min-h-[50px] pl-4 pr-4 w-full max-w-[210px]"

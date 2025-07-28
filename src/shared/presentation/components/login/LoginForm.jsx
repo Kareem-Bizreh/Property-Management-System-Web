@@ -30,8 +30,8 @@ const LoginForm = () => {
             <LogoCard width='239px' height='240px' top='20px' fontSize='32px'/>
 
             <div className="absolute right-1/2 transform translate-x-1/2 grid grid-rows-2 gap-y-10 top-[320px]">
-                <TextField label={'اسم المستخدم'} value={register('username')}/>
-                <TextField type={'password'} label={'كلمة المرور'} value={register('password')}/>
+                <TextField label={'اسم المستخدم'} value={register('username',{required: 'اسم الستخدم مطلوب'})}/>
+                <TextField type={'password'} label={'كلمة المرور'} value={register('password', {required: 'كلمة السر مطلوبة'})}/>
             </div>
 
             <div className="absolute right-1/2 transform translate-x-1/2 top-[230px]">
