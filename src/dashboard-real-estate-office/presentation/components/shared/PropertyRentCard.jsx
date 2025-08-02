@@ -5,7 +5,7 @@ import locationIcon from "../../../assets/cards/location.svg";
 import property_rent from "../../../assets/cards/property_rent.png";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 
-const CardPropertyRent = ({property: {id, postTitle, rate, location, rent_details, postStatus, postImage, status}}) => {
+const PropertyRentCard = ({property: {id, postTitle, rate, location, rent_details, postStatus, postImage, status}}) => {
     const finalStatus = postStatus !== "مقبول" ? postStatus : status;
 
     return (
@@ -98,8 +98,8 @@ const CardPropertyRent = ({property: {id, postTitle, rate, location, rent_detail
                             letterSpacing: '0%',
                         }}
                     >
-                    {location}
-                </span>
+                        {location}
+                    </span>
                 </div>
                 <div
                     className="absolute flex flex-row w-full h-[22px] top-[325px] justify-center items-center whitespace-nowrap">
@@ -132,4 +132,4 @@ const CardPropertyRent = ({property: {id, postTitle, rate, location, rent_detail
 
     )
 }
-export default CardPropertyRent
+export default PropertyRentCard

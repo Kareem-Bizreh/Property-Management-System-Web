@@ -2,7 +2,7 @@ import {Link, useLocation} from "react-router";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../colors.jsx";
 import {motion, AnimatePresence} from "framer-motion";
 
-const Items = ({isSidebarOpen,items}) => {
+const Items = ({isSidebarOpen, items}) => {
     const location = useLocation();
     const width = isSidebarOpen ? '222px' : '42px';
     const topPosition = isSidebarOpen ? '186px' : '70px';
@@ -35,8 +35,8 @@ const Items = ({isSidebarOpen,items}) => {
                     >
                         <Link key={item.href} to={item.href}>
                             <motion.div
-                                animate={{ width }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                animate={{width}}
+                                transition={{duration: 0.3, ease: "easeInOut"}}
                                 className={`flex flex-row items-center h-[44px] mr-1 transition-colors duration-200 ease-in-out custom-hover`}
                                 style={{
                                     width,

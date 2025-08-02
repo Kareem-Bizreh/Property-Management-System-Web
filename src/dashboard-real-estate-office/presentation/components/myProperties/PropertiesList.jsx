@@ -1,9 +1,9 @@
 import AddCard from '../shared/AddCard.jsx'
-import CardPropertyRent from "../shared/CardPropertyRent.jsx";
-import CardPropertySaleTourist from "../shared/CardPropertySaleTourist.jsx";
+import PropertyRentCard from "../shared/PropertyRentCard.jsx";
+import PropertySaleTouristCard from "../shared/PropertySaleTouristCard.jsx";
 // import {saleAndRentProperties} from "../../../shared/constants/properties.jsx";
 import EmptyBox from '../../../assets/shared/EmptyBox.svg'
-import usePropertiesStore from "../../../application/state/usePropertiesStore.jsx";
+import usePropertiesStore from "../../../application/state/Property/usePropertiesStore.jsx";
 
 const PropertiesList = () => {
     const {properties} = usePropertiesStore();
@@ -15,9 +15,9 @@ const PropertiesList = () => {
             {(properties && properties.length > 0) ? properties.map((property) => (
                     <div key={property.id} className="flex-shrink-0">
                         {(property.listing_type === 'أجار') ? (
-                            <CardPropertyRent property={property}/>
+                            <PropertyRentCard property={property}/>
                         ) : (
-                            <CardPropertySaleTourist property={property} type={'sale'}/>
+                            <PropertySaleTouristCard property={property} type={'sale'}/>
                         )}
                     </div>
                 )) :

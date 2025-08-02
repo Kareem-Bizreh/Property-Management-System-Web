@@ -6,7 +6,7 @@ import map from "../../../assets/cards/map.svg"
 import spaceIcon from "../../../assets/cards/space.svg"
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 
-const CardPropertySaleTourist = ({
+const PropertySaleTouristCard = ({
                                      property: {
                                          id,
                                          status,
@@ -154,4 +154,4 @@ const CardPropertySaleTourist = ({
 
     )
 }
-export default CardPropertySaleTourist
+export default PropertySaleTouristCard

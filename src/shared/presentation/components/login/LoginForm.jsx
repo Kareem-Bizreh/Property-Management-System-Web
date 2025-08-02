@@ -5,7 +5,6 @@ import {useForm} from "react-hook-form"
 import {useLogin} from "../../../shared/hooks/useLogin.jsx";
 import useErrorStore from "../../../application/state/login/errorStore.jsx";
 import useLoadingStore from "../../../application/state/loadingStore.jsx";
-import {Spinner} from "../Spinner.jsx";
 
 const LoginForm = () => {
     const {register, handleSubmit} = useForm();

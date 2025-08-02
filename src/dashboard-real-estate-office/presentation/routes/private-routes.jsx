@@ -6,7 +6,7 @@ import MyTouristsPage from "../pages/MyTouristsPage.jsx";
 import AddTouristPage from "../pages/AddTouristPage.jsx";
 import TourismPage from "../pages/TourismPage.jsx";
 import ReservationsPage from "../pages/ReservationsPage.jsx";
-import BookingPage from "../pages/BookingPage.jsx";
+import ReservationPage from "../pages/ReservationPage.jsx";
 import RentalPage from "../pages/RentalPage.jsx";
 import RentalsPage from "../pages/RentalsPage.jsx";
 import UserRequestsPage from "../pages/UserRequestsPage.jsx";
@@ -59,12 +59,12 @@ export const PrivateRoutes = [{
             element: <TourismPage/>,
         },
         {
-            path: "booking",
+            path: "reservations",
             element: <ReservationsPage/>,
         },
         {
-            path: "booking/:id",
-            element: <BookingPage/>,
+            path: "reservations/:id",
+            element: <ReservationPage/>,
         },
         {
             path: "rentals",

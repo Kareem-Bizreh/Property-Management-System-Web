@@ -1,9 +1,9 @@
 import Header from "./Header.jsx";
-import CardPropertySaleTourist from "../shared/CardPropertySaleTourist.jsx";
-import CardPropertyRent from "../shared/CardPropertyRent.jsx";
+import PropertySaleTouristCard from "../shared/PropertySaleTouristCard.jsx";
+import PropertyRentCard from "../shared/PropertyRentCard.jsx";
 // import {saleAndRentProperties} from "../../../shared/constants/properties.jsx";
 import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
-import usePropertiesStore from "../../../application/state/usePropertiesStore.jsx";
+import usePropertiesStore from "../../../application/state/Property/usePropertiesStore.jsx";
 import {useEffect} from "react";
 import {getAll} from "../../../application/useCases/residentialOffice/getPropertiesUseCase.jsx";
 
@@ -34,9 +34,9 @@ const MostRatedProperties = () => {
                 {properties.map((property, index) => (
                     <div key={index} className="flex-shrink-0">
                         {(property.listingType === 'أجار') ? (
-                            <CardPropertyRent property={property}/>
+                            <PropertyRentCard property={property}/>
                         ) : (
-                            <CardPropertySaleTourist property={property} type={'sale'}/>
+                            <PropertySaleTouristCard property={property} type={'sale'}/>
                         )}
                     </div>
                 ))}

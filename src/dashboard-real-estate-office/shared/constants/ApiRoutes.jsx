@@ -26,3 +26,17 @@ export const PropertyImage = {
     update: (propertyId, imageId) => `${propertyId}/images/${imageId}`,// PUT
     delete: (propertyId, imageId) => `${propertyId}/images/${imageId}`,// DELETE
 };
+
+export const PropertyReservation = {
+    baseURL: 'property-reservation/',
+    getAll: '',
+    filters: 'filters',
+    getReservation: (propertyReservationId) => `${propertyReservationId}`,
+    getPropertyRentalInformation: (propertyId) => `properties/${propertyId}`,
+}
+
+export const UserPropertyInvoice = {
+    baseURL: 'user-property-invoices/',
+    uploadDocument: (invoiceId) => `${invoiceId}/upload-docement`,
+    add: 'upload-docement',
+}

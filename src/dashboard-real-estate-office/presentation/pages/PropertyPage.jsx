@@ -120,7 +120,7 @@ const PropertyPage = () => {
 
     const methods = useForm();
 
-    if (isLoading) return <Spinner/>;
+    if (isLoading || !property) return <Spinner/>;
 
     const readOnly = property.postStatus === "قيد الانتظار" || STATUS_OPTIONS.findIndex(opt => opt === property.status) < 3;
 

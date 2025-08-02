@@ -244,7 +244,7 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
             {/* Summary Info */}
             <div className="flex flex-wrap gap-4 h-[40px] items-center w-full">
                 <span style={styles} className="min-w-[120px]">رسوم المكتب</span>
-                <span style={styles} className="min-w-[100px]">%{commission}</span>
+                <span style={styles} className="min-w-[100px]">%{commission * 100}</span>
             </div>
             <div className="flex flex-wrap gap-4 h-[40px] items-center w-full">
                 <span style={styles} className="min-w-[120px]">السعر الكامل</span>

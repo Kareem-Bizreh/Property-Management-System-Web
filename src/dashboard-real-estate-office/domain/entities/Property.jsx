@@ -11,7 +11,7 @@ export class Property {
         this.postImage = data.postImage;
         this.postDate = data.postDate;
         this.postStatus = data.postStatus;
-        this.area = data.area.toFixed(3);
+        this.area = data.area.toFixed(2);
         this.property_type = data.property_type;
         this.ownership_type = data.ownership_type;
         this.direction = data.direction;
@@ -29,7 +29,7 @@ export class Property {
         this.tag = data.tag;
         this.listing_type = data.listing_type;
         if (this.listing_type === 'أجار') {
-            this.rate = data.rate.toFixed(3);
+            this.rate = data.rate.toFixed(1);
             this.rent_details = data.rent_details;
         } else {
             this.sell_details = data.sell_details;

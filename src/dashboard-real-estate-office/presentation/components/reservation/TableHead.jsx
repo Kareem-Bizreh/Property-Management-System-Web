@@ -9,7 +9,7 @@ const TableHead = () => {
                       key={index}
                       style={{
                           color: TEXT_COLORS.primary,
-                          minWidth: title.width,
+                          width: title.width,
                           fontFamily: 'Cairo',
                           fontWeight: 700,
                           fontSize: '18px',
@@ -18,8 +18,8 @@ const TableHead = () => {
                           textAlign: 'center'
                       }}
                 >
-                        {title.name}
-                    </span>
+                    {title.name}
+                </span>
             ))}
         </div>
     )

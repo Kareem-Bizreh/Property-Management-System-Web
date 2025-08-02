@@ -15,7 +15,7 @@ export const SIDEBAR_ITEMS = [
     { name: 'لوحة التحكم', icon: dashboard, href: 'dashboard' },
     { name: 'عقاراتي', icon: myProperties, href: 'my-properties' },
     { name: 'سياحي', icon: tourism, href: 'tourism' },
-    { name: 'حجز الأملاك', icon: booking, href: 'booking' },
+    { name: 'حجز الأملاك', icon: booking, href: 'reservations' },
     { name: 'الإيجارات', icon: rentals, href: 'rentals' },
     { name: 'طلبات المستخدمين', icon: users, href: 'user-requests' },
     { name: 'الإعلانات', icon: ads, href: 'ads' },

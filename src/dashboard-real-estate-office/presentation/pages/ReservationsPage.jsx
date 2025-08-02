@@ -1,17 +1,47 @@
+import {useEffect} from "react";
 import Header from "../components/shared/Header.jsx";
-import Filter from "../components/booking/Filter.jsx";
-import Reservations from "../components/booking/Reservations.jsx";
+import Filter from "../components/reservation/Filter.jsx";
+import Reservations from "../components/reservation/Reservations.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useCityStore from "../../application/state/reservation/useCityStore.jsx";
+import useRegionStore from "../../application/state/reservation/useRegionStore.jsx";
+import useStatusStore from "../../application/state/reservation/useStatusStore.jsx";
+import useReservationsStore from "../../application/state/reservation/useReservationsStore.jsx";
+import {getFilterReservation} from "../../application/useCases/reservations/getFilterReservationUseCase.jsx";
 
 const ReservationsPage = () => {
-    const {isLoading} = useLoadingStore()
+    const {isLoading, setIsLoading} = useLoadingStore();
+    const {city} = useCityStore();
+    const {region} = useRegionStore();
+    const {status} = useStatusStore();
+    const {setReservations} = useReservationsStore();
+
+    useEffect(() => {
+        setIsLoading(true);
+        const fetchData = async () => {
+            const {success, response} = await getFilterReservation(city, region, status);
+            if (success) {
+                setReservations(response.data);
+            } else {
+                setReservations([]);
+                alert(response);
+            }
+            setIsLoading(false);
+        }
+
+        fetchData();
+    }, [city, region, status]);
+
     return (
         <div className="flex flex-col">
-            <Header title={'حجز الأملاك'} />
-            <Filter />
-            <Reservations />
-            {(isLoading ? (<Spinner/>) : null)}
+            <Header title={'حجز الأملاك'}/>
+            <Filter/>
+            {isLoading ? (
+                <Spinner />
+            ) : (
+                <Reservations />
+            )}
         </div>
     )
 }

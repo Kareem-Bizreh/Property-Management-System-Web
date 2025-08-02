@@ -1,5 +1,5 @@
 import Header from "./Header.jsx";
-import CardPropertySaleTourist from "../shared/CardPropertySaleTourist.jsx";
+import PropertySaleTouristCard from "../shared/PropertySaleTouristCard.jsx";
 import {touristProperties} from "../../../shared/constants/properties.jsx";
 
 const MostRatedTourist = () => {
@@ -11,7 +11,7 @@ const MostRatedTourist = () => {
             <div className="flex overflow-x-auto p-2 gap-3.5">
                 {touristProperties.map((property, index) => (
                     <div key={index} className="flex-shrink-0">
-                        <CardPropertySaleTourist property={property}  type={'tourist'}/>
+                        <PropertySaleTouristCard property={property} type={'tourist'}/>
                     </div>
                 ))}
             </div>
