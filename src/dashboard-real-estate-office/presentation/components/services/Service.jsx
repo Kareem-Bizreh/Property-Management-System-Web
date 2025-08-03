@@ -3,7 +3,7 @@ import star from '../../../assets/shared/star.svg';
 import phone from '../../../assets/services/phone.svg';
 import locationIcon from '../../../assets/services/location.svg';
 
-const Service = ({service: {id, name, location, userPhone, career, logo, avgRate, openTime, closeTime}}) => {
+const Service = ({service: {id, name, location, userPhone, career, logo, avgRate, opening_time, closing_time}}) => {
     return (
         <div
             className="flex flex-row flex-wrap justify-around items-center rounded-[12px] min-h-[112px] gap-6 p-4"
@@ -30,6 +30,9 @@ const Service = ({service: {id, name, location, userPhone, career, logo, avgRate
                             src={logo}
                             alt="profile"
                             className="w-full h-full rounded-full object-cover"
+                            onError={(e) => {
+                                e.target.style.display = 'none';
+                            }}
                         />
                     )}
                 </div>
@@ -47,8 +50,8 @@ const Service = ({service: {id, name, location, userPhone, career, logo, avgRate
 
             {/*open and close time*/}
             <div className="flex flex-col justify-around h-[60px] w-[130px]">
-                <span>{openTime}</span>
-                <span>{closeTime}</span>
+                <span>{opening_time}</span>
+                <span>{closing_time}</span>
             </div>
 
             {/*rate*/}

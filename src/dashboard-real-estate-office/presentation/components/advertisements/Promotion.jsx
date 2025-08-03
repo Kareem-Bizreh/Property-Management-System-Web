@@ -21,7 +21,7 @@ const Promotion = ({price}) => {
                 <ButtonCard
                     onClick={(e) => e.stopPropagation()}
                     icon={officer}
-                    title={'إنشاء إعلان'}
+                    title={'ترويج'}
                     color={DASHBOARD_CARDS_COLORS.realEstate_places}
                     bgColor={DASHBOARD_CARDS_COLORS.bg_tourist_places}
                 />

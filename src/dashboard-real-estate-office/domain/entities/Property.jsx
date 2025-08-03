@@ -6,6 +6,7 @@ import {Direction} from "../../shared/constants/Direction.jsx";
 export class Property {
     constructor(data) {
         this.id = data.propertyId;
+        this.residentialId = data.residentialId;
         this.postTitle = data.postTitle;
         this.postDescription = data.postDescription;
         this.postImage = data.postImage;

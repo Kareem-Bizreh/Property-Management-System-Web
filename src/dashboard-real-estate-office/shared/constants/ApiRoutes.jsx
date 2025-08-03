@@ -58,3 +58,13 @@ export const UserPostSuggestion = {
     baseURL: 'user-post-suggestion/',
     suggest: ''
 }
+
+export const ServiceProvider = {
+    baseURL: 'service-provider/',
+    filters: 'filters',
+}
+
+export const Notifications = {
+    baseURL: 'notifications/',
+    getAll: '',
+}
