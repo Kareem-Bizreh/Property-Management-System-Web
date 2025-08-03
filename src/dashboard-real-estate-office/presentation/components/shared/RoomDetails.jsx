@@ -5,7 +5,7 @@ import shower from "../../../assets/properties/shower.svg";
 import kitchenIcon from "../../../assets/properties/kitchen.svg";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import {useFormContext} from "react-hook-form";
-import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
+import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 import {useEffect} from "react";
 
 const RoomDetails = ({readOnly = false}) => {

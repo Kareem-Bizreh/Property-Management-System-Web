@@ -6,7 +6,7 @@ import useLoadingStore from "../../../shared/application/state/loadingStore.jsx"
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import {PropertyTags} from "../../shared/constants/propertyPostTag.jsx";
 import {useEffect} from "react";
-import usePropertyStore from "../../application/state/Property/usePropertyStore.jsx";
+import usePropertyStore from "../../application/state/property/usePropertyStore.jsx";
 import useCommissionStore from "../../application/state/office/useCommissionStore.jsx";
 import {getOfficeCommission} from "../../application/useCases/office/getCommissionUseCase.jsx";
 import useMeterPriceStore from "../../application/state/residentialOffice/useMeterPriceStore.jsx";

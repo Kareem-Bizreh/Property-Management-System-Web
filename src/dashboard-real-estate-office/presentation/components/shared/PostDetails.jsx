@@ -3,7 +3,7 @@ import TextInput from "./TextInput.jsx";
 import UploadImage from "./UploadImage.jsx";
 import KeywordSelector from "./KeywordSelector.jsx";
 import {useFormContext} from "react-hook-form";
-import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
+import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 import {useEffect} from "react";
 import {formatDate} from "../../../shared/utils/formatDate.js";
 

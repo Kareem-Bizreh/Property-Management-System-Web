@@ -3,26 +3,29 @@ import Button from "@mui/material/Button";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import Header from "./Header.jsx";
 import Popup from "reactjs-popup";
-import usePropertiesStore from "../../../application/state/Property/usePropertiesStore.jsx";
+import usePropertiesStore from "../../../application/state/property/usePropertiesStore.jsx";
 import {getFilterProperties} from "../../../application/useCases/residentialOffice/getFilterPropertiesUseCase.jsx";
-import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
+import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 import PropertyCard from "./PropertyCard.jsx";
-import usePropertySelectionOpenStore from "../../../application/state/reservation/usePropertySelectionOpenStore.jsx";
+import usePropertySelectionOpenStore from "../../../application/state/shared/usePropertySelectionOpenStore.jsx";
 import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import {Spinner} from "../../../../shared/presentation/components/Spinner.jsx";
 
-const SelectProperty = ({onSelect}) => {
-    const {setIsLoading} = useLoadingStore();
+const SelectProperty = ({onSelect, listingType}) => {
+    const {setIsLoading, isLoading} = useLoadingStore();
     const {setProperties, properties} = usePropertiesStore();
     const {setProperty} = usePropertyStore();
     const {isOpen, setIsOpen} = usePropertySelectionOpenStore();
 
     useEffect(() => {
+        if (!isOpen) return;
         setIsLoading(true);
         const fetchData = async () => {
             const {success, response} = await getFilterProperties({
-                listingType: 'بيع',
+                listingType,
                 status: 'متوفر'
             });
+            console.log(listingType, response);
             if (success) {
                 setProperties(response.data);
             } else {
@@ -32,13 +35,15 @@ const SelectProperty = ({onSelect}) => {
             setIsLoading(false);
         };
         fetchData();
-    }, []);
+    }, [listingType, isOpen]);
 
     const handleSelect = (item, close) => {
         setProperty(item);
-        onSelect(item.id); // calls loadPropertyRentalInformation
+        onSelect?.(item.id);
         close();
     };
+
+    if (isLoading) return <Spinner/>;
 
     return (
         <Popup

@@ -10,7 +10,7 @@ import usePropertyReservationOpenStore
 import Button from "@mui/material/Button";
 import PropertyReservation from "./PropertyReservation.jsx";
 import useReservationDetailsStore from "../../../application/state/reservation/useReservationDetailsStore.jsx";
-import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
+import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 
 const Filter = () => {
     const {city, setCity} = useCityStore();

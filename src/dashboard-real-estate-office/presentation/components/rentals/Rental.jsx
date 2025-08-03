@@ -1,7 +1,7 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import {formatDate} from "../../../shared/utils/formatDate.js";
 
-const Rental = ({id, image, start_date, end_date, address, buyer, status}) => {
+const Rental = ({rental: {id, image, start_date, end_date, address, buyer, status}}) => {
     return (
         <div className="min-h-[158px] h-auto rounded-[25px] flex flex-row flex-wrap justify-between items-center gap-6"
              style={{
@@ -27,8 +27,7 @@ const Rental = ({id, image, start_date, end_date, address, buyer, status}) => {
             <span className="min-w-[110px] h-[20px]">{formatDate(end_date)}</span>
             <span className="min-w-[140px] h-[20px]"
                   style={{
-                      color: (status === 'محجوز' ? TEXT_COLORS.reserved :
-                          (status === 'تم البيع' ? TEXT_COLORS.sold : TEXT_COLORS.cancelled))
+                      color: status === 'مؤجر' ? TEXT_COLORS.sold : TEXT_COLORS.cancelled
                   }}
             >
                 {status}

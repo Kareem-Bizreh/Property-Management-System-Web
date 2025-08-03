@@ -1,7 +1,13 @@
 import {BACKGROUND_COLORS} from "../../../../shared/colors.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
+import useRegionStore from "../../../application/state/userPost/useRegionStore.jsx";
+import useTypeStore from "../../../application/state/userPost/useTypeStore.jsx";
+import {UserPostTypes} from "../../../shared/constants/UserPostTypes.jsx";
 
 const Filter = () => {
+    const {regions, region, setRegion} = useRegionStore();
+    const {type, setType} = useTypeStore();
+
     return (
         <div
             className="w-full py-4 px-6"
@@ -10,28 +16,20 @@ const Filter = () => {
             <div className="flex flex-wrap gap-4 md:gap-6 items-center" style={{minHeight: "48px"}}>
                 <div className="flex flex-1 flex-wrap gap-4 md:gap-6">
                     <SelectInput
-                        title="المحافظة"
-                        options={[]}
-                        maxWidth={'124px'}
-                        height={'48px'}
+                        key={1}
+                        title={region || "المنطقة"}
+                        options={["إلغاء", ...regions.map((reg) => reg.name)]}
+                        maxWidth={"124px"}
+                        height={"48px"}
+                        onChange={setRegion}
                     />
                     <SelectInput
-                        title="المنطقة"
-                        options={[]}
-                        maxWidth={'124px'}
-                        height={'48px'}
-                    />
-                    <SelectInput
-                        title="النوع"
-                        options={['بيع', 'إيجار']}
-                        maxWidth={'124px'}
-                        height={'48px'}
-                    />
-                    <SelectInput
-                        title="الأحدث"
-                        options={['الأحدث', 'الأقدم']}
-                        maxWidth={'124px'}
-                        height={'48px'}
+                        key={2}
+                        title={type || "نوع"}
+                        options={["إلغاء", ...UserPostTypes]}
+                        maxWidth={"124px"}
+                        height={"48px"}
+                        onChange={setType}
                     />
                 </div>
             </div>

@@ -3,26 +3,14 @@ import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import Header from "../shared/Header.jsx";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 import Popup from "reactjs-popup";
+import usePropertyContractOpenStore from "../../../application/state/rental/usePropertyContractOpenStore.jsx";
 
 const ContractExtension = () => {
+    const {isOpen, setIsOpen} = usePropertyContractOpenStore();
     return (
         <Popup
-            trigger={
-                <Button variant="contained"
-                        sx={{
-                            width: 163,
-                            height: 46,
-                            backgroundColor: BACKGROUND_COLORS.card,
-                            borderRadius: '15px',
-                            fontWeight: 700,
-                            fontSize: '16px',
-                            lineHeight: '100%',
-                            letterSpacing: '3%',
-                            textAlign: 'center'
-                        }}>
-                    تمديد عقد
-                </Button>
-            }
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
             modal
             nested
             closeOnDocumentClick

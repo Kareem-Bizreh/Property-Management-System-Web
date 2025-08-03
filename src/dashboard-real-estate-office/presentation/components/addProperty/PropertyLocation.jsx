@@ -5,8 +5,8 @@ import TextInput from "../shared/TextInput.jsx";
 import map from "../../../assets/shared/map-marker.svg";
 import {useFormContext} from "react-hook-form";
 import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
-import useRegionsStore from "../../../application/state/Property/useRegionsStore.jsx";
-import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
+import useRegionsStore from "../../../application/state/property/useRegionsStore.jsx";
+import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 import {useEffect} from "react";
 
 const PropertyLocation = ({readOnly}) => {

@@ -40,3 +40,21 @@ export const UserPropertyInvoice = {
     uploadDocument: (invoiceId) => `${invoiceId}/upload-docement`,
     add: 'upload-docement',
 }
+
+export const RentalContracts = {
+    baseURL: 'rental-contracts/',
+    add: '',
+    filters: '',
+    getRentalContracts: (id) => `${id}/details`,
+    uploadDocument: (invoiceId) => `${invoiceId}/upload-document`,
+}
+
+export const UserPost = {
+    baseURL: 'user-post/',
+    filters: 'filters',
+}
+
+export const UserPostSuggestion = {
+    baseURL: 'user-post-suggestion/',
+    suggest: ''
+}

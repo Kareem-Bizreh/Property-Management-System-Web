@@ -9,7 +9,7 @@ import Header2 from "../addProperty/Header2.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
 import {useNavigate} from "react-router";
 import {STATUS_OPTIONS} from "../../../shared/constants/statusOptions.jsx";
-import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
+import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 
 const PropertyDetails = ({readOnly = false, onClick}) => {
     const navigate = useNavigate();

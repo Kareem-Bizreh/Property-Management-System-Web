@@ -1,6 +1,5 @@
 import {useParams} from "react-router";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/colors.jsx";
-import img from "../../assets/cards/property_sale.jpg";
 import Header from "../components/shared/Header.jsx";
 import TableHead from "../components/rentals/TableHead.jsx";
 import FinancialRecord from "../components/shared/FinancialRecord.jsx";
@@ -8,49 +7,48 @@ import Rental from "../components/rentals/Rental.jsx";
 import ContractExtension from "../components/rentals/ContractExtension.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useRentalStore from "../../application/state/rental/useRentalStore.jsx";
+import Button from "@mui/material/Button";
+import usePropertyContractOpenStore from "../../application/state/rental/usePropertyContractOpenStore.jsx";
+import {useEffect} from "react";
+import {getRental} from "../../application/useCases/rentals/getRentalContractsUseCase.jsx";
 
 const RentalPage = () => {
-    const {isLoading} = useLoadingStore()
+    const {isLoading, setIsLoading} = useLoadingStore()
     const {id} = useParams();
-    const rental =
-        {
-            id: id,
-            image: img,
-            start_date: "2025-06-11",
-            end_date: "2025-06-11",
-            address: "بيت أبو العود",
-            buyer: '0994778327',
-            status: "محجوز",
-            FinancialRecords: [
-                {
-                    id: 1,
-                    date: "2025-06-11",
-                    type: 'إيجار',
-                    paymentType: "دفع يدوي",
-                    price: 320000,
-                    status: 'تم الدفع',
-                    document: 'https://userpic.codeforces.org/3060832/title/c773068ec0bb8654.jpg'
-                },
-                {
-                    id: 2,
-                    date: "2025-06-11",
-                    type: 'إيجار',
-                    paymentType: "دفع الكتروني",
-                    price: 320000,
-                    status: 'لم يتم الدفع',
-                    document: ''
+    const {rental, setRental} = useRentalStore();
+    const {setIsOpen} = usePropertyContractOpenStore();
+
+    useEffect(() => {
+        const loadRental = async () => {
+            setIsLoading(true);
+
+            try {
+                const {success, response} = await getRental(id);
+                if (success) {
+                    const data = response.data;
+                    setRental(data);
+                } else {
+                    setRental(null);
+                    alert(response);
                 }
-            ]
+            } catch (error) {
+                alert("حدث خطأ أثناء تحميل الإيجار");
+                setRental(null);
+            } finally {
+                setIsLoading(false);
+            }
         };
+
+        loadRental();
+    }, [id]);
 
     return (
         <div className="flex flex-col gap-2 mb-4">
             <Header title={'تفاصيل الإيجار'}/>
             <div className="px-6 flex flex-col gap-6">
                 <TableHead/>
-                <Rental id={rental.id} image={rental.image} start_date={rental.start_date}
-                        end_date={rental.end_date} buyer={rental.buyer}
-                        status={rental.status} address={rental.address}/>
+                <Rental rental={rental}/>
             </div>
             <div className="w-full h-[8px] my-2" style={{backgroundColor: BACKGROUND_COLORS.filter}}/>
             <div className='px-6 flex flex-col gap-6'>
@@ -68,10 +66,26 @@ const RentalPage = () => {
                     >
                         السجل المالي
                     </span>
+                    <Button
+                        onClick={() => setIsOpen(true)}
+                        variant="contained"
+                        sx={{
+                            width: 163,
+                            height: 46,
+                            backgroundColor: BACKGROUND_COLORS.card,
+                            borderRadius: '15px',
+                            fontWeight: 700,
+                            fontSize: '16px',
+                            lineHeight: '100%',
+                            letterSpacing: '3%',
+                            textAlign: 'center'
+                        }}>
+                        تمديد عقد
+                    </Button>
                     <ContractExtension/>
                 </div>
                 <div className="flex flex-col gap-4">
-                    {rental?.FinancialRecords.map((item) => (
+                    {rental?.financial_records.map((item) => (
                         <FinancialRecord record={item} key={item.id}/>
                     ))}
                 </div>

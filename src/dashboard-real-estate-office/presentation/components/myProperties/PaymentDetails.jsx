@@ -8,7 +8,7 @@ import {LISTING_TYPE_OPTIONS} from "../../../shared/constants/listingTypeOptions
 import useCommissionStore from "../../../application/state/office/useCommissionStore.jsx";
 import useMeterPriceStore from "../../../application/state/residentialOffice/useMeterPriceStore.jsx";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
-import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
+import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 
 const PaymentDetails = ({readOnly = false}) => {
     const {property} = usePropertyStore();

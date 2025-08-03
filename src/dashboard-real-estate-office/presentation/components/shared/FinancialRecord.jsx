@@ -7,7 +7,7 @@ import {uploadInvoiceDocument} from "../../../application/useCases/userPropertyI
 
 const FinancialRecord = ({
                              record: {
-                                 id, reason, belling_period_start, paymentMethod,
+                                 id, reason, created_at, paymentMethod,
                                  amount, status, invoiceImage, deadline
                              }
                          }) => {
@@ -50,7 +50,7 @@ const FinancialRecord = ({
         >
             <span className="min-w-[73px] h-[20px]">{id}</span>
             <span
-                className="min-w-[110px] h-[20px]">{status !== 'قيد الانتظار' ? formatDate(belling_period_start) : '----'}</span>
+                className="min-w-[110px] h-[20px]">{status !== 'قيد الانتظار' ? formatDate(created_at) : '----'}</span>
             <span className="min-w-[170px] h-[20px]">{reason}</span>
             <span className="min-w-[170px] h-[20px]">{status !== 'قيد الانتظار' ? paymentMethod : '----'}</span>
             <span className="min-w-[110px] h-[20px]">{formatPrice(amount)} $</span>

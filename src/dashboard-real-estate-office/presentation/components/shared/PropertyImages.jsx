@@ -2,7 +2,7 @@ import {BACKGROUND_COLORS} from "../../../../shared/colors.jsx";
 import UploadImage from "./UploadImage.jsx";
 import Header1 from "../addProperty/Header1.jsx";
 import Images from "../addProperty/Images.jsx";
-import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
+import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 
 const PropertyImages = ({readOnly = false}) => {
     const {property, setProperty, setNewImages, setDeletedImages} = usePropertyStore();

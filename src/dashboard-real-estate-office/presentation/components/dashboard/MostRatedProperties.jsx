@@ -3,7 +3,7 @@ import PropertySaleTouristCard from "../shared/PropertySaleTouristCard.jsx";
 import PropertyRentCard from "../shared/PropertyRentCard.jsx";
 // import {saleAndRentProperties} from "../../../shared/constants/properties.jsx";
 import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
-import usePropertiesStore from "../../../application/state/Property/usePropertiesStore.jsx";
+import usePropertiesStore from "../../../application/state/property/usePropertiesStore.jsx";
 import {useEffect} from "react";
 import {getAll} from "../../../application/useCases/residentialOffice/getPropertiesUseCase.jsx";
 

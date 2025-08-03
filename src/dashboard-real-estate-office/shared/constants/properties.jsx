@@ -115,43 +115,23 @@ export const touristProperties = [
 
 export const propertyPosts = [
     {
-        title: "مطلوب للأجار عقار في دمشق",
-        type: "إيجار",
-        area: "دمشق, حميدية",
-        budget: 1200000,
-        date: "2025-06-11",
-        isProposed: true,
+        "id": 1,
+        "title": "شراء شقة في دمشق",
+        "description": "تفاصيل المنشور...",
+        "type": "شراء",
+        "budget": 1200000,
+        "publishedDate": "2025-07-16",
+        "location": "دمشق، المزة",
+        "isProposed": 1
     },
     {
-        title: "شقة للبيع في المزة",
-        type: "بيع",
-        area: "دمشق, المزة",
-        budget: 350000000,
-        date: "2025-06-20",
-        isProposed: false,
-    },
-    {
-        title: "مكتب للإيجار في قدسيا",
-        type: "إيجار",
-        area: "دمشق, باب شرقي",
-        budget: 800000,
-        date: "2025-05-30",
-        isProposed: false,
-    },
-    {
-        title: "منزل للبيع في مشروع دمر",
-        type: "بيع",
-        area: "ريف دمشق, جرمانا",
-        budget: 250000000,
-        date: "2025-06-15",
-        isProposed: true,
-    },
-    {
-        title: "محل للإيجار في الشعلان",
-        type: "إيجار",
-        area: "دمشق, الشعلان",
-        budget: 2000000,
-        date: "2025-06-25",
-        isProposed: false,
+        "id": 2,
+        "title": "أجار منزل في حلب",
+        "description": "تفاصيل الأجار...",
+        "type": "أجار",
+        "budget": 500000,
+        "publishedDate": "2025-07-15",
+        "location": "حلب، الجميلية",
+        "isProposed": 0
     }
 ];

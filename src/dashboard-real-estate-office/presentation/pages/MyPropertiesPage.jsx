@@ -4,7 +4,7 @@ import Filter from "../components/myProperties/Filter.jsx";
 import PropertiesList from "../components/myProperties/PropertiesList.jsx";
 import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
-import usePropertiesStore from "../../application/state/Property/usePropertiesStore.jsx";
+import usePropertiesStore from "../../application/state/property/usePropertiesStore.jsx";
 import {useForm} from "react-hook-form";
 import useCityStore from "../../application/state/residentialOffice/useCityStore.jsx";
 import useRegionStore from "../../application/state/residentialOffice/useRegionStore.jsx";

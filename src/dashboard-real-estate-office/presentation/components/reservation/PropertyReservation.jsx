@@ -7,14 +7,14 @@ import {useForm} from "react-hook-form";
 import useReservationDetailsStore from "../../../application/state/reservation/useReservationDetailsStore.jsx";
 import SelectProperty from "../shared/SelectProperty.jsx";
 import {Checkbox, FormControlLabel} from "@mui/material";
-import usePropertyStore from "../../../application/state/Property/usePropertyStore.jsx";
+import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 import {useEffect, useRef} from "react";
 import PropertyCard from "../shared/PropertyCard.jsx";
 import {addUserPropertyInvoice} from "../../../application/useCases/userPropertyInvoices/addInvoiceUseCase.jsx";
 import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
 import usePropertyReservationOpenStore
     from "../../../application/state/reservation/usePropertyReservationOpenStore.jsx";
-import usePropertySelectionOpenStore from "../../../application/state/reservation/usePropertySelectionOpenStore.jsx";
+import usePropertySelectionOpenStore from "../../../application/state/shared/usePropertySelectionOpenStore.jsx";
 import {
     getPropertyRentalInformation
 } from "../../../application/useCases/reservations/getPropertyRentalInformationUseCase.jsx";
@@ -134,7 +134,7 @@ const PropertyReservation = () => {
                                         }}>
                                         اختيار
                                     </Button>
-                                    <SelectProperty onSelect={loadPropertyRentalInformation}/>
+                                    <SelectProperty onSelect={loadPropertyRentalInformation} listingType={'بيع'}/>
                                 </>
                             ) : (
                                 <PropertyCard property={property}/>

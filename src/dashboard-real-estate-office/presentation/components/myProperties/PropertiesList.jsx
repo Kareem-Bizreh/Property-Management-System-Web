@@ -3,7 +3,7 @@ import PropertyRentCard from "../shared/PropertyRentCard.jsx";
 import PropertySaleTouristCard from "../shared/PropertySaleTouristCard.jsx";
 // import {saleAndRentProperties} from "../../../shared/constants/properties.jsx";
 import EmptyBox from '../../../assets/shared/EmptyBox.svg'
-import usePropertiesStore from "../../../application/state/Property/usePropertiesStore.jsx";
+import usePropertiesStore from "../../../application/state/property/usePropertiesStore.jsx";
 
 const PropertiesList = () => {
     const {properties} = usePropertiesStore();
