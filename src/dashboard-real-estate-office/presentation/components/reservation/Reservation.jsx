@@ -27,7 +27,7 @@ const Reservation = ({reservation}) => {
             <img
                 className="w-[133px] h-[125px] object-cover rounded-[25px]"
                 alt="صورة العقار"
-                src={reservation.image || img}
+                src={reservation.image_url || img}
             />
             <span className="w-[110px] h-[20px] whitespace-nowrap">{formatDate(reservation.created_at)}</span>
             <div className="w-[170px] h-full flex flex-col gap-2">

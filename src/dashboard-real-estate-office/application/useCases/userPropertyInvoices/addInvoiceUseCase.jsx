@@ -6,7 +6,7 @@ export const addUserPropertyInvoice = async (propertyId, phone, document, instal
         formData.append("propertyId", propertyId);
         formData.append("phone", phone);
         formData.append("document", document);
-        formData.append("installment_allowed", installment_allowed);
+        formData.append("installment", installment_allowed);
         const response = await UserPropertyInvoiceRepository.addInvoice(formData);
         return {success: true, response: response};
     } catch (error) {

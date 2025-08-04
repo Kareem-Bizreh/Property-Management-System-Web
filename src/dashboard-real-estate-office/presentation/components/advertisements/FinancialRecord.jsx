@@ -3,7 +3,12 @@ import {formatDate} from "../../../shared/utils/formatDate.js";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
 
-const FinancialRecord = ({record: {id, type, date, number, price, status, document}}) => {
+const FinancialRecord = ({
+                             record: {
+                                 advertisement_id, type, paid_date,
+                                 day_period, amount, advertisement_status, document
+                             }
+                         }) => {
     function onPress() {
         if (document && document.length > 0) {
             window.open(document, '_blank');
@@ -24,37 +29,37 @@ const FinancialRecord = ({record: {id, type, date, number, price, status, docume
                 textAlign: 'center',
             }}
         >
-            <span className="min-w-[73px] h-[20px]">{id}</span>
-            <span className="min-w-[110px] h-[20px]">{formatDate(date)}</span>
+            <span className="min-w-[73px] h-[20px]">{advertisement_id}</span>
+            <span className="min-w-[110px] h-[20px]">{formatDate(paid_date) || "----"}</span>
             <span className="min-w-[140px] h-[20px]">{type}</span>
-            <span className="min-w-[140px] h-[20px]">{number} أيام</span>
-            <span className="min-w-[110px] h-[20px]">{formatPrice(price)} $</span>
+            <span className="min-w-[140px] h-[20px]">{day_period} أيام</span>
+            <span className="min-w-[110px] h-[20px]">{formatPrice(amount)} $</span>
             <span className="min-w-[120px] h-[20px]"
                   style={{
-                      color: (status === 'قيد الإنتظار' ? TEXT_COLORS.reserved :
-                          (status === 'تم الدفع' ? TEXT_COLORS.sold : TEXT_COLORS.cancelled))
+                      color: (advertisement_status === 'قيد الانتظار' ? TEXT_COLORS.reserved :
+                          (advertisement_status === 'مدفوع' ? TEXT_COLORS.sold : TEXT_COLORS.cancelled))
                   }}>
-                {status}
+                {advertisement_status}
             </span>
             <div className="min-w-[140px] h-[20px] flex items-center">
-                {status !== 'لم يتم الدفع' ?
-                    <Button variant="contained"
-                            onClick={onPress}
-                            sx={{
-                                width: 115,
-                                height: 46,
-                                backgroundColor: document ? BACKGROUND_COLORS.sidebar : BACKGROUND_COLORS.card,
-                                color: document ? TEXT_COLORS.primary : TEXT_COLORS.white,
-                                borderRadius: '15px',
-                                fontWeight: 700,
-                                fontSize: '16px',
-                                lineHeight: '100%',
-                                letterSpacing: '3%',
-                                textAlign: 'center'
-                            }}>
-                        {document ? 'عرض وثيقة' : 'رفع وثيقة'}
-                    </Button> : null
-                }
+                <Button variant="contained"
+                        disabled={advertisement_status !== 'مدفوع' || !document}
+                        onClick={onPress}
+                        sx={{
+                            width: 115,
+                            height: 46,
+                            backgroundColor: BACKGROUND_COLORS.sidebar,
+                            color: TEXT_COLORS.primary,
+                            borderRadius: '15px',
+                            fontWeight: 700,
+                            fontSize: '16px',
+                            lineHeight: '100%',
+                            letterSpacing: '3%',
+                            textAlign: 'center'
+                        }}
+                >
+                    عرض وثيقة
+                </Button>
             </div>
         </div>
     )

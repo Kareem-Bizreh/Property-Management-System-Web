@@ -4,44 +4,40 @@ import Header from "../components/shared/Header.jsx";
 import TableHead from "../components/rentals/TableHead.jsx";
 import FinancialRecord from "../components/shared/FinancialRecord.jsx";
 import Rental from "../components/rentals/Rental.jsx";
-import ContractExtension from "../components/rentals/ContractExtension.jsx";
+// import ContractExtension from "../components/rentals/ContractExtension.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
 import useRentalStore from "../../application/state/rental/useRentalStore.jsx";
 import Button from "@mui/material/Button";
-import usePropertyContractOpenStore from "../../application/state/rental/usePropertyContractOpenStore.jsx";
+// import usePropertyContractOpenStore from "../../application/state/rental/usePropertyContractOpenStore.jsx";
 import {useEffect} from "react";
 import {getRental} from "../../application/useCases/rentals/getRentalContractsUseCase.jsx";
+import {uploadRentalDocument} from "../../application/useCases/rentals/uploadDocumentUseCase.jsx";
 
 const RentalPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore()
     const {id} = useParams();
     const {rental, setRental} = useRentalStore();
-    const {setIsOpen} = usePropertyContractOpenStore();
+    // const {setIsOpen, isOpen} = usePropertyContractOpenStore();
 
     useEffect(() => {
         const loadRental = async () => {
             setIsLoading(true);
-
-            try {
-                const {success, response} = await getRental(id);
-                if (success) {
-                    const data = response.data;
-                    setRental(data);
-                } else {
-                    setRental(null);
-                    alert(response);
-                }
-            } catch (error) {
-                alert("حدث خطأ أثناء تحميل الإيجار");
+            const {success, response} = await getRental(id);
+            if (success) {
+                const data = response.data;
+                setRental(data);
+            } else {
                 setRental(null);
-            } finally {
-                setIsLoading(false);
+                alert(response);
             }
+            setIsLoading(false);
         };
 
         loadRental();
     }, [id]);
+
+    if (isLoading || !rental) return <Spinner/>;
 
     return (
         <div className="flex flex-col gap-2 mb-4">
@@ -66,31 +62,30 @@ const RentalPage = () => {
                     >
                         السجل المالي
                     </span>
-                    <Button
-                        onClick={() => setIsOpen(true)}
-                        variant="contained"
-                        sx={{
-                            width: 163,
-                            height: 46,
-                            backgroundColor: BACKGROUND_COLORS.card,
-                            borderRadius: '15px',
-                            fontWeight: 700,
-                            fontSize: '16px',
-                            lineHeight: '100%',
-                            letterSpacing: '3%',
-                            textAlign: 'center'
-                        }}>
-                        تمديد عقد
-                    </Button>
-                    <ContractExtension/>
+                    {/*<Button*/}
+                    {/*    onClick={() => setIsOpen(true)}*/}
+                    {/*    variant="contained"*/}
+                    {/*    sx={{*/}
+                    {/*        width: 163,*/}
+                    {/*        height: 46,*/}
+                    {/*        backgroundColor: BACKGROUND_COLORS.card,*/}
+                    {/*        borderRadius: '15px',*/}
+                    {/*        fontWeight: 700,*/}
+                    {/*        fontSize: '16px',*/}
+                    {/*        lineHeight: '100%',*/}
+                    {/*        letterSpacing: '3%',*/}
+                    {/*        textAlign: 'center'*/}
+                    {/*    }}>*/}
+                    {/*    تمديد عقد*/}
+                    {/*</Button>*/}
+                    {/*{isOpen && <ContractExtension/>}*/}
                 </div>
                 <div className="flex flex-col gap-4">
-                    {rental?.financial_records.map((item) => (
-                        <FinancialRecord record={item} key={item.id}/>
+                    {rental?.invoices.map((item) => (
+                        <FinancialRecord record={item} key={item.id} upload={uploadRentalDocument}/>
                     ))}
                 </div>
             </div>
-            {(isLoading ? (<Spinner/>) : null)}
         </div>
     )
 }

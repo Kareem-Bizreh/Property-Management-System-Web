@@ -25,7 +25,6 @@ const SelectProperty = ({onSelect, listingType}) => {
                 listingType,
                 status: 'متوفر'
             });
-            console.log(listingType, response);
             if (success) {
                 setProperties(response.data);
             } else {

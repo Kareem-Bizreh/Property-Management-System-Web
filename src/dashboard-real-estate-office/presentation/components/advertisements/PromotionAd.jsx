@@ -1,31 +1,62 @@
-import ButtonCard from "./ButtonCard.jsx";
-import officer from "../../../assets/ads/marketing-officer.svg";
-import {BACKGROUND_COLORS, DASHBOARD_CARDS_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
+import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import Header from "../shared/Header.jsx";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
 import Popup from "reactjs-popup";
 import {useForm} from "react-hook-form";
 import SelectInput from "../shared/SelectInput.jsx";
+import usePromotionAdOpenStore from "../../../application/state/advertisement/usePromotionAdOpenStore.jsx";
+import usePropertyTypeStore from "../../../application/state/advertisement/usePropertyTypeStore.jsx";
+import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
+import {PropertyType} from "../../../shared/constants/PropertyType.jsx";
+import useServicePriceStore from "../../../application/state/advertisement/useServicePriceStore.jsx";
+import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import {useEffect} from "react";
+import {getServicePrice} from "../../../application/useCases/servicePrice/getServicePriceUseCase.jsx";
+import {Spinner} from "../../../../shared/presentation/components/Spinner.jsx";
 
-const Promotion = ({price}) => {
-    const {register, watch} = useForm({
-        defaultValues: {
-            days: 0
-        },
-    });
+const PromotionAd = () => {
+    const {register, watch, setValue, handleSubmit} = useForm({defaultValues: {days: 1}});
+    const {setIsOpen, isOpen} = usePromotionAdOpenStore();
+    const {type, setType} = usePropertyTypeStore();
+    const {property, setProperty} = usePropertyStore();
+    const {promotionPrice, setPromotionPrice} = useServicePriceStore();
+    const {setIsLoading, isLoading} = useLoadingStore();
+
+    useEffect(() => {
+        setProperty(null)
+        const loadServicePrice = async () => {
+            setIsLoading(true);
+            const {success, response} = await getServicePrice('إعلان ترويجي');
+            if (success) {
+                setPromotionPrice(response.price);
+            } else {
+                alert(response);
+                setIsOpen(false);
+            }
+            setIsLoading(false);
+        }
+        loadServicePrice();
+    }, []);
+
+    const pay = async () => {
+        if (!property) {
+            alert("يرجى اختيار العقار")
+        }
+        console.log(watch("days"), property.id)
+    }
+
+    if (isLoading) return <Spinner/>
 
     return (
         <Popup
-            trigger={
-                <ButtonCard
-                    onClick={(e) => e.stopPropagation()}
-                    icon={officer}
-                    title={'ترويج'}
-                    color={DASHBOARD_CARDS_COLORS.realEstate_places}
-                    bgColor={DASHBOARD_CARDS_COLORS.bg_tourist_places}
-                />
-            }
+            open={isOpen}
+            onClose={() => {
+                setType(null);
+                setProperty(null);
+                setValue("days", 1);
+                setIsOpen(false);
+            }}
             modal
             nested
             closeOnDocumentClick
@@ -54,8 +85,8 @@ const Promotion = ({price}) => {
                     </div>
                     <div className="flex flex-col items-center gap-6 w-full mb-4">
                         <span>النوع</span>
-                        <SelectInput title={'اختر النوع'} options={['سياحي', 'عقاري']} height={'46px'}
-                                     maxWidth={'150px'} style={{borderWidth: '1px'}}/>
+                        <SelectInput title={type || "نوع"} options={["إلغاء", ...PropertyType]} height={'46px'}
+                                     maxWidth={'150px'} style={{borderWidth: '1px'}} onChange={setType}/>
                     </div>
                     <div className="flex flex-col items-center gap-2">
                         <span>إختر العقار</span>
@@ -81,8 +112,8 @@ const Promotion = ({price}) => {
                         <div className="flex flex-col items-center gap-5">
                             <span>عدد أيام عرض الإعلان</span>
                             <input
-                                {...register('days')}
-                                min={0}
+                                {...register('days', {required: true})}
+                                min={1}
                                 type="number"
                                 className="rounded-[15px] border-[1px] min-h-[50px] pl-4 pr-4 max-w-[150px] w-full text-center"
                                 style={{
@@ -99,7 +130,7 @@ const Promotion = ({price}) => {
                         </div>
                         <div className="flex flex-col items-center gap-4" style={{fontSize: '16px'}}>
                             <span>السعر باليوم</span>
-                            <span>{formatPrice(price)} $</span>
+                            <span>{formatPrice(promotionPrice)} $</span>
                         </div>
                         <div className="flex flex-col items-center gap-6 mb-4" style={{fontSize: '16px'}}>
                             <span>السعر</span>
@@ -107,7 +138,7 @@ const Promotion = ({price}) => {
                                 style={{
                                     fontSize: '24px',
                                     color: TEXT_COLORS.primary
-                                }}>{formatPrice(price * watch('days'))} $</span>
+                                }}>{formatPrice(promotionPrice * watch('days'))} $</span>
                         </div>
                     </div>
                     <div className="flex flex-row items-center gap-6 mb-2">
@@ -128,7 +159,7 @@ const Promotion = ({price}) => {
                             إلغاء
                         </Button>
                         <Button variant="contained"
-                            // onClick={onPress}
+                                onClick={handleSubmit(pay)}
                                 sx={{
                                     width: 160,
                                     height: 47,
@@ -149,4 +180,4 @@ const Promotion = ({price}) => {
         </Popup>
     )
 }
-export default Promotion
+export default PromotionAd

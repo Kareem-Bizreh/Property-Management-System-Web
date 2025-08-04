@@ -1,31 +1,67 @@
-import ButtonCard from "./ButtonCard.jsx";
-import seller from "../../../assets/ads/seller.svg";
-import {BACKGROUND_COLORS, DASHBOARD_CARDS_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
+import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import Header from "../shared/Header.jsx";
 import Button from "@mui/material/Button";
 import Popup from "reactjs-popup";
 import UploadImage from "../shared/UploadImage.jsx";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 import {useForm} from "react-hook-form";
+import useImageStore from "../../../application/state/advertisement/useImageStore.jsx";
+import useImageAdOpenStore from "../../../application/state/advertisement/useImageAdOpenStore.jsx";
+import {addImageAd} from "../../../application/useCases/advertisement/addImageAdUseCase.jsx";
+import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import {useEffect} from "react";
+import useServicePriceStore from "../../../application/state/advertisement/useServicePriceStore.jsx";
+import {getServicePrice} from "../../../application/useCases/servicePrice/getServicePriceUseCase.jsx";
+import {Spinner} from "../../../../shared/presentation/components/Spinner.jsx";
 
-const CreateAd = ({price}) => {
-    const { register, watch } = useForm({
-        defaultValues: {
-            days: 0
-        },
-    });
+const ImageAd = () => {
+    const {register, watch, handleSubmit, setValue} = useForm({defaultValues: {days: 1}});
+    const {image, setImage} = useImageStore();
+    const {setIsOpen, isOpen} = useImageAdOpenStore();
+    const {imagePrice, setImagePrice} = useServicePriceStore();
+    const {setIsLoading, isLoading} = useLoadingStore();
+
+    useEffect(() => {
+        const loadServicePrice = async () => {
+            setIsLoading(true);
+            const {success, response} = await getServicePrice('إعلان صوري');
+            if (success) {
+                setImagePrice(response.price);
+            } else {
+                alert(response);
+                setIsOpen(false);
+            }
+            setIsLoading(false);
+        }
+        loadServicePrice();
+    }, []);
+
+    const pay = async () => {
+        if(!image) {
+            alert("يرجى ادخال صورة الإعلان");
+            return;
+        }
+        setIsLoading(true);
+        const {success, response} = await addImageAd(watch("days"), image);
+        if (success) {
+            alert("تم طلب اعلان صوري بنجاح");
+            window.location.reload();
+        } else {
+            alert(response);
+        }
+        setIsLoading(false);
+    }
+
+    if (isLoading) return <Spinner/>
 
     return (
         <Popup
-            trigger={
-                <ButtonCard
-                    onClick={(e) => e.stopPropagation()}
-                    icon={seller}
-                    title={'إنشاء إعلان'}
-                    color={DASHBOARD_CARDS_COLORS.warnings}
-                    bgColor={DASHBOARD_CARDS_COLORS.bg_warnings}
-                />
-            }
+            open={isOpen}
+            onClose={() => {
+                setImage(null);
+                setValue("days", 1);
+                setIsOpen(false);
+            }}
             modal
             nested
             closeOnDocumentClick
@@ -53,14 +89,15 @@ const CreateAd = ({price}) => {
                         <Header title={'إنشاء إعلان'}/>
                     </div>
                     <div className="h-fit">
-                        <UploadImage title={"صورة الإعلان"}/>
+                        <UploadImage title={"صورة الإعلان"} image={image} onChange={setImage}
+                                     onDelete={() => setImage(null)}/>
                     </div>
                     <div className="flex flex-col items-center gap-6">
                         <div className="flex flex-col items-center gap-5">
                             <span>عدد أيام عرض الإعلان</span>
                             <input
-                                {...register('days')}
-                                min={0}
+                                {...register('days', {required: true})}
+                                min={1}
                                 type="number"
                                 className="rounded-[15px] border-[1px] min-h-[50px] pl-4 pr-4 max-w-[150px] w-full text-center"
                                 style={{
@@ -77,12 +114,15 @@ const CreateAd = ({price}) => {
                         </div>
                         <div className="flex flex-col items-center gap-4" style={{fontSize: '16px'}}>
                             <span>السعر باليوم</span>
-                            <span>{formatPrice(price)} $</span>
+                            <span>{formatPrice(imagePrice)} $</span>
                         </div>
                         <div className="flex flex-col items-center gap-6 mb-4" style={{fontSize: '16px'}}>
                             <span>السعر</span>
                             <span
-                                style={{fontSize: '24px', color: TEXT_COLORS.primary}}>{formatPrice(price * watch('days'))} $</span>
+                                style={{
+                                    fontSize: '24px',
+                                    color: TEXT_COLORS.primary
+                                }}>{formatPrice(imagePrice * watch('days'))} $</span>
                         </div>
                     </div>
                     <div className="flex flex-row items-center gap-6 mb-2">
@@ -103,7 +143,7 @@ const CreateAd = ({price}) => {
                             إلغاء
                         </Button>
                         <Button variant="contained"
-                            // onClick={onPress}
+                                onClick={handleSubmit(pay)}
                                 sx={{
                                     width: 160,
                                     height: 47,
@@ -124,4 +164,4 @@ const CreateAd = ({price}) => {
         </Popup>
     )
 }
-export default CreateAd
+export default ImageAd

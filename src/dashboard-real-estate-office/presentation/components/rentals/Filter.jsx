@@ -8,12 +8,16 @@ import useStatusStore from "../../../application/state/rental/useStatusStore.jsx
 import {RentalStatus} from "../../../shared/constants/RentalsStatus.jsx";
 import Button from "@mui/material/Button";
 import usePropertyRentalOpenStore from "../../../application/state/rental/usePropertyRentalOpenStore.jsx";
+import useRentalDetailsStore from "../../../application/state/rental/useRentalDetailsStore.jsx";
+import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 
 const Filter = () => {
     const {city, setCity} = useCityStore();
     const {regions, setRegions, region, setRegion} = useRegionStore();
     const {status, setStatus} = useStatusStore();
-    const {setIsOpen} = usePropertyRentalOpenStore();
+    const {setIsOpen, isOpen} = usePropertyRentalOpenStore();
+    const {resetRentalDetails} = useRentalDetailsStore();
+    const {setProperty} = usePropertyStore();
 
     const handleCityChange = (cityName) => {
         const selectedGovernorate = SyrianGovernorates.find((gov) => gov.name === cityName);
@@ -55,7 +59,11 @@ const Filter = () => {
                     />
                 </div>
                 <Button
-                    onClick={() => setIsOpen(true)}
+                    onClick={() => {
+                        resetRentalDetails()
+                        setIsOpen(true)
+                        setProperty(null)
+                    }}
                     variant="contained"
                     sx={{
                         width: 163,
@@ -70,7 +78,7 @@ const Filter = () => {
                     }}>
                     تأجير عقار
                 </Button>
-                <PropertyRental/>
+                {isOpen && <PropertyRental/>}
             </div>
         </div>
     )

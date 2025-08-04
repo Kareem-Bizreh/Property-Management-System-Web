@@ -46,7 +46,7 @@ export const RentalContracts = {
     add: '',
     filters: '',
     getRentalContracts: (id) => `${id}/details`,
-    uploadDocument: (invoiceId) => `${invoiceId}/upload-document`,
+    uploadDocument: (invoiceId) => `${invoiceId}/document`,
 }
 
 export const UserPost = {
@@ -67,4 +67,15 @@ export const ServiceProvider = {
 export const Notifications = {
     baseURL: 'notifications/',
     getAll: '',
+}
+
+export const Advertisement = {
+    baseURL: 'advertisement/',
+    addImageAd: 'imageAd',
+    getInvoices: 'invoices'
+}
+
+export const ServicePrice = {
+    baseURL: 'service-prices/',
+    get: ''
 }

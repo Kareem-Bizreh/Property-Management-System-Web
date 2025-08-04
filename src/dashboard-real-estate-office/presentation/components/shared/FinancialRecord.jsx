@@ -3,13 +3,12 @@ import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import {formatDate} from "../../../shared/utils/formatDate.js";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
-import {uploadInvoiceDocument} from "../../../application/useCases/userPropertyInvoices/uploadDocumentUseCase.jsx";
 
 const FinancialRecord = ({
                              record: {
                                  id, reason, created_at, paymentMethod,
                                  amount, status, invoiceImage, deadline
-                             }
+                             }, upload
                          }) => {
     const fileInputRef = useRef(null);
 
@@ -25,7 +24,7 @@ const FinancialRecord = ({
         const file = e.target.files?.[0];
         if (!file) return;
 
-        const {success, response} = await uploadInvoiceDocument(id, file);
+        const {success, response} = await upload(id, file);
         if (success) {
             alert("تم رفع الوثيقة بنجاح");
             window.location.reload();

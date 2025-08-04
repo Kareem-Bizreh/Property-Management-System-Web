@@ -34,14 +34,13 @@ const PropertyReservation = () => {
 
     useEffect(() => setProperty(null), []);
 
-    const loadPropertyRentalInformation = async (propertyId) => {
+    const loadPropertyReservationInformation = async (propertyId) => {
         setIsLoading(true);
         setReservationDetails({installment_allowed: false});
         const {success, response} = await getPropertyRentalInformation(propertyId);
         setIsLoading(false);
         if (success) {
             setReservationDetails(response);
-            window.location.reload();
         } else {
             resetReservationDetails()
             setProperty(null)
@@ -50,7 +49,6 @@ const PropertyReservation = () => {
     };
 
     const reserve = async () => {
-        setIsLoading(true)
         if (!invoice_image) {
             alert("يرجى إدخال وثيقة الحجز")
             return;
@@ -59,16 +57,18 @@ const PropertyReservation = () => {
             alert("يرجى اختيار العقار")
             return;
         }
+        setIsLoading(true)
         const {
             success,
             response
         } = await addUserPropertyInvoice(property.id, watch("phone"), invoice_image.file, installment_allowed);
         if (success) {
             alert("تم حجز العقار بنجاح");
+            window.location.reload();
+            resetReservationDetails();
         } else {
             alert(response);
         }
-        resetReservationDetails();
         setIsLoading(false);
     };
 
@@ -134,7 +134,7 @@ const PropertyReservation = () => {
                                         }}>
                                         اختيار
                                     </Button>
-                                    <SelectProperty onSelect={loadPropertyRentalInformation} listingType={'بيع'}/>
+                                    <SelectProperty onSelect={loadPropertyReservationInformation} listingType={'بيع'}/>
                                 </>
                             ) : (
                                 <PropertyCard property={property}/>

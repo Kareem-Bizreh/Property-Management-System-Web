@@ -1,5 +1,6 @@
 import RentalRepository from "../../../domain/repositories/rentalRepository.jsx";
 import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import {Rental} from "../../../domain/entities/Rental.jsx";
 
 export const getFilterRentals = async (city, region, status) => {
     try {
@@ -10,7 +11,7 @@ export const getFilterRentals = async (city, region, status) => {
         const regionId = regionObj ? regionObj.id : null;
 
         const response = await RentalRepository.filters(cityId, regionId, status);
-        // response.data = response.data.map((item) => new Rental(item));
+        response.data = response.data.map((item) => new Rental(item));
 
         return {success: true, response: response};
     } catch (error) {

@@ -1,9 +1,10 @@
 import RentalRepository from "../../../domain/repositories/rentalRepository.jsx";
+import {Rental} from "../../../domain/entities/Rental.jsx";
 
 export const getRental = async (rentalId) => {
     try {
         const response = await RentalRepository.getRentalContracts(rentalId);
-        // response.data = new Reservation(response.data);
+        response.data = new Rental(response.data);
 
         return {success: true, response: response};
     } catch (error) {

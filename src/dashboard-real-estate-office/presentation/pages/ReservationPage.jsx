@@ -10,6 +10,7 @@ import FinancialRecord from "../components/shared/FinancialRecord.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import {getReservation} from "../../application/useCases/reservations/getReservationUseCase.jsx";
 import useReservationDetailsStore from "../../application/state/reservation/useReservationDetailsStore.jsx";
+import {uploadInvoiceDocument} from "../../application/useCases/userPropertyInvoices/uploadDocumentUseCase.jsx";
 
 const ReservationPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
@@ -67,7 +68,7 @@ const ReservationPage = () => {
                 </span>
                 <div className="flex flex-col gap-4">
                     {reservation?.financial_records.map((item) => (
-                        <FinancialRecord record={item} key={item.id}/>
+                        <FinancialRecord record={item} key={item.id} upload={uploadInvoiceDocument}/>
                     ))}
                 </div>
             </div>

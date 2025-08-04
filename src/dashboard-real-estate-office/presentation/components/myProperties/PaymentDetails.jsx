@@ -249,7 +249,7 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
             <div className="flex flex-wrap gap-4 h-[40px] items-center w-full">
                 <span style={styles} className="min-w-[120px]">السعر الكامل</span>
                 <span style={styles} className="min-w-[100px]">
-                    ${formatPrice(price + (price * commission / 100))}
+                    ${formatPrice(price + (price * commission))}
                 </span>
             </div>
         </div>
