@@ -217,9 +217,9 @@ const TypeCard = ({listing_type = 'بيع', details = {}, readOnly = false}) => 
             <div className="flex flex-wrap gap-4 items-center w-full">
                 <span style={styles} className="min-w-[120px]">سعر العقار</span>
                 <div className="relative w-full max-w-[210px]">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 select-none"
-                          style={{color: TEXT_COLORS.primary}}>$</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 select-none" style={styles}>$</span>
                     <input
+                        min={0}
                         readOnly={readOnly}
                         {...register('price', {
                             required: `السعر مطلوب`,

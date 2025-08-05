@@ -2,10 +2,8 @@ import {BACKGROUND_COLORS} from "../../../../shared/colors.jsx";
 import UploadImage from "./UploadImage.jsx";
 import Header1 from "../addProperty/Header1.jsx";
 import Images from "../addProperty/Images.jsx";
-import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 
-const PropertyImages = ({readOnly = false}) => {
-    const {property, setProperty, setNewImages, setDeletedImages} = usePropertyStore();
+const PropertyImages = ({readOnly = false, property, setProperty, setNewImages, setDeletedImages}) => {
 
     const handleAddImage = (file) => {
         const id = Date.now(); // temporary local ID
@@ -23,7 +21,7 @@ const PropertyImages = ({readOnly = false}) => {
             images: [...(property.images || []), newImage],
         });
 
-        if(newImage.length === 20) {
+        if (newImage.length === 20) {
             alert("لا يمكن اضافة اكثر من 20 صورة");
             return;
         }

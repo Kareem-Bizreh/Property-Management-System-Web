@@ -19,7 +19,7 @@ import {upload} from "../../application/useCases/propertyImage/uploadUseCase.jsx
 
 const AddPropertyPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
-    const {property, setProperty, newImages, resetImageTracking} = usePropertyStore();
+    const {property, setProperty, newImages, resetImageTracking, setNewImages, setDeletedImages} = usePropertyStore();
     const {setCommission} = useCommissionStore();
     const {setMeterPrice} = useMeterPriceStore();
 
@@ -107,13 +107,14 @@ const AddPropertyPage = () => {
                 <div className="-mb-6">
                     <Header title={"إضافة عقار"}/>
                 </div>
-                <PostDetails options={PropertyTags}/>
+                <PostDetails options={PropertyTags} property={property} setProperty={setProperty}/>
                 <div className="flex flex-row gap-4 mx-6 flex-wrap">
                     <div className="flex-5">
                         <PropertyDetails onClick={methods.handleSubmit(onSubmit)}/>
                     </div>
                     <div className="flex-2">
-                        <PropertyImages/>
+                        <PropertyImages setProperty={setProperty} property={property}
+                                        setDeletedImages={setDeletedImages} setNewImages={setNewImages}/>
                     </div>
                 </div>
             </div>

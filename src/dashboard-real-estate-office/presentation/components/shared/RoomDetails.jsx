@@ -5,11 +5,9 @@ import shower from "../../../assets/properties/shower.svg";
 import kitchenIcon from "../../../assets/properties/kitchen.svg";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import {useFormContext} from "react-hook-form";
-import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 import {useEffect} from "react";
 
-const RoomDetails = ({readOnly = false}) => {
-    const {property, setProperty} = usePropertyStore();
+const RoomDetails = ({readOnly = false, property, setProperty}) => {
 
     const items = [
         {title: "نوم", icon: bed, type: "number", name: "bedroom"},
@@ -78,6 +76,7 @@ const RoomDetails = ({readOnly = false}) => {
                         <input
                             readOnly={readOnly}
                             type={item.type}
+                            min={0}
                             {...register(item.name, {
                                 required: `${item.name} مطلوب`,
                             })}

@@ -24,7 +24,7 @@ const KeywordSelector = ({options = [], select = [], onChange, title, readOnly =
 
         if (onlyOne)
             onChange?.(...next);
-        else onChange?.(...next);
+        else onChange?.(next);
     };
 
     return (
@@ -61,20 +61,18 @@ const KeywordSelector = ({options = [], select = [], onChange, title, readOnly =
                             animate={{opacity: 1, scale: 1}}
                             exit={{opacity: 0, scale: 0.8}}
                             transition={{duration: 0.2}}
-                            className="relative w-[111px] h-[34px] rounded-[5px] cursor-pointer transition-colors duration-200"
+                            className="relative inline-flex items-center justify-center h-[34px] px-4 rounded-[5px] cursor-pointer transition-colors duration-200 max-w-full"
                             style={{
                                 color: TEXT_COLORS.select,
                                 backgroundColor: BACKGROUND_COLORS.sidebar,
                             }}
                             onClick={() => toggleKeyword(word)}
                         >
-                            <span
-                                className="absolute right-1/2 transform translate-x-1/2 top-1/2 -translate-y-1/2 select-none whitespace-nowrap">
-                                {word}
-                            </span>
+                            <span className="truncate py-2">{word}</span>
                         </motion.div>
                     ))}
                 </AnimatePresence>
+
             </div>
 
             {/* Options list */}
@@ -85,7 +83,7 @@ const KeywordSelector = ({options = [], select = [], onChange, title, readOnly =
                     return (
                         <div
                             key={word}
-                            className="relative w-[111px] h-[34px] rounded-[5px] transition-colors duration-200 cursor-pointer select-none"
+                            className="relative inline-flex items-center justify-center h-[34px] px-4 rounded-[5px] transition-colors duration-200 cursor-pointer select-none max-w-full"
                             style={{
                                 color: isSelected ? BACKGROUND_COLORS.sidebar : TEXT_COLORS.select,
                                 backgroundColor: isSelected ? TEXT_COLORS.select : BACKGROUND_COLORS.sidebar,
@@ -94,10 +92,7 @@ const KeywordSelector = ({options = [], select = [], onChange, title, readOnly =
                             }}
                             onClick={() => toggleKeyword(word)}
                         >
-                            <span
-                                className="absolute right-1/2 transform translate-x-1/2 top-1/2 -translate-y-1/2 whitespace-nowrap">
-                                {word}
-                            </span>
+                            <span className="truncate py-2">{word}</span>
                         </div>
                     );
                 })}

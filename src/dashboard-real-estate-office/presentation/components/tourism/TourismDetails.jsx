@@ -1,20 +1,21 @@
+import {useNavigate} from "react-router";
+import useTouristStore from "../../../application/state/tourism/useTouristStore.jsx";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import Header1 from "../addProperty/Header1.jsx";
-import PropertyLocation from "../addProperty/PropertyLocation.jsx";
-import GeneralDetails from "../addProperty/GeneralDetails.jsx";
-import RoomDetails from "../shared/RoomDetails.jsx";
-import PaymentDetails from "./PaymentDetails.jsx";
-import Button from "@mui/material/Button";
 import Header2 from "../addProperty/Header2.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
-import {useNavigate} from "react-router";
 import {STATUS_OPTIONS} from "../../../shared/constants/statusOptions.jsx";
-import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
+import PropertyLocation from "../addProperty/PropertyLocation.jsx";
+import RoomDetails from "../shared/RoomDetails.jsx";
+import Button from "@mui/material/Button";
+import GeneralDetails from "./GeneralDetails.jsx";
+import PaymentDetails from "./PaymentDetails.jsx";
+import {TouristicStatus} from "../../../shared/constants/TouristicStatus.jsx";
 
-const PropertyDetails = ({readOnly = false, onClick}) => {
+const TourismDetails = ({readOnly = false, onClick}) => {
     const navigate = useNavigate();
-    const {property, setProperty} = usePropertyStore();
-    const status = property?.postStatus;
+    const {tourist, setTourist} = useTouristStore();
+    const status = tourist?.postStatus;
 
     const buttons = [
         ...(status !== "مرفوض" && status !== "قيد الانتظار"
@@ -39,20 +40,21 @@ const PropertyDetails = ({readOnly = false, onClick}) => {
                             : "إضافة",
             color: BACKGROUND_COLORS.app,
             backgroundColor: BACKGROUND_COLORS.primary,
-            disabled: readOnly && status !== "قيد الانتظار",
+            disabled: tourist.status === TouristicStatus[3],
             onClick: () => {
                 if (status === "قيد الانتظار") navigate(-1);
                 else onClick()
             },
         },
     ];
+
     return (
         <div
             className="relative h-auto rounded-[15px] flex flex-col gap-8"
             style={{backgroundColor: BACKGROUND_COLORS.secondary2}}
         >
             <div className="mt-2 -mb-4">
-                <Header1 title={"تفاصيل العقار"} align={"right"}/>
+                <Header1 title={"تفاصيل المكان"} align={"right"}/>
             </div>
             <div className="flex flex-col mx-8 mb-4">
                 {status && (
@@ -92,9 +94,9 @@ const PropertyDetails = ({readOnly = false, onClick}) => {
                             ) : (
                                 <SelectInput
                                     readOnly={readOnly}
-                                    title={property.status}
+                                    title={tourist.status}
                                     options={[STATUS_OPTIONS[3], STATUS_OPTIONS[4], STATUS_OPTIONS[5]]}
-                                    onChange={(status) => setProperty({...property, status})}
+                                    onChange={(status) => setTourist({...tourist, status})}
                                     height={"50px"}
                                     maxWidth={"200px"}
                                     style={{
@@ -109,11 +111,12 @@ const PropertyDetails = ({readOnly = false, onClick}) => {
                     </div>
                 )}
 
-                <PropertyLocation readOnly={readOnly} property={property} setProperty={setProperty}
-                                  inputTitle={"floor_number"} inputType={"number"} fieldName={"الطابق"}/>
+                <PropertyLocation readOnly={readOnly} property={tourist} setProperty={setTourist}
+                                  inputTitle={"street"} inputType={"text"} fieldName={"الشارع"}/>
                 <GeneralDetails readOnly={readOnly}/>
-                <RoomDetails readOnly={readOnly} property={property} setProperty={setProperty}/>
+                <RoomDetails readOnly={readOnly} property={tourist} setProperty={setTourist}/>
                 <PaymentDetails readOnly={readOnly}/>
+
                 <div className="flex flex-row flex-wrap justify-end gap-4 mt-4">
                     {buttons.map((button) => (
                         <Button
@@ -139,6 +142,6 @@ const PropertyDetails = ({readOnly = false, onClick}) => {
                 </div>
             </div>
         </div>
-    );
-};
-export default PropertyDetails;
+    )
+}
+export default TourismDetails

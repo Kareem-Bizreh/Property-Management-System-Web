@@ -6,20 +6,18 @@ import map from "../../../assets/shared/map-marker.svg";
 import {useFormContext} from "react-hook-form";
 import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
 import useRegionsStore from "../../../application/state/property/useRegionsStore.jsx";
-import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 import {useEffect} from "react";
 
-const PropertyLocation = ({readOnly}) => {
-    const {property, setProperty} = usePropertyStore();
+const PropertyLocation = ({readOnly, property, setProperty, inputTitle, inputType, fieldName}) => {
     const {regions, setRegions} = useRegionsStore();
     const {register, watch, setValue, getValues} = useFormContext();
 
     useEffect(() => {
-        const currentValue = getValues("floor_number");
-        if (currentValue !== property.floor_number) {
-            setValue("floor_number", property.floor_number);
+        const currentValue = getValues(inputTitle);
+        if (currentValue !== property[inputTitle]) {
+            setValue(inputTitle, property[inputTitle]);
         }
-    }, [property.floor_number, setValue, getValues]);
+    }, [property[inputTitle], setValue, getValues]);
 
     const handleCityChange = (cityName) => {
         const selectedGovernorate = SyrianGovernorates.find((gov) => gov.name === cityName);
@@ -39,17 +37,17 @@ const PropertyLocation = ({readOnly}) => {
         setProperty({...property, region});
     };
 
-    const floor_number = watch('floor_number');
+    const input = watch(inputTitle);
 
     useEffect(() => {
         handleCityChange(property.city?.name);
     }, [])
 
     useEffect(() => {
-        if (floor_number !== property.floor_number) {
-            setProperty({...property, floor_number});
+        if (input !== property[inputTitle]) {
+            setProperty({...property, [inputTitle]: input});
         }
-    }, [floor_number]);
+    }, [input]);
 
     return (
         <div className="flex flex-col">
@@ -90,9 +88,9 @@ const PropertyLocation = ({readOnly}) => {
                 <div className="flex flex-row justify-between flex-wrap w-full gap-6">
                     <div className="flex-1">
                         <TextInput
-                            name={"floor_number"}
-                            title={"الطابق"}
-                            type={"number"}
+                            name={inputTitle}
+                            title={fieldName}
+                            type={inputType}
                             register={register}
                             readOnly={readOnly}
                         />

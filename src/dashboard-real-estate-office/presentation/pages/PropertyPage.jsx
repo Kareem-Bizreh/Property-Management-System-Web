@@ -21,7 +21,10 @@ import {STATUS_OPTIONS} from "../../shared/constants/statusOptions.jsx";
 
 const PropertyPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
-    const {property, setProperty, newImages, deletedImages, resetImageTracking} = usePropertyStore();
+    const {
+        property, setProperty, newImages, deletedImages,
+        resetImageTracking, setNewImages, setDeletedImages
+    } = usePropertyStore();
     const {setCommission} = useCommissionStore();
     const {setMeterPrice} = useMeterPriceStore();
     const {id} = useParams();
@@ -131,13 +134,14 @@ const PropertyPage = () => {
                 <div className="-mb-6">
                     <Header title={"عرض عقار"}/>
                 </div>
-                <PostDetails readOnly={readOnly} options={PropertyTags}/>
+                <PostDetails readOnly={readOnly} options={PropertyTags} setProperty={setProperty} property={property}/>
                 <div className="flex flex-row gap-4 mx-6 flex-wrap">
                     <div className="flex-5">
                         <PropertyDetails readOnly={readOnly} onClick={methods.handleSubmit(onSubmit)}/>
                     </div>
                     <div className="flex-2">
-                        <PropertyImages readOnly={readOnly}/>
+                        <PropertyImages readOnly={readOnly} setProperty={setProperty} property={property}
+                                        setDeletedImages={setDeletedImages} setNewImages={setNewImages}/>
                     </div>
                 </div>
             </div>

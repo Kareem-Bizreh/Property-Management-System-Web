@@ -1,21 +1,21 @@
 import AddCard from '../shared/AddCard.jsx'
-import PropertyRentCard from "../shared/PropertyRentCard.jsx";
 import PropertySaleTouristCard from "../shared/PropertySaleTouristCard.jsx";
 import {touristProperties} from "../../../shared/constants/properties.jsx";
 import EmptyBox from '../../../assets/shared/EmptyBox.svg'
+import useTouristsStore from "../../../application/state/tourism/useTouristsStore.jsx";
 
 const TouristList = () => {
+    const {tourists} = useTouristsStore();
+
     return (
-        <div
-            className="p-4 flex flex-row flex-wrap gap-4 md:gap-6"
-        >
-            <AddCard title={'إضافة مكان سياحي'} />
+        <div className="p-4 flex flex-row flex-wrap gap-4 md:gap-6">
+            <AddCard title={'إضافة مكان سياحي'}/>
             {(touristProperties && touristProperties.length > 0) ? touristProperties.map((property, index) => (
                     <div key={index} className="flex-shrink-0">
-                        <PropertySaleTouristCard property={property} type={'tourist'} />
+                        <PropertySaleTouristCard property={property} type={'tourist'}/>
                     </div>
                 )) :
-                (<img src={EmptyBox} alt="empty" className="flex-shrink-0 mt-20" />)
+                (<img src={EmptyBox} alt="empty" className="flex-shrink-0 mt-20"/>)
             }
         </div>
     )

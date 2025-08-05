@@ -27,6 +27,14 @@ export const PropertyImage = {
     delete: (propertyId, imageId) => `${propertyId}/images/${imageId}`,// DELETE
 };
 
+export const Tourism = {
+    baseURL: 'tourism/',
+    add: '',
+    filters: 'filter',
+    get: (tourismId) => tourismId,
+    edit: (tourismId) => tourismId,
+}
+
 export const PropertyReservation = {
     baseURL: 'property-reservation/',
     getAll: '',

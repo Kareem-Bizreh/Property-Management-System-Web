@@ -8,14 +8,8 @@ import {formatPrice} from "../../../shared/utils/formatPrice.js";
 
 const PropertySaleTouristCard = ({
                                      property: {
-                                         id,
-                                         status,
-                                         postStatus,
-                                         postTitle,
-                                         location,
-                                         area,
-                                         sell_details = {},
-                                         postImage
+                                         id, status, postStatus, postTitle, location,
+                                         area, sell_details = {}, postImage
                                      },
                                      type
                                  }) => {
