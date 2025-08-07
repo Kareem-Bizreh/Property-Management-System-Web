@@ -27,7 +27,8 @@ export const TextField = ({type = 'text', label, value}) => {
                     '& .MuiOutlinedInput-notchedOutline': {
                         border: 'none'
                     },
-                    fontSize: '16px',
+                    fontSize: showPassword ? '20px' : '25px',
+                    fontFamily: showPassword ? 'Cairo' : 'Arial',
                 }}
                 endAdornment={
                     type === 'password' ? (

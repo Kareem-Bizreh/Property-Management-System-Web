@@ -3,7 +3,7 @@ import {addTourism, editTourism, filters, getTourism} from "../../infrastructure
 const TourismRepository = {
     addTourism: async (data) => await addTourism(data),
 
-    filters: async (regionId, status) => await filters(regionId, status),
+    filters: async (city, region, status) => await filters(city, region, status),
 
     getTourism: async (tourismId) => await getTourism(tourismId),
 

@@ -6,7 +6,6 @@ import useTouristStore from "../../application/state/tourism/useTouristStore.jsx
 import useTapStore from "../../application/state/tourism/useTapStore.jsx";
 import {PropertyTags} from "../../shared/constants/propertyPostTag.jsx";
 import {TouristicStatus} from "../../shared/constants/TouristicStatus.jsx";
-import {Tourism} from "../../domain/entities/Tourism.jsx";
 import {getTourism} from "../../application/useCases/tourism/getTourismUseCase.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import {FormProvider, useForm} from "react-hook-form";
@@ -19,6 +18,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import FinancialRecords from "../components/tourism/FinancialRecords.jsx";
+import {upload} from "../../application/useCases/propertyImage/uploadUseCase.jsx";
+import {deleteImage} from "../../application/useCases/propertyImage/deleteUseCase.jsx";
+import {editTourism} from "../../application/useCases/tourism/editTourismUseCase.jsx";
 
 function CustomTabPanel({children, value, index, ...other}) {
     return (
@@ -52,27 +54,25 @@ const TourismPage = () => {
     useEffect(() => {
         setIsLoading(true);
         const loadTourist = async () => {
-            // const {success, response} = await getTourism(id);
-            // if (success) {
-            //     const data = response.data;
-            //     setTourist(data);
-            // } else {
-            //     setTourist(null);
-            //     alert(response);
-            // }
-            setTourist(Tourism.createInitial())
+            const {success, response} = await getTourism(id);
+            if (success) {
+                const data = response.data;
+                setTourist(data);
+            } else {
+                setTourist(null);
+                alert(response);
+            }
             setIsLoading(false);
         }
         loadTourist();
     }, []);
 
     const onSubmit = async () => {
-        /*
         setIsLoading(true);
 
         try {
             // 1. Update the main tourism
-            const {success, response} = await edit(tourist, id);
+            const {success, response} = await editTourism(tourist, id);
 
             if (!success) {
                 alert(response);
@@ -110,7 +110,6 @@ const TourismPage = () => {
         } finally {
             setIsLoading(false);
         }
-        */
     };
 
     const methods = useForm();

@@ -4,52 +4,67 @@ import {TouristicStatus} from "../../shared/constants/TouristicStatus.jsx";
 import {TourismPlaceWaterStatus} from "../../shared/constants/TourismPlaceWaterStatus.jsx";
 import {TourismPlacePoolStatus} from "../../shared/constants/TourismPlacePoolStatus.jsx";
 import {TourismPlaceElectricityStatus} from "../../shared/constants/TourismPlaceElectricityStatus.jsx";
-import FinancialRecords from "../../presentation/components/tourism/FinancialRecords.jsx";
 
 export class Tourism {
     constructor(data) {
         this.id = data.propertyId;
-        this.postTitle = data.postTitle;
-        this.postDescription = data.postDescription;
+        this.postTitle = data.title;
+        this.postDescription = data.description;
         this.postImage = data.postImage;
-        this.postDate = data.postDate;
+        this.postDate = data.date;
         this.postStatus = data.postStatus;
         this.tag = data.tag;
-        this.area = data.area.toFixed(2);
+        this.area = parseFloat(data.area).toFixed(2);
+        this.coordinates = {
+            latitude: data.latitude,
+            longitude: data.longitude,
+        };
         this.status = data.status;
-        this.city = data.city;
-        this.region = data.region;
+        this.city = {
+            id: 1,
+            name: data.city,
+        };
+        this.region = {
+            id: 2,
+            name: data.region,
+        };
         this.location = data.location;
         this.street = data.street;
-        this.room_counts = data.room_counts;
+        this.room_counts = {
+            total: data.roomCount,
+            bedroom: data.bedroomCount,
+            living_room: data.livingRoomCount,
+            kitchen: data.kitchenCount,
+            bathroom: data.bathroomCount,
+        };
         this.price = data.price;
-        this.has_furniture = data.has_furniture;
+        this.has_furniture = data.hasFurniture;
         this.electricity = data.electricity;
         this.water = data.water;
         this.pool = data.pool;
-        this.additional_services = data.additional_services;
-        this.images = data.images;
-        this.financialRecord = [];
+        this.additional_services = data.additionalServices ?? [];
+        this.images = data.images ?? [];
+        this.financialRecord = data.financialRecord ?? [];
     }
 
     static createInitial() {
-        return new Tourism({
+        return {
             postTitle: '',
             postDescription: '',
             postImage: '',
             postDate: '',
-            postStatus: 'مقبول',
+            postStatus: '',
             tag: PropertyTags[0],
             area: 0,
             street: '',
             status: TouristicStatus[0],
             city: {
                 id: 1,
-                name: 'دمشق'
+                name: 'دمشق',
             },
             region: {
                 id: 1,
-                name: 'المزة'
+                name: 'المزة',
             },
             location: 'دمشق, المزة',
             room_counts: {
@@ -57,7 +72,7 @@ export class Tourism {
                 bedroom: 0,
                 living_room: 0,
                 kitchen: 0,
-                bathroom: 0
+                bathroom: 0,
             },
             price: 0,
             has_furniture: PropertyFurnishingTypes[0],
@@ -67,12 +82,44 @@ export class Tourism {
             additional_services: [],
             images: [],
             financialRecord: [],
-        });
+        };
     }
 
     static toFormData(tourism) {
-        return {
-            postDescription: tourism.postDescription,
-        };
+        const formData = new FormData();
+
+        if (tourism.postImage instanceof File) {
+            formData.append("postImage", tourism.postImage);
+        }
+
+        formData.append("status", tourism.status);
+
+        formData.append("post[description]", tourism.postDescription ?? '');
+        formData.append("post[tag]", tourism.tag ?? '');
+
+        formData.append("public_information[region_id]", tourism.region?.id?.toString() ?? '0');
+        formData.append("public_information[room_count]", tourism.room_counts?.total?.toString() ?? '0');
+        formData.append("public_information[latitude]", tourism.coordinates?.latitude?.toString() ?? '0');
+        formData.append("public_information[longitude]", tourism.coordinates?.longitude?.toString() ?? '0');
+        formData.append("public_information[area]", tourism.area?.toString() ?? '0');
+        formData.append("public_information[has_furniture]", tourism.has_furniture ?? '');
+        formData.append("public_information[living_room_count]", tourism.room_counts?.living_room?.toString() ?? '0');
+        formData.append("public_information[kitchen_count]", tourism.room_counts?.kitchen?.toString() ?? '0');
+        formData.append("public_information[bathroom_count]", tourism.room_counts?.bathroom?.toString() ?? '0');
+        formData.append("public_information[bedroom_count]", tourism.room_counts?.bedroom?.toString() ?? '0');
+
+        formData.append("tourism_place[price]", tourism.price?.toString() ?? '0');
+        formData.append("tourism_place[street]", tourism.street ?? '');
+        formData.append("tourism_place[electricity]", tourism.electricity ?? '');
+        formData.append("tourism_place[water]", tourism.water ?? '');
+        formData.append("tourism_place[pool]", tourism.pool ?? '');
+
+        tourism.additional_services?.forEach((service, index) => {
+            if (service) {
+                formData.append(`tourism_place[additional_services][${index}]`, service);
+            }
+        });
+
+        return formData;
     }
 }

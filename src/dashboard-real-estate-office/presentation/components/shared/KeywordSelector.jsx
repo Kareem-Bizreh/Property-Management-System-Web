@@ -29,7 +29,7 @@ const KeywordSelector = ({options = [], select = [], onChange, title, readOnly =
 
     return (
         <div
-            className="flex flex-col min-h-[97px] px-8 py-3 gap-4"
+            className="flex flex-col min-h-[97px] px-8 py-3 gap-4 select-none"
             style={{
                 fontFamily: 'Cairo',
                 fontWeight: 700,

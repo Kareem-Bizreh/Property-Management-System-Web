@@ -27,11 +27,11 @@ const SelectInput = ({title, options = [], onChange, maxWidth, height, style = {
     };
 
     return (
-        <div ref={containerRef} className="relative h-full w-full" style={{maxWidth, height}}>
+        <div ref={containerRef} className="relative w-full select-none" style={{maxWidth}}>
             <div className="relative w-full h-full">
                 <button
                     onClick={() => setOpen((o) => !readOnly ? !o : false)}
-                    className="min-w-full h-full flex flex-row flex-nowrap justify-between items-center py-2 px-3 rounded-[16px] relative"
+                    className="min-w-full min-h-full h-auto flex flex-row flex-nowrap justify-between items-center px-3 rounded-[16px] relative"
                     style={{
                         backgroundColor: BACKGROUND_COLORS.app,
                         color: TEXT_COLORS.select,
@@ -39,8 +39,9 @@ const SelectInput = ({title, options = [], onChange, maxWidth, height, style = {
                         fontFamily: "Cairo",
                         fontWeight: 700,
                         fontSize: "16px",
-                        lineHeight: "100%",
+                        lineHeight: "25px",
                         letterSpacing: "3%",
+                        minHeight: height,
                         ...style,
                     }}
                 >

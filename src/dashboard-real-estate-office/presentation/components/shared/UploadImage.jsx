@@ -38,7 +38,7 @@ const UploadImage = ({ title, image, readOnly = false, onChange, onDelete }) => 
     };
 
     return (
-        <div className="relative w-[252px] flex flex-col h-full gap-4">
+        <div className="relative w-[252px] flex flex-col h-full gap-4 select-none">
             <span
                 style={{
                     color: TEXT_COLORS.secondary,

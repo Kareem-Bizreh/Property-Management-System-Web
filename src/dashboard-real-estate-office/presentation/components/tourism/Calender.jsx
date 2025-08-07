@@ -22,6 +22,7 @@ const Calender = () => {
             <Calendar
                 onClickDay={toggleDate}
                 onChange={setDate}
+                minDetail="decade"
                 value={date}
                 formatShortWeekday={(locale, date) =>
                     ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'][(date.getDay() + 6) % 7]}

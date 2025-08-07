@@ -9,6 +9,8 @@ import useTouristStore from "../../application/state/tourism/useTouristStore.jsx
 import {useEffect} from "react";
 import {Tourism} from "../../domain/entities/Tourism.jsx";
 import TourismDetails from "../components/tourism/TourismDetails.jsx";
+import {addTourism} from "../../application/useCases/tourism/addTourismUseCase.jsx";
+import {upload} from "../../application/useCases/propertyImage/uploadUseCase.jsx";
 
 const AddTouristPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
@@ -21,12 +23,11 @@ const AddTouristPage = () => {
     }, []);
 
     const onSubmit = async () => {
-        /*
         setIsLoading(true)
 
         try {
             // 1. add the tourist place
-            const {success, response} = await add(tourist);
+            const {success, response} = await addTourism(tourist);
 
             if (!success) {
                 alert(response);
@@ -37,7 +38,6 @@ const AddTouristPage = () => {
             if (newImages.length > 0) {
                 const formData = new FormData();
                 newImages.forEach((file) => formData.append("images", file));
-
                 const uploadResponse = await upload(response.data.id, formData);
                 if (!uploadResponse.success) {
                     alert("فشل في رفع الصور");
@@ -53,12 +53,12 @@ const AddTouristPage = () => {
         } finally {
             setIsLoading(false);
         }
-        */
     }
 
     const methods = useForm();
 
-    if (isLoading || !tourist) return <Spinner/>;
+
+    if (isLoading || !tourist || tourist.id) return <Spinner/>;
 
     return (
         <FormProvider {...methods}>

@@ -48,7 +48,7 @@ const Items = ({isSidebarOpen, items}) => {
                                 <img
                                     alt={item.name}
                                     src={item.icon}
-                                    className="w-[25px] h-[25px] transition-[filter] duration-200 ease-in-out ml-3 mr-2"
+                                    className="w-[25px] h-[25px] transition-[filter] duration-200 ease-in-out ml-3 mr-2 select-none"
                                     style={{
                                         filter: isActive ? 'invert(1) brightness(2)' : 'none',
                                     }}

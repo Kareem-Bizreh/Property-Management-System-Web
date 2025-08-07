@@ -1,16 +1,18 @@
 import TourismRepository from "../../../domain/repositories/tourismRepository.jsx";
-import {Tourism} from "../../../domain/entities/Tourism.jsx";
-import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
 
-export const getFilterTourisms = async ({city, region, status}) => {
+export const getTourismFilters = async (city, region, status) => {
     try {
-        const cityObj = SyrianGovernorates.find((gov) => gov.name === city);
-
-        const regionObj = cityObj?.regions.find((reg) => reg.name === region);
-        const regionId = regionObj ? regionObj.id : null;
-
-        const response = await TourismRepository.filters(regionId, status);
-        response.data = response.data.map((item) => new Tourism(item));
+        const response = await TourismRepository.filters(city, region, status);
+        response.data.sort((a, b) => a.id - b.id);
+        response.data = response.data.map((item) => ({
+            id: item.id,
+            postTitle: item.title,
+            postImage: item.postImage,
+            location: item.location,
+            area: item.area,
+            price: item.price,
+            postStatus: item.status,
+        }));
 
         return {success: true, response: response};
     } catch (error) {

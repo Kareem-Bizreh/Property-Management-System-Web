@@ -9,7 +9,7 @@ import {formatPrice} from "../../../shared/utils/formatPrice.js";
 const PropertySaleTouristCard = ({
                                      property: {
                                          id, status, postStatus, postTitle, location,
-                                         area, sell_details = {}, postImage
+                                         area, sell_details = {}, postImage , price
                                      },
                                      type
                                  }) => {
@@ -141,7 +141,7 @@ const PropertySaleTouristCard = ({
                         letterSpacing: '3%'
                     }}
                 >
-                {formatPrice(sell_details.selling_price)} $
+                {formatPrice(sell_details.selling_price || price)} $
             </span>
             </div>
         </Link>

@@ -4,7 +4,7 @@ import {TEXT_COLORS} from "../../colors.jsx";
 const LogoCard = ({ width, height, top, fontSize }) => {
     return (
         <div
-            className="absolute flex flex-col items-center right-1/2 transform translate-x-1/2"
+            className="absolute flex flex-col items-center right-1/2 transform translate-x-1/2 select-none"
             style={{
                 width: width,
                 height: height,

@@ -10,9 +10,10 @@ export const addTourism = async (data) => {
     return response.data;
 }
 
-export const filters = async (regionId, status) => {
+export const filters = async (city, region, status) => {
     const params = {};
-    if (regionId) params.regionId = regionId;
+    if (city) params.city = city;
+    if (region) params.region = region;
     if (status) params.status = status;
 
     const response = await axiosInstance.get(

@@ -9,6 +9,7 @@ import useRegionStore from "../../application/state/tourism/useRegionStore.jsx";
 import useStatusStore from "../../application/state/tourism/useStatusStore.jsx";
 import useTouristsStore from "../../application/state/tourism/useTouristsStore.jsx";
 import {useForm} from "react-hook-form";
+import {getTourismFilters} from "../../application/useCases/tourism/getTourismFiltersUseCase.jsx";
 
 const MyTouristsPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
@@ -21,13 +22,13 @@ const MyTouristsPage = () => {
     useEffect(() => {
         setIsLoading(true);
         const fetchData = async () => {
-            // const {success, response} = await getFilterTourists(city, region, status);
-            // if (success) {
-            //     setTourists(response.data);
-            // } else {
-            //     setTourists([]);
-            //     alert(response);
-            // }
+            const {success, response} = await getTourismFilters(city, region, status);
+            if (success) {
+                setTourists(response.data);
+            } else {
+                setTourists([]);
+                alert(response);
+            }
             setIsLoading(false);
         }
 

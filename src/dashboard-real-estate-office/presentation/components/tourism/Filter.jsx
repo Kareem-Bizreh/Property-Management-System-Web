@@ -2,10 +2,11 @@ import {BACKGROUND_COLORS} from "../../../../shared/colors.jsx";
 import SearchBar from "../shared/SearchBar.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
 import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
-import {PropertyPostStatus, STATUS_OPTIONS} from "../../../shared/constants/statusOptions.jsx";
+import {PropertyPostStatus} from "../../../shared/constants/statusOptions.jsx";
 import useCityStore from "../../../application/state/tourism/useCityStore.jsx";
 import useRegionStore from "../../../application/state/tourism/useRegionStore.jsx";
 import useStatusStore from "../../../application/state/tourism/useStatusStore.jsx";
+import {TouristicStatus} from "../../../shared/constants/TouristicStatus.jsx";
 
 const Filter = ({register}) => {
     const {city, setCity} = useCityStore();
@@ -29,7 +30,7 @@ const Filter = ({register}) => {
                 className="flex flex-wrap gap-4 md:gap-6 items-center"
                 style={{minHeight: "48px"}}
             >
-                <SearchBar register={register}/>
+                {/*<SearchBar register={register}/>*/}
                 <SelectInput
                     key={1}
                     title={city || "المحافظة"}
@@ -49,7 +50,7 @@ const Filter = ({register}) => {
                 <SelectInput
                     key={2}
                     title={status || "حالة"}
-                    options={["إلغاء", ...STATUS_OPTIONS, ...PropertyPostStatus]}
+                    options={["إلغاء", ...TouristicStatus, ...PropertyPostStatus]}
                     maxWidth={"124px"}
                     height={"48px"}
                     onChange={setStatus}
