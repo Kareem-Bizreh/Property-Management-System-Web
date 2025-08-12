@@ -1,10 +1,10 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import TextInput from "./TextInput.jsx";
+import TextInput from "../../../../shared/presentation/components/TextInput.jsx";
 import UploadImage from "./UploadImage.jsx";
-import KeywordSelector from "./KeywordSelector.jsx";
+import KeywordSelector from "../../../../shared/presentation/components/KeywordSelector.jsx";
 import {useFormContext} from "react-hook-form";
 import {useEffect} from "react";
-import {formatDate} from "../../../shared/utils/formatDate.js";
+import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 
 const PostDetails = ({readOnly = false, options, property, setProperty}) => {
     const {register, watch, setValue, getValues} = useFormContext();

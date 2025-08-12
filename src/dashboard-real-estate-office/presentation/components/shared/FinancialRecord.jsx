@@ -1,7 +1,7 @@
 import {useRef} from "react";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import {formatDate} from "../../../shared/utils/formatDate.js";
-import {formatPrice} from "../../../shared/utils/formatPrice.js";
+import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
+import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
 
 const FinancialRecord = ({

@@ -1,7 +1,7 @@
 import {useState, useRef, useEffect} from "react";
 import {ChevronDown} from "lucide-react";
 import {motion, AnimatePresence} from "framer-motion";
-import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
+import {BACKGROUND_COLORS, TEXT_COLORS} from "../../colors.jsx";
 
 const SelectInput = ({title, options = [], onChange, maxWidth, height, style = {}, readOnly = false}) => {
     const [open, setOpen] = useState(false);

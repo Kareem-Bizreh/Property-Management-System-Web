@@ -1,6 +1,6 @@
 import Reservation from "./Reservation.jsx";
 import {Link} from "react-router";
-import TableHead from "./TableHead.jsx";
+import TableHead from "../../../../shared/presentation/components/TableHead.jsx";
 import useReservationsStore from "../../../application/state/reservation/useReservationsStore.jsx";
 
 const Reservations = () => {

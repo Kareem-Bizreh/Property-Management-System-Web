@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import Button from "@mui/material/Button";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import Header from "./Header.jsx";
+import Header from "../../../../shared/presentation/components/Header.jsx";
 import Popup from "reactjs-popup";
 import usePropertiesStore from "../../../application/state/property/usePropertiesStore.jsx";
 import {getFilterProperties} from "../../../application/useCases/residentialOffice/getFilterPropertiesUseCase.jsx";

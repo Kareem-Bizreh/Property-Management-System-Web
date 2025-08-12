@@ -1,5 +1,5 @@
-import search from "../../../assets/shared/search-normal.svg";
-import { BACKGROUND_COLORS } from "../../../../shared/colors.jsx";
+import search from "../../../dashboard-real-estate-office/assets/shared/search-normal.svg";
+import { BACKGROUND_COLORS } from "../../colors.jsx";
 
 const SearchBar = ({register}) => {
 

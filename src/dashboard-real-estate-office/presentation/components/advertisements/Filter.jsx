@@ -1,5 +1,5 @@
 import {BACKGROUND_COLORS} from "../../../../shared/colors.jsx";
-import SelectInput from "../shared/SelectInput.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import useTypeStore from "../../../application/state/advertisement/useTypeStore.jsx";
 import {AdType} from "../../../shared/constants/AdType.jsx";
 

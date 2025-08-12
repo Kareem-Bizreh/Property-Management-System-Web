@@ -1,4 +1,4 @@
-import Header from "../components/shared/Header.jsx";
+import Header from "../../../shared/presentation/components/Header.jsx";
 import Filter from "../components/advertisements/Filter.jsx";
 import AdCreationOptions from "../components/advertisements/AdCreationOptions.jsx";
 import FinancialRecords from "../components/advertisements/FinancialRecords.jsx";

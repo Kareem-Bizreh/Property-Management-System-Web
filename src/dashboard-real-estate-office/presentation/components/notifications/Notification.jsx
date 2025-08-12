@@ -1,6 +1,6 @@
 import bell from '../../../assets/notifications/bell-ringing.svg'
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import {formatDate} from "../../../shared/utils/formatDate.js";
+import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 
 const Notification = ({notification: {id, sent_at, source, title, body}}) => {
     return (

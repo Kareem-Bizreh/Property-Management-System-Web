@@ -1,9 +1,9 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import Header from "../shared/Header.jsx";
+import Header from "../../../../shared/presentation/components/Header.jsx";
 import Button from "@mui/material/Button";
 import Popup from "reactjs-popup";
 import UploadImage from "../shared/UploadImage.jsx";
-import {formatPrice} from "../../../shared/utils/formatPrice.js";
+import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import {useForm} from "react-hook-form";
 import useImageStore from "../../../application/state/advertisement/useImageStore.jsx";
 import useImageAdOpenStore from "../../../application/state/advertisement/useImageAdOpenStore.jsx";

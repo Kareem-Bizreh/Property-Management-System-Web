@@ -1,10 +1,10 @@
 import {BACKGROUND_COLORS} from "../../../../shared/colors.jsx";
-import SearchBar from "../shared/SearchBar.jsx";
-import SelectInput from "../shared/SelectInput.jsx";
+import SearchBar from "../../../../shared/presentation/components/SearchBar.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import useCityStore from "../../../application/state/service-provider/useCityStore.jsx";
 import useRegionStore from "../../../application/state/service-provider/useRegionStore.jsx";
 import useTypeStore from "../../../application/state/service-provider/useTypeStore.jsx";
-import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 import {ServiceProviderType} from "../../../shared/constants/ServiceProviderType.jsx";
 
 const Filter = ({register}) => {

@@ -3,7 +3,7 @@ import useTouristStore from "../../../application/state/tourism/useTouristStore.
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import Header1 from "../addProperty/Header1.jsx";
 import Header2 from "../addProperty/Header2.jsx";
-import SelectInput from "../shared/SelectInput.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import {STATUS_OPTIONS} from "../../../shared/constants/statusOptions.jsx";
 import PropertyLocation from "../addProperty/PropertyLocation.jsx";
 import RoomDetails from "../shared/RoomDetails.jsx";

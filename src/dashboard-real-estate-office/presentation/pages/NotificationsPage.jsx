@@ -1,4 +1,4 @@
-import Header from "../components/shared/Header.jsx";
+import Header from "../../../shared/presentation/components/Header.jsx";
 import Notification from "../components/notifications/Notification.jsx";
 import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";

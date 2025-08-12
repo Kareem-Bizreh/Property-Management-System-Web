@@ -2,8 +2,8 @@ import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import placeMarker from "../../../assets/user-requests/place-marker.svg"
 import budgetIcon from '../../../assets/user-requests/budget.svg'
 import {Clock} from "lucide-react";
-import {formatPrice} from "../../../shared/utils/formatPrice.js";
-import {formatDate} from "../../../shared/utils/formatDate.js";
+import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
+import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 import PropertySuggestion from "./PropertySuggestion.jsx";
 import Button from "@mui/material/Button";
 import useSuggestionOpenStore from "../../../application/state/userPost/useSuggestionOpenStore.jsx";

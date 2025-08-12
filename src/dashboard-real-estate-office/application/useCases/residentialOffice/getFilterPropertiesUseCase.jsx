@@ -1,6 +1,6 @@
 import ResidentialOfficeRepository from "../../../domain/repositories/residentialOfficeRepository.jsx";
 import {Property} from "../../../domain/entities/Property.jsx";
-import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 
 export const getFilterProperties = async ({city, region, listingType, status}) => {
     try {

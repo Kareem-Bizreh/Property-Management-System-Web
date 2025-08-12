@@ -3,7 +3,7 @@ import {Link} from "react-router";
 import star from '../../../assets/shared/star.svg'
 import locationIcon from "../../../assets/cards/location.svg";
 import property_rent from "../../../assets/cards/property_rent.png";
-import {formatPrice} from "../../../shared/utils/formatPrice.js";
+import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 
 const PropertyRentCard = ({property: {id, postTitle, rate, location, rent_details, postStatus, postImage, status}}) => {
     const finalStatus = postStatus !== "مقبول" ? postStatus : status;

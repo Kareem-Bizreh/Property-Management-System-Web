@@ -1,5 +1,5 @@
 import ServiceProviderRepository from "../../../domain/repositories/serviceProviderRepository.jsx";
-import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 
 export const getFilterServiceProviders = async (city, region, career) => {
     try {

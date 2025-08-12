@@ -1,9 +1,9 @@
 import {BACKGROUND_COLORS} from "../../../../shared/colors.jsx";
-import SelectInput from "../shared/SelectInput.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import useCityStore from "../../../application/state/reservation/useCityStore.jsx";
 import useRegionStore from "../../../application/state/reservation/useRegionStore.jsx";
 import useStatusStore from "../../../application/state/reservation/useStatusStore.jsx";
-import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 import {PurchaseStatus} from "../../../shared/constants/PurchaseStatus.jsx";
 import usePropertyReservationOpenStore
     from "../../../application/state/reservation/usePropertyReservationOpenStore.jsx";

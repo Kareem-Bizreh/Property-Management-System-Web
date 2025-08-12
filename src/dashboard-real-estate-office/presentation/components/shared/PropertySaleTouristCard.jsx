@@ -4,7 +4,7 @@ import property_sale from "../../../assets/cards/property_sale.jpg"
 import property_tourist from "../../../assets/cards/property_tourist.jpg"
 import map from "../../../assets/cards/map.svg"
 import spaceIcon from "../../../assets/cards/space.svg"
-import {formatPrice} from "../../../shared/utils/formatPrice.js";
+import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 
 const PropertySaleTouristCard = ({
                                      property: {

@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import Header from "../shared/Header.jsx";
+import Header from "../../../../shared/presentation/components/Header.jsx";
 import Popup from "reactjs-popup";
 import useSuggestionOpenStore from "../../../application/state/userPost/useSuggestionOpenStore.jsx";
 import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";

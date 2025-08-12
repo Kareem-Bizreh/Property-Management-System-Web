@@ -6,7 +6,7 @@ import RoomDetails from "../shared/RoomDetails.jsx";
 import PaymentDetails from "./PaymentDetails.jsx";
 import Button from "@mui/material/Button";
 import Header2 from "../addProperty/Header2.jsx";
-import SelectInput from "../shared/SelectInput.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import {useNavigate} from "react-router";
 import {STATUS_OPTIONS} from "../../../shared/constants/statusOptions.jsx";
 import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";

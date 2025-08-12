@@ -3,45 +3,24 @@ import {useParams} from "react-router";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/colors.jsx";
 import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
 import useTouristStore from "../../application/state/tourism/useTouristStore.jsx";
-import useTapStore from "../../application/state/tourism/useTapStore.jsx";
 import {PropertyTags} from "../../shared/constants/propertyPostTag.jsx";
 import {TouristicStatus} from "../../shared/constants/TouristicStatus.jsx";
 import {getTourism} from "../../application/useCases/tourism/getTourismUseCase.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import {FormProvider, useForm} from "react-hook-form";
-import Header from "../components/shared/Header.jsx";
+import Header from "../../../shared/presentation/components/Header.jsx";
 import PostDetails from "../components/shared/PostDetails.jsx";
 import TourismDetails from "../components/tourism/TourismDetails.jsx";
 import PropertyImages from "../components/shared/PropertyImages.jsx";
 import Calendar from '../components/tourism/Calender.jsx';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import FinancialRecords from "../components/tourism/FinancialRecords.jsx";
 import {upload} from "../../application/useCases/propertyImage/uploadUseCase.jsx";
 import {deleteImage} from "../../application/useCases/propertyImage/deleteUseCase.jsx";
 import {editTourism} from "../../application/useCases/tourism/editTourismUseCase.jsx";
-
-function CustomTabPanel({children, value, index, ...other}) {
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`tabpanel-${index}`}
-            aria-labelledby={`tab-${index}`}
-            {...other}
-        >
-            {value === index && <Box sx={{p: 3}}>{children}</Box>}
-        </div>
-    );
-}
-
-function a11yProps(index) {
-    return {
-        id: `tab-${index}`,
-        'aria-controls': `tabpanel-${index}`,
-    };
-}
+import {Tabs} from "../../../shared/presentation/components/Tabs.jsx";
+import {CustomTabPanel} from "../../../shared/presentation/components/Tabs.jsx";
+import useTabStore from "../../application/state/tourism/useTabStore.jsx";
 
 const TourismPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
@@ -114,71 +93,23 @@ const TourismPage = () => {
 
     const methods = useForm();
 
-    const {tap, setTap} = useTapStore();
-
-    const handleTabChange = (event, newValue) => setTap(newValue);
+    const {tab, setTab} = useTabStore();
 
     if (isLoading || !tourist) return <Spinner/>;
 
     const readOnly = tourist.postStatus === "قيد الانتظار" || tourist.status === TouristicStatus[3];
 
-    const tapSx = {
-        width: "45%",
-        minWidth: "265px",
-        maxWidth: 'none',
-        height: "70px",
-        padding: '10px',
-        borderWidth: "3px",
-        borderRadius: "25px",
-        whiteSpace: "nowrap",
-        fontSize: '24px',
-        fontWeight: 700,
-        lineHeight: '100%',
-        letterSpacing: '3%',
-        textAlign: 'center',
-        borderStyle: 'solid',
-        transition: 'all 0.3s ease',
-        '&.Mui-selected': {
-            color: TEXT_COLORS.primary,
-            backgroundColor: BACKGROUND_COLORS.app,
-            borderColor: BACKGROUND_COLORS.button,
-        },
-        '&:not(.Mui-selected)': {
-            color: TEXT_COLORS.select,
-            backgroundColor: BACKGROUND_COLORS.picture,
-            borderColor: TEXT_COLORS.secondary,
-        },
-    };
-
+    const tabs = ['تفاصيل المكان', 'الحجوزات والسجل المالي'];
 
     return (
         <Box>
             <Header title="عرض مكان سياحي"/>
             {/* Tabs */}
-            <Tabs
-                value={tap}
-                onChange={handleTabChange}
-                aria-label="tourism tabs"
-                TabIndicatorProps={{style: {display: 'none'}}}
-                sx={{
-                    width: '100%',
-                    minHeight: '85px',
-                    backgroundColor: BACKGROUND_COLORS.table,
-                    '& .MuiTabs-flexContainer': {
-                        flexWrap: 'wrap',
-                        justifyContent: 'center',
-                        gap: '16px',
-                        padding: '8px 0',
-                    },
-                }}
-            >
-                <Tab label="تفاصيل المكان" {...a11yProps(0)} sx={tapSx}/>
-                <Tab label="الحجوزات والسجل المالي" {...a11yProps(1)} sx={tapSx}/>
-            </Tabs>
-
+            <Tabs tabs={tabs} tabHeight={'70px'} borderRadius={'25px'} border={true}
+            bgHeight={'85px'} minWidth={"265px"} tab={tab} setTab={setTab}/>
 
             {/* Tab Panel 1 */}
-            <CustomTabPanel value={tap} index={0}>
+            <CustomTabPanel value={tab} index={0}>
                 <FormProvider {...methods}>
                     <div className="flex flex-col gap-4">
                         <PostDetails
@@ -209,7 +140,7 @@ const TourismPage = () => {
             </CustomTabPanel>
 
             {/* Tab Panel 2 */}
-            <CustomTabPanel value={tap} index={1}>
+            <CustomTabPanel value={tab} index={1}>
                 <div className="flex flex-col items-center gap-8">
                     <Calendar/>
                     <FinancialRecords/>

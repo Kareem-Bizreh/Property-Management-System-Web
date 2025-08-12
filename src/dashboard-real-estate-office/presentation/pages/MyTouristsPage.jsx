@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import Header from "../components/shared/Header.jsx";
+import Header from "../../../shared/presentation/components/Header.jsx";
 import Filter from "../components/tourism/Filter.jsx"
 import TouristList from "../components/tourism/TouristList.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";

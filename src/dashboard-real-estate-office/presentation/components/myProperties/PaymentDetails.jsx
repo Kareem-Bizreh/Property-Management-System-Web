@@ -1,13 +1,13 @@
 import Header2 from "../addProperty/Header2.jsx";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import SelectInput from "../shared/SelectInput.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import {useEffect, useState} from "react";
 import {motion, AnimatePresence} from "framer-motion";
 import {useFormContext} from "react-hook-form";
 import {LISTING_TYPE_OPTIONS} from "../../../shared/constants/listingTypeOptions.jsx";
 import useCommissionStore from "../../../application/state/office/useCommissionStore.jsx";
 import useMeterPriceStore from "../../../application/state/residentialOffice/useMeterPriceStore.jsx";
-import {formatPrice} from "../../../shared/utils/formatPrice.js";
+import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 
 const PaymentDetails = ({readOnly = false}) => {

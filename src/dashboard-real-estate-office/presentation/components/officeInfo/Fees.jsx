@@ -1,9 +1,9 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import Header from "./Header.jsx";
 import {useFormContext} from "react-hook-form";
-import TextInput from "../shared/TextInput.jsx";
-import SelectInput from "../shared/SelectInput.jsx";
-import {formatPrice} from "../../../shared/utils/formatPrice.js";
+import TextInput from "../../../../shared/presentation/components/TextInput.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
+import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
 import {useEffect} from "react";
 import useOfficeStore from "../../../application/state/office/useOfficeStore.jsx";

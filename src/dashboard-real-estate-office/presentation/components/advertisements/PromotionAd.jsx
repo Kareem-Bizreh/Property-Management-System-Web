@@ -1,10 +1,10 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import Header from "../shared/Header.jsx";
-import {formatPrice} from "../../../shared/utils/formatPrice.js";
+import Header from "../../../../shared/presentation/components/Header.jsx";
+import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
 import Popup from "reactjs-popup";
 import {useForm} from "react-hook-form";
-import SelectInput from "../shared/SelectInput.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import usePromotionAdOpenStore from "../../../application/state/advertisement/usePromotionAdOpenStore.jsx";
 import usePropertyTypeStore from "../../../application/state/advertisement/usePropertyTypeStore.jsx";
 import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";

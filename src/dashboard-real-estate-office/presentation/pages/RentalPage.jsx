@@ -1,6 +1,6 @@
 import {useParams} from "react-router";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/colors.jsx";
-import Header from "../components/shared/Header.jsx";
+import Header from "../../../shared/presentation/components/Header.jsx";
 import TableHead from "../components/rentals/TableHead.jsx";
 import FinancialRecord from "../components/shared/FinancialRecord.jsx";
 import Rental from "../components/rentals/Rental.jsx";

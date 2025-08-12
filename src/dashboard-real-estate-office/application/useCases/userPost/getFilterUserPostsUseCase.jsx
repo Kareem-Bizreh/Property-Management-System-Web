@@ -1,5 +1,5 @@
 import UserPostRepository from "../../../domain/repositories/userPostRepository.jsx";
-import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 
 export const getFilterUserPosts = async (cityId, region, type) => {
     try {

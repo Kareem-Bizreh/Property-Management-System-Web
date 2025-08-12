@@ -1,5 +1,5 @@
 import {BACKGROUND_COLORS} from "../../../../shared/colors.jsx";
-import SelectInput from "../shared/SelectInput.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import useRegionStore from "../../../application/state/userPost/useRegionStore.jsx";
 import useTypeStore from "../../../application/state/userPost/useTypeStore.jsx";
 import {UserPostTypes} from "../../../shared/constants/UserPostTypes.jsx";

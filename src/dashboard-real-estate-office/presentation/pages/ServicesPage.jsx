@@ -1,4 +1,4 @@
-import Header from "../components/shared/Header.jsx";
+import Header from "../../../shared/presentation/components/Header.jsx";
 import Filter from "../components/services/Filter.jsx";
 import Services from "../components/services/Services.jsx";
 import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";

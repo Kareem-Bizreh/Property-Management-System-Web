@@ -1,5 +1,5 @@
 import RentalRepository from "../../../domain/repositories/rentalRepository.jsx";
-import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 import {Rental} from "../../../domain/entities/Rental.jsx";
 
 export const getFilterRentals = async (city, region, status) => {

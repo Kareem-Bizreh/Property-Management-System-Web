@@ -5,7 +5,7 @@ import side from "../../../assets/properties/side.svg";
 import furnishings from "../../../assets/properties/furnishings.svg";
 import rooms from "../../../assets/properties/rooms.svg";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import SelectInput from "../shared/SelectInput.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import {useFormContext} from "react-hook-form";
 import {PropertyOwnershipTypes} from "../../../shared/constants/propertyOwnershipType.jsx";
 import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";

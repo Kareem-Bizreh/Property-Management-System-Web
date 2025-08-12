@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import Header from "../components/shared/Header.jsx";
+import Header from "../../../shared/presentation/components/Header.jsx";
 import Filter from "../components/reservation/Filter.jsx";
 import Reservations from "../components/reservation/Reservations.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";

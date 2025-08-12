@@ -1,14 +1,14 @@
 import mapIcon from "../../../assets/shared/map-marker.svg";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import TextInput from "../shared/TextInput.jsx";
-import SelectInput from "../shared/SelectInput.jsx";
+import TextInput from "../../../../shared/presentation/components/TextInput.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import {useFormContext} from "react-hook-form";
 import Button from "@mui/material/Button";
 import facebook from "../../../assets/office-info/facebook.svg"
 import whatsapp from "../../../assets/office-info/whatsapp.svg"
 import instagram from "../../../assets/office-info/instagram.svg"
 import useOfficeStore from "../../../application/state/office/useOfficeStore.jsx";
-import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 import {useEffect} from "react";
 
 const GeneralDetails = ({onEdit}) => {

@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import Header from "../components/shared/Header.jsx";
+import Header from "../../../shared/presentation/components/Header.jsx";
 import Filter from "../components/myProperties/Filter.jsx";
 import PropertiesList from "../components/myProperties/PropertiesList.jsx";
 import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";

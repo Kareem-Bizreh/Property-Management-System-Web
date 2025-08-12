@@ -1,6 +1,6 @@
 import ReservationRepository from "../../../domain/repositories/reservationsRepository.jsx";
 import {Reservation} from "../../../domain/entities/Reservation.jsx";
-import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 
 export const getFilterReservation = async (city, region, status) => {
     try {

@@ -1,4 +1,4 @@
-import Header from "../components/shared/Header.jsx";
+import Header from "../../../shared/presentation/components/Header.jsx";
 import PostDetails from "../components/shared/PostDetails.jsx";
 import PropertyImages from "../components/shared/PropertyImages.jsx";
 import PropertyDetails from "../components/myProperties/PropertyDetails.jsx";

@@ -1,6 +1,6 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import {formatPrice} from "../../../shared/utils/formatPrice.js";
-import {formatDate} from "../../../shared/utils/formatDate.js";
+import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
+import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
 import {Spinner} from "../../../../shared/presentation/components/Spinner.jsx";
 import img from "../../../assets/cards/property_sale.jpg";

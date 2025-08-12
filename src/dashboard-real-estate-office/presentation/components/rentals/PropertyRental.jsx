@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import Header from "../shared/Header.jsx";
-import {formatPrice} from "../../../shared/utils/formatPrice.js";
+import Header from "../../../../shared/presentation/components/Header.jsx";
+import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import Popup from "reactjs-popup";
 import usePropertyRentalOpenStore from "../../../application/state/rental/usePropertyRentalOpenStore.jsx";
 import usePropertySelectionOpenStore from "../../../application/state/shared/usePropertySelectionOpenStore.jsx";

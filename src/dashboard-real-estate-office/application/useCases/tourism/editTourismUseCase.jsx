@@ -1,6 +1,6 @@
 import TourismRepository from "../../../domain/repositories/tourismRepository.jsx";
 import {Tourism} from "../../../domain/entities/Tourism.jsx";
-import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 
 export const editTourism = async (tourism, id) => {
     try {

@@ -1,4 +1,4 @@
-import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
+import {BACKGROUND_COLORS, TEXT_COLORS} from "../../colors.jsx";
 
 const Header = ({title}) => {
     return (

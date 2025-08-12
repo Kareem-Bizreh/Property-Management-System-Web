@@ -1,8 +1,8 @@
-import {TEXT_COLORS} from "../../../../shared/colors.jsx";
+import {TEXT_COLORS} from "../../colors.jsx";
 
-const TableHead = () => {
+const TableHead = ({titles}) => {
     return (
-        <div className="h-auto flex flex-row flex-wrap justify-between items-center gap-6">
+        <div className="h-auto flex flex-row flex-wrap justify-between items-center gap-6 whitespace-nowrap">
             {titles.map((title, index) => (
 
                 <span className="h-[20px]"
@@ -25,13 +25,3 @@ const TableHead = () => {
     )
 }
 export default TableHead
-
-const titles = [
-    {name: 'ID', width: '73px'},
-    {name: 'صورة', width: '133px'},
-    {name: 'تاريخ الحجز', width: '110px'},
-    {name: 'العنوان', width: '170px'},
-    {name: 'المشتري', width: '170px'},
-    {name: 'المبلغ', width: '110px'},
-    {name: 'الحالة', width: '144px'}
-];

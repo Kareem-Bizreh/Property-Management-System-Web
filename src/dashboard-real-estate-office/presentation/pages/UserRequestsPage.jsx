@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import Header from "../components/shared/Header.jsx";
+import Header from "../../../shared/presentation/components/Header.jsx";
 import Filter from "../components/userRequests/Filter.jsx";
 import Requests from "../components/userRequests/Requests.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
@@ -8,7 +8,7 @@ import useUserPostsStore from "../../application/state/userPost/useUserPostsStor
 import useRegionStore from "../../application/state/userPost/useRegionStore.jsx";
 import useTypeStore from "../../application/state/userPost/useTypeStore.jsx";
 import useCityStore from "../../application/state/rental/useCityStore.jsx";
-import {SyrianGovernorates} from "../../shared/constants/syrianGovernorates.jsx";
+import {SyrianGovernorates} from "../../../shared/shared/constants/syrianGovernorates.jsx";
 import {getFilterUserPosts} from "../../application/useCases/userPost/getFilterUserPostsUseCase.jsx";
 
 const UserRequestsPage = () => {

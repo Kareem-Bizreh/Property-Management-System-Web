@@ -1,5 +1,5 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import {formatDate} from "../../../shared/utils/formatDate.js";
+import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 
 const Rental = ({rental: {id, imageUrl, startDate, endDate, location, title, phone, status}}) => {
     return (

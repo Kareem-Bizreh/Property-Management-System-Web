@@ -1,5 +1,5 @@
 import {motion, AnimatePresence} from "framer-motion";
-import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
+import {BACKGROUND_COLORS, TEXT_COLORS} from "../../colors.jsx";
 
 const KeywordSelector = ({options = [], select = [], onChange, title, readOnly = false, onlyOne = false}) => {
 
