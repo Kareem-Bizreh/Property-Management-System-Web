@@ -227,6 +227,6 @@
 
 .highlighted {
     background-color: #DBEDF6 !important;
-    color: black !important;
+    color: inherit !important;
     border-radius: 8px;
 }

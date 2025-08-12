@@ -1,24 +1,63 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import Header from "./Header.jsx";
-import {useForm} from "react-hook-form";
+import {useFormContext} from "react-hook-form";
 import TextInput from "../shared/TextInput.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
+import {useEffect} from "react";
+import useOfficeStore from "../../../application/state/office/useOfficeStore.jsx";
 
-const Fees = () => {
-    const {register} = useForm();
+const Fees = ({onEdit}) => {
+    const {office, setOffice} = useOfficeStore();
+    const {register, watch, setValue, getValues} = useFormContext();
+
+    useEffect(() => {
+        const currentValues = getValues();
+
+        if ((currentValues.reservationPeriod ?? 0) !== (office?.reservationPeriod ?? 0)) {
+            setValue("reservationPeriod", office?.reservationPeriod ?? 0);
+        }
+
+        if ((currentValues.depositPrice ?? 0) !== (office?.depositPrice ?? 0)) {
+            setValue("depositPrice", office?.depositPrice ?? 0);
+        }
+
+        if ((currentValues.depositRate ?? 0) !== (office?.depositRate ?? 0)) {
+            setValue("depositRate", office?.depositRate ?? 0);
+        }
+
+        if ((currentValues.feesRate ?? 0) !== (office?.feesRate ?? 0)) {
+            setValue("feesRate", office?.feesRate ?? 0);
+        }
+
+    }, []);
+
+    useEffect(() => {
+        const currentValues = watch();
+
+        setOffice({
+            ...office,
+            reservationPeriod: Number(currentValues.reservationPeriod ?? 0),
+            depositPrice: Number(currentValues.depositPrice ?? 0),
+            depositRate: Number(currentValues.depositRate ?? 0),
+            feesRate: Number(currentValues.feesRate ?? 0),
+        });
+
+    }, [watch("reservationPeriod"), watch("depositPrice"), watch("depositRate"), watch("feesRate")]);
+
+
     const fees = [
         {location: 'دمشق, الميدان', price: 50, id: 1},
-        {location: 'دمشق, الميدان', price: 50, id: 1},
-        {location: 'دمشق, الميدان', price: 50, id: 1},
-        {location: 'دمشق, الميدان', price: 50, id: 1},
-        {location: 'دمشق, الميدان', price: 50, id: 1},
-        {location: 'دمشق, الميدان', price: 50, id: 1},
-        {location: 'دمشق, الميدان', price: 50, id: 1},
-        {location: 'دمشق, الميدان', price: 50, id: 1},
-        {location: 'دمشق, الميدان', price: 50, id: 1},
-        {location: 'دمشق, الميدان', price: 50, id: 1},
+        {location: 'دمشق, الميدان', price: 50, id: 2},
+        {location: 'دمشق, الميدان', price: 50, id: 3},
+        {location: 'دمشق, الميدان', price: 50, id: 4},
+        {location: 'دمشق, الميدان', price: 50, id: 5},
+        {location: 'دمشق, الميدان', price: 50, id: 6},
+        {location: 'دمشق, الميدان', price: 50, id: 7},
+        {location: 'دمشق, الميدان', price: 50, id: 8},
+        {location: 'دمشق, الميدان', price: 50, id: 9},
+        {location: 'دمشق, الميدان', price: 50, id: 10},
     ]
 
     return (
@@ -41,25 +80,29 @@ const Fees = () => {
                         title="تحديد مدة الحجز باليوم"
                         type="number"
                         inputClassName="max-w-[180px]"
-                        register={register("reservationPeriod")}
+                        name={"reservationPeriod"}
+                        register={register}
                     />
                     <TextInput
                         title="تحديد سعر العربون في المتر المربع"
                         type="number"
-                        register={register("depositPrice")}
+                        name={"depositPrice"}
+                        register={register}
                         inputClassName="max-w-[180px]"
                     />
                     <TextInput
                         title="تحديد نسبة العربون في المكان السياحي"
                         type="number"
-                        register={register("depositRate")}
+                        name={"depositRate"}
+                        register={register}
                         inputClassName="max-w-[180px]"
                     />
                 </div>
                 <TextInput
                     title="تحديد نسبة رسوم المكتب"
                     type="number"
-                    register={register("feesRate")}
+                    name={"feesRate"}
+                    register={register}
                     inputClassName="max-w-[180px] text-black"
                 />
             </div>
@@ -118,7 +161,7 @@ const Fees = () => {
             </div>
             <div className="flex items-center justify-end">
                 <Button variant="contained"
-                    // onClick={onPress}
+                        onClick={onEdit}
                         sx={{
                             width: 160,
                             height: 47,

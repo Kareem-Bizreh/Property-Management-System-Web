@@ -7,7 +7,7 @@ const CreditCard = () => {
     const {register} = useForm();
 
     return (
-        <div className="relative w-[245px] h-[150px] rounded-[24px] bg-[radial-gradient(circle,_#30B0C7,_#2790A3)]">
+        <div className="relative w-[245px] h-[150px] rounded-[24px] bg-[radial-gradient(circle,_#30B0C7,_#2790A3)] shadow-xl">
             <img src={chip} alt="chip" className="absolute top-[10px] left-[15px]"/>
 
             <div className="relative w-[40px] h-[40px] top-[118px] right-[10px]">

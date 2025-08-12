@@ -28,7 +28,7 @@ const TextInput = ({
     };
 
     return (
-        <div className="flex flex-col min-h-[97px] py-3 gap-4">
+        <div className="flex flex-col min-h-[97px] py-3 gap-4" key={name}>
             <span style={{
                 color: TEXT_COLORS.secondary,
                 fontFamily: "Cairo",

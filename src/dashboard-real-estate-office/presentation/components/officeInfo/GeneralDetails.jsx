@@ -2,14 +2,67 @@ import mapIcon from "../../../assets/shared/map-marker.svg";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import TextInput from "../shared/TextInput.jsx";
 import SelectInput from "../shared/SelectInput.jsx";
-import {useForm} from "react-hook-form";
+import {useFormContext} from "react-hook-form";
 import Button from "@mui/material/Button";
 import facebook from "../../../assets/office-info/facebook.svg"
 import whatsapp from "../../../assets/office-info/whatsapp.svg"
 import instagram from "../../../assets/office-info/instagram.svg"
+import useOfficeStore from "../../../application/state/office/useOfficeStore.jsx";
+import {SyrianGovernorates} from "../../../shared/constants/syrianGovernorates.jsx";
+import {useEffect} from "react";
 
-const GeneralDetails = () => {
-    const {register} = useForm();
+const GeneralDetails = ({onEdit}) => {
+    const {register, watch, setValue, getValues, handleSubmit} = useFormContext();
+    const {office, setOffice} = useOfficeStore();
+
+    useEffect(() => {
+        const currentValues = getValues();
+
+        if (currentValues.name !== office?.name) {
+            setValue("name", office?.name);
+        }
+
+        if ((currentValues.contactNumber) !== office?.contactNumber) {
+            setValue("contactNumber", office?.contactNumber);
+        }
+
+        if (currentValues.openingTime !== office?.openingTime) {
+            setValue("openingTime", office?.openingTime);
+        }
+
+        if (currentValues.closingTime !== office?.closingTime) {
+            setValue("closingTime", office?.closingTime);
+        }
+
+        if (currentValues.facebookAccount !== office?.facebookAccount) {
+            setValue("facebookAccount", office?.facebookAccount);
+        }
+
+        if (currentValues.whatsappAccount !== office?.whatsappAccount) {
+            setValue("whatsappAccount", office?.whatsappAccount);
+        }
+
+        if (currentValues.instagramAccount !== office?.instagramAccount) {
+            setValue("instagramAccount", office?.instagramAccount);
+        }
+    }, []);
+
+    useEffect(() => {
+        const currentValues = watch();
+
+        setOffice({
+            ...office,
+            name: currentValues.name,
+            contactNumber: currentValues.contactNumber,
+            openingTime: currentValues.openingTime,
+            closingTime: currentValues.closingTime,
+            facebookAccount: currentValues.facebookAccount,
+            whatsappAccount: currentValues.whatsappAccount,
+            instagramAccount: currentValues.instagramAccount,
+        });
+
+    }, [watch("name"), watch("contactNumber"), watch("openingTime"), watch("closingTime"),
+        watch("facebookAccount"), watch("whatsappAccount"), watch("instagramAccount")]);
 
     return (
         <div className="flex flex-col justify-between py-4 px-6 rounded-[25px] min-h-full h-auto"
@@ -27,14 +80,16 @@ const GeneralDetails = () => {
                 <TextInput
                     title="اسم المكتب"
                     type="text"
-                    register={register("officeName")}
+                    name={"name"}
+                    register={register}
                 />
 
                 {/* رقم التواصل */}
                 <TextInput
                     title="رقم التواصل"
                     type="text"
-                    register={register("contactNumber")}
+                    name={"contactNumber"}
+                    register={register}
                 />
             </div>
 
@@ -45,10 +100,18 @@ const GeneralDetails = () => {
                     <SelectInput
                         height={'60px'}
                         maxWidth={'250px'}
-                        title=""
+                        title={office?.city.name}
                         style={{borderWidth: '1px'}}
-                        options={["دمشق", "ريف دمشق", "حلب"]}
-                        onChange={(v) => console.log("محافظة:", v)}
+                        options={SyrianGovernorates.map((city) => city.name)}
+                        onChange={(cityName) => {
+                            const city = SyrianGovernorates.find((gov) => gov.name === cityName);
+                            setOffice({
+                                    ...office,
+                                    city,
+                                    region: city.regions[0]
+                                }
+                            )
+                        }}
                     />
                 </div>
 
@@ -58,10 +121,14 @@ const GeneralDetails = () => {
                     <SelectInput
                         height={'60px'}
                         maxWidth={'250px'}
-                        title=""
+                        title={office?.region.name}
                         style={{borderWidth: '1px'}}
-                        options={["المزة", "القنوات", "باب توما"]}
-                        onChange={(v) => console.log("منطقة:", v)}
+                        options={SyrianGovernorates.find((city) => city.id === office?.city.id).regions.map((region) => region.name)}
+                        onChange={(regionName) => {
+                            const city = SyrianGovernorates.find((gov) => gov.id === office?.city.id);
+                            const region = city?.regions.find((region) => region.name === regionName);
+                            setOffice({...office, region})
+                        }}
                     />
                 </div>
 
@@ -103,7 +170,7 @@ const GeneralDetails = () => {
                     </span>
                     <input
                         type="time"
-                        {...register("openingTime")}
+                        {...register("openingTime", {required: true})}
                         className="rounded-[15px] border-[1px] h-[50px] px-4 w-full"
                         style={{
                             backgroundColor: BACKGROUND_COLORS.app,
@@ -133,7 +200,7 @@ const GeneralDetails = () => {
                     </span>
                     <input
                         type="time"
-                        {...register("closingTime")}
+                        {...register("closingTime", {required: true})}
                         className="rounded-[15px] border-[1px] h-[50px] px-4 w-full max-w-[260px]"
                         style={{
                             backgroundColor: BACKGROUND_COLORS.app,
@@ -157,7 +224,9 @@ const GeneralDetails = () => {
                 <div className="relative w-full">
                     <TextInput
                         type="text"
-                        register={register("facebook")}
+                        name={"facebookAccount"}
+                        register={register}
+                        required={false}
                         inputClassName="pr-12"
                     />
                     <img
@@ -169,13 +238,13 @@ const GeneralDetails = () => {
 
                 {/* WhatsApp */}
                 <div className="relative w-full">
-                    <div style={{color: TEXT_COLORS.black}}>
-                        <TextInput
-                            type="text"
-                            register={register("whatsapp")}
-                            inputClassName="pr-12"
-                        />
-                    </div>
+                    <TextInput
+                        type="text"
+                        name={"whatsappAccount"}
+                        register={register}
+                        required={false}
+                        inputClassName="pr-12"
+                    />
                     <img
                         src={whatsapp}
                         alt="whatsapp"
@@ -185,13 +254,13 @@ const GeneralDetails = () => {
 
                 {/* Instagram */}
                 <div className="relative w-full">
-                    <div style={{color: TEXT_COLORS.black}}>
-                        <TextInput
-                            type="text"
-                            register={register("instagram")}
-                            inputClassName="pr-12"
-                        />
-                    </div>
+                    <TextInput
+                        type="text"
+                        name={"instagramAccount"}
+                        register={register}
+                        required={false}
+                        inputClassName="pr-12"
+                    />
                     <img
                         src={instagram}
                         alt="instagram"
@@ -199,9 +268,9 @@ const GeneralDetails = () => {
                     />
                 </div>
             </div>
-            <div className="flex items-center justify-end mx-4 mt-4">
+            {onEdit && <div className="flex items-center justify-end mx-4 mt-4">
                 <Button variant="contained"
-                    // onClick={onPress}
+                        onClick={handleSubmit(onEdit)}
                         sx={{
                             width: 160,
                             height: 47,
@@ -216,7 +285,7 @@ const GeneralDetails = () => {
                         }}>
                     تعديل
                 </Button>
-            </div>
+            </div>}
         </div>
     )
 }

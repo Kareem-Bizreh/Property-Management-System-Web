@@ -1,15 +1,27 @@
 import Header from "./Header.jsx";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import Button from "@mui/material/Button";
+import {useRef} from "react";
 
-const Logo = () => {
-    const imgSrc = '';
+const Logo = ({office, setOffice, name}) => {
+    const inputRef = useRef(null);
+
+    const handleUploadClick = () => {
+        inputRef.current?.click();
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setOffice({...office, image: file});
+        }
+    };
 
     return (
         <div className="flex flex-col flex-1 justify-around items-center rounded-[25px] px-4 min-h-[300px]"
              style={{backgroundColor: BACKGROUND_COLORS.secondary2}}
         >
-            <Header title={'شعار المكتب'} fontSize={'18px'}/>
+            <Header title={`شعار ${name}`} fontSize={'18px'}/>
 
             <div
                 className="w-[200px] h-[200px] rounded-full flex-shrink-0"
@@ -19,17 +31,17 @@ const Logo = () => {
                     borderWidth: '1px',
                 }}
             >
-                {imgSrc && (
+                {office?.image && (
                     <img
-                        src={imgSrc}
+                        src={typeof office.image === 'string' ? office.image : URL.createObjectURL(office.image)}
                         alt="profile"
-                        className="w-full h-full rounded-full object-cover"
+                        className="w-full h-full rounded-full object-cover object-center"
                     />
                 )}
             </div>
 
             <Button variant="contained"
-                // onClick={onPress}
+                    onClick={handleUploadClick}
                     sx={{
                         width: 160,
                         height: 47,
@@ -44,6 +56,14 @@ const Logo = () => {
                     }}>
                 رفع
             </Button>
+
+            <input
+                type="file"
+                accept="image/*"
+                ref={inputRef}
+                onChange={handleFileChange}
+                style={{display: 'none'}}
+            />
         </div>
     )
 }
