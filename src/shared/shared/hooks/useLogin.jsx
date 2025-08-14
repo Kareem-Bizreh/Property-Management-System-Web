@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router";
-import useUserStore from "../../application/state/userStore.jsx";
+import useUserStore from "../../application/state/useUserStore.jsx";
 import {loginUseCase} from "../../application/useCases/loginUseCase.jsx";
 import useErrorStore from "../../application/state/login/errorStore.jsx";
 

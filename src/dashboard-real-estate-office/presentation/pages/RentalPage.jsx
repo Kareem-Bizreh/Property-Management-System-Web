@@ -6,7 +6,7 @@ import FinancialRecord from "../components/shared/FinancialRecord.jsx";
 import Rental from "../components/rentals/Rental.jsx";
 // import ContractExtension from "../components/rentals/ContractExtension.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import useRentalStore from "../../application/state/rental/useRentalStore.jsx";
 import Button from "@mui/material/Button";
 // import usePropertyContractOpenStore from "../../application/state/rental/usePropertyContractOpenStore.jsx";

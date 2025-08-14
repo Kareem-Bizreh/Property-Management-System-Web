@@ -1,5 +1,5 @@
 import AddCard from '../shared/AddCard.jsx'
-import PropertySaleTouristCard from "../shared/PropertySaleTouristCard.jsx";
+import PropertySaleTouristCard from "../../../../shared/presentation/components/properties/PropertySaleTouristCard.jsx";
 import EmptyBox from '../../../assets/shared/EmptyBox.svg'
 import useTouristsStore from "../../../application/state/tourism/useTouristsStore.jsx";
 

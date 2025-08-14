@@ -1,11 +1,11 @@
 import {useEffect} from "react";
 import {FormProvider, useForm} from "react-hook-form";
-import Logo from "../components/officeInfo/Logo.jsx";
+import Logo from "../../../shared/presentation/components/office/Logo.jsx";
 import PaymentMethod from "../components/officeInfo/PaymentMethod.jsx";
 import GeneralDetails from "../components/officeInfo/GeneralDetails.jsx";
 import Fees from "../components/officeInfo/Fees.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import useOfficeStore from "../../application/state/office/useOfficeStore.jsx";
 
 const OfficeInfoPage = () => {

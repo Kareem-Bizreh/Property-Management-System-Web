@@ -1,5 +1,5 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/colors.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import useReservationStore from "../../application/state/reservation/useReservationStore.jsx";
 import {useEffect} from "react";
 import {useParams} from "react-router";

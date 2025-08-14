@@ -10,7 +10,7 @@ import usePropertyTypeStore from "../../../application/state/advertisement/usePr
 import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 import {PropertyType} from "../../../shared/constants/PropertyType.jsx";
 import useServicePriceStore from "../../../application/state/advertisement/useServicePriceStore.jsx";
-import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 import {useEffect} from "react";
 import {getServicePrice} from "../../../application/useCases/servicePrice/getServicePriceUseCase.jsx";
 import {Spinner} from "../../../../shared/presentation/components/Spinner.jsx";

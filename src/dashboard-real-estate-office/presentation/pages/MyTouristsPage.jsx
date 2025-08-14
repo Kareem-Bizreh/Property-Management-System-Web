@@ -3,7 +3,7 @@ import Header from "../../../shared/presentation/components/Header.jsx";
 import Filter from "../components/tourism/Filter.jsx"
 import TouristList from "../components/tourism/TouristList.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import useCityStore from "../../application/state/tourism/useCityStore.jsx";
 import useRegionStore from "../../application/state/tourism/useRegionStore.jsx";
 import useStatusStore from "../../application/state/tourism/useStatusStore.jsx";

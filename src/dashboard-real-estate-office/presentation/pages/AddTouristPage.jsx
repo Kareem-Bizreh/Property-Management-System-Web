@@ -2,7 +2,7 @@ import Header from "../../../shared/presentation/components/Header.jsx";
 import PostDetails from "../components/shared/PostDetails.jsx";
 import PropertyImages from "../components/shared/PropertyImages.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import {PropertyTags} from "../../shared/constants/propertyPostTag.jsx";
 import {FormProvider, useForm} from "react-hook-form";
 import useTouristStore from "../../application/state/tourism/useTouristStore.jsx";

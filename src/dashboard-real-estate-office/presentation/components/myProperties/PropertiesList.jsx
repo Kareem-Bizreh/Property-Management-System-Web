@@ -1,6 +1,6 @@
 import AddCard from '../shared/AddCard.jsx'
-import PropertyRentCard from "../shared/PropertyRentCard.jsx";
-import PropertySaleTouristCard from "../shared/PropertySaleTouristCard.jsx";
+import PropertyRentCard from "../../../../shared/presentation/components/properties/PropertyRentCard.jsx";
+import PropertySaleTouristCard from "../../../../shared/presentation/components/properties/PropertySaleTouristCard.jsx";
 import EmptyBox from '../../../assets/shared/EmptyBox.svg'
 import usePropertiesStore from "../../../application/state/property/usePropertiesStore.jsx";
 

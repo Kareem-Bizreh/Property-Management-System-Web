@@ -2,7 +2,7 @@ import Header from "../../../shared/presentation/components/Header.jsx";
 import PostDetails from "../components/shared/PostDetails.jsx";
 import PropertyImages from "../components/shared/PropertyImages.jsx";
 import PropertyDetails from "../components/myProperties/PropertyDetails.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import {PropertyTags} from "../../shared/constants/propertyPostTag.jsx";
 import {useEffect} from "react";

@@ -7,7 +7,7 @@ import usePropertyStore from "../../../application/state/property/usePropertySto
 import {useEffect} from "react";
 import SelectProperty from "../shared/SelectProperty.jsx";
 import PropertyCard from "../shared/PropertyCard.jsx";
-import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 import {suggestProperty} from "../../../application/useCases/userPost/suggestPropertyUseCase.jsx";
 import usePropertySelectionOpenStore from "../../../application/state/shared/usePropertySelectionOpenStore.jsx";
 

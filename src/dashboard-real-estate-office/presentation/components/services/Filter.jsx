@@ -5,7 +5,7 @@ import useCityStore from "../../../application/state/service-provider/useCitySto
 import useRegionStore from "../../../application/state/service-provider/useRegionStore.jsx";
 import useTypeStore from "../../../application/state/service-provider/useTypeStore.jsx";
 import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
-import {ServiceProviderType} from "../../../shared/constants/ServiceProviderType.jsx";
+import {ServiceProviderType} from "../../../../shared/shared/constants/ServiceProviderType.jsx";
 
 const Filter = ({register}) => {
     const {city, setCity} = useCityStore();

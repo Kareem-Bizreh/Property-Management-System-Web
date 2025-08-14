@@ -1,5 +1,5 @@
 import authRepository from "../../domain/repositories/authRepository";
-import useUserStore from "../state/userStore.jsx";
+import useUserStore from "../state/useUserStore.jsx";
 
 export const logoutUseCase = async () => {
     try {

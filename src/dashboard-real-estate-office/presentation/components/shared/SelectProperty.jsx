@@ -8,7 +8,7 @@ import {getFilterProperties} from "../../../application/useCases/residentialOffi
 import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
 import PropertyCard from "./PropertyCard.jsx";
 import usePropertySelectionOpenStore from "../../../application/state/shared/usePropertySelectionOpenStore.jsx";
-import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 import {Spinner} from "../../../../shared/presentation/components/Spinner.jsx";
 
 const SelectProperty = ({onSelect, listingType}) => {

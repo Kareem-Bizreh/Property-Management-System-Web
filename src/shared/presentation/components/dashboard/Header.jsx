@@ -1,5 +1,5 @@
 import React from 'react'
-import {TEXT_COLORS} from "../../../../shared/colors.jsx";
+import {TEXT_COLORS} from "../../../colors.jsx";
 
 const Header = ({name}) => {
     return (

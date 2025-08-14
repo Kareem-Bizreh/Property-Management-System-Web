@@ -3,7 +3,7 @@ import Filter from "../components/advertisements/Filter.jsx";
 import AdCreationOptions from "../components/advertisements/AdCreationOptions.jsx";
 import FinancialRecords from "../components/advertisements/FinancialRecords.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import useTypeStore from "../../application/state/advertisement/useTypeStore.jsx";
 import useAdvertisementsStore from "../../application/state/advertisement/useAdvertisementsStore.jsx";
 import {useEffect} from "react";

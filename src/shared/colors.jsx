@@ -29,7 +29,8 @@ export const BACKGROUND_COLORS = {
     button: '#30B0C7',
     notification: '#FFF8EB',
     delete: '#B07171',
-    edit: '#F2CD33'
+    edit: '#F2CD33',
+    accept: '#71B08C'
 }
 
 export const DASHBOARD_CARDS_COLORS = {

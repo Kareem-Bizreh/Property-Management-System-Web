@@ -1,5 +1,5 @@
-import DetailsCard from "./DetailsCard.jsx";
-import RealEstatePlaces from "./realEstatePlaces.jsx";
+import DetailsCard from "../../../../shared/presentation/components/dashboard/DetailsCard.jsx";
+import RealEstatePlaces from "../../../../shared/presentation/components/dashboard/RealEstatePlaces.jsx";
 import warning from "../../../assets/dashboard/warning.svg";
 import earning from "../../../assets/dashboard/earning.svg";
 import tourist_places from "../../../assets/dashboard/tourist_places.svg";

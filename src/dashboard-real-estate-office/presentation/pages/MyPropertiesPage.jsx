@@ -2,7 +2,7 @@ import {useEffect} from "react";
 import Header from "../../../shared/presentation/components/Header.jsx";
 import Filter from "../components/myProperties/Filter.jsx";
 import PropertiesList from "../components/myProperties/PropertiesList.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import usePropertiesStore from "../../application/state/property/usePropertiesStore.jsx";
 import {useForm} from "react-hook-form";

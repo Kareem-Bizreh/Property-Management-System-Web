@@ -1,4 +1,4 @@
-import Header from "./Header.jsx";
+import Header from "../../../../shared/presentation/components/dashboard/Header.jsx";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 
 const MostRequestedAreas = () => {

@@ -3,7 +3,7 @@ import Header from "../../../shared/presentation/components/Header.jsx";
 import Filter from "../components/userRequests/Filter.jsx";
 import Requests from "../components/userRequests/Requests.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import useUserPostsStore from "../../application/state/userPost/useUserPostsStore.jsx";
 import useRegionStore from "../../application/state/userPost/useRegionStore.jsx";
 import useTypeStore from "../../application/state/userPost/useTypeStore.jsx";

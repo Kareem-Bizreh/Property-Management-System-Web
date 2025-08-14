@@ -11,7 +11,7 @@ import usePropertyStore from "../../../application/state/property/usePropertySto
 import {useEffect, useRef} from "react";
 import PropertyCard from "../shared/PropertyCard.jsx";
 import {addUserPropertyInvoice} from "../../../application/useCases/userPropertyInvoices/addInvoiceUseCase.jsx";
-import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 import usePropertyReservationOpenStore
     from "../../../application/state/reservation/usePropertyReservationOpenStore.jsx";
 import usePropertySelectionOpenStore from "../../../application/state/shared/usePropertySelectionOpenStore.jsx";

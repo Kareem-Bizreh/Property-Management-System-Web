@@ -1,5 +1,5 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import locationIcon from "../../../assets/cards/location.svg";
+import locationIcon from "../../../../shared/assets/cards/location.svg";
 import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 
 const PropertyCard = ({property}) => {

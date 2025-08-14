@@ -1,7 +1,7 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import Header from "./Header.jsx";
-import CreditCard from "./CreditCard.jsx";
-import coinHand from "../../../assets/office-info/coin-hand.svg"
+import CreditCard from "../../../../shared/presentation/components/financial/CreditCard.jsx";
+import coinHand from "../../../../shared/assets/office-info/coin-hand.svg"
 import {Checkbox} from "@mui/material";
 import useOfficeStore from "../../../application/state/office/useOfficeStore.jsx";
 

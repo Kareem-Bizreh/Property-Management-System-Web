@@ -1,9 +1,9 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
-import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 import {Spinner} from "../../../../shared/presentation/components/Spinner.jsx";
-import img from "../../../assets/cards/property_sale.jpg";
+import img from "../../../../shared/assets/cards/property_sale.jpg";
 
 const Reservation = ({reservation}) => {
     const {isLoading} = useLoadingStore();

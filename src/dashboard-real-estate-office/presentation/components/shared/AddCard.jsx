@@ -1,6 +1,6 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import {Link} from "react-router";
-import add from "../../../assets/cards/add-square.svg"
+import add from "../../../../shared/assets/cards/add-square.svg"
 
 const AddCard = ({ title }) => {
     return (

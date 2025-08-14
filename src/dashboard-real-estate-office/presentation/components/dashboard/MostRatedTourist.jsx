@@ -1,5 +1,5 @@
-import Header from "./Header.jsx";
-import PropertySaleTouristCard from "../shared/PropertySaleTouristCard.jsx";
+import Header from "../../../../shared/presentation/components/dashboard/Header.jsx";
+import PropertySaleTouristCard from "../../../../shared/presentation/components/properties/PropertySaleTouristCard.jsx";
 import {touristProperties} from "../../../shared/constants/properties.jsx";
 
 const MostRatedTourist = () => {

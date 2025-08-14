@@ -4,7 +4,7 @@ import MostRequestedAreas from "../components/dashboard/MostRequestedAreas.jsx";
 import MostRatedProperties from "../components/dashboard/MostRatedProperties.jsx";
 import MostRatedTourist from "../components/dashboard/MostRatedTourist.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 
 const DashboardPage = () => {
     const {isLoading} = useLoadingStore()

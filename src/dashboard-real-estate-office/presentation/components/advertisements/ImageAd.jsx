@@ -8,7 +8,7 @@ import {useForm} from "react-hook-form";
 import useImageStore from "../../../application/state/advertisement/useImageStore.jsx";
 import useImageAdOpenStore from "../../../application/state/advertisement/useImageAdOpenStore.jsx";
 import {addImageAd} from "../../../application/useCases/advertisement/addImageAdUseCase.jsx";
-import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 import {useEffect} from "react";
 import useServicePriceStore from "../../../application/state/advertisement/useServicePriceStore.jsx";
 import {getServicePrice} from "../../../application/useCases/servicePrice/getServicePriceUseCase.jsx";

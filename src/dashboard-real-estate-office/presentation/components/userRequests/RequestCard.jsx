@@ -1,6 +1,6 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import placeMarker from "../../../assets/user-requests/place-marker.svg"
-import budgetIcon from '../../../assets/user-requests/budget.svg'
+import placeMarker from "../../../../shared/assets/user-requests/place-marker.svg"
+import budgetIcon from '../../../../shared/assets/user-requests/budget.svg'
 import {Clock} from "lucide-react";
 import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
@@ -8,7 +8,7 @@ import PropertySuggestion from "./PropertySuggestion.jsx";
 import Button from "@mui/material/Button";
 import useSuggestionOpenStore from "../../../application/state/userPost/useSuggestionOpenStore.jsx";
 import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
-import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 
 const RequestCard = ({post: {id, type, location, budget, publishedDate, isProposed, description}}) => {
 
@@ -23,7 +23,7 @@ const RequestCard = ({post: {id, type, location, budget, publishedDate, isPropos
     ]
 
     return (
-        <div className="rounded-[30px] w-full h-[214px] max-w-[426px] flex flex-col py-4 px-6 gap-2"
+        <div className="rounded-[30px] w-full min-h-[214px] max-w-[426px] flex flex-col py-4 px-6 gap-2"
              style={{
                  backgroundColor: BACKGROUND_COLORS.secondary2,
                  color: TEXT_COLORS.post,
@@ -35,8 +35,8 @@ const RequestCard = ({post: {id, type, location, budget, publishedDate, isPropos
                  textAlign: 'right',
              }}
         >
-            <div className="flex flex-col justify-between h-[145px]">
-                <span style={{fontSize: '16px', lineHeight: '1.3'}}>
+            <div className="flex flex-col justify-between min-h-[145px]">
+                <span style={{fontSize: '16px', lineHeight: '1.4'}}>
                     {description}
                 </span>
                 <div className="flex flex-col gap-2">
@@ -53,7 +53,7 @@ const RequestCard = ({post: {id, type, location, budget, publishedDate, isPropos
                     }
                 </div>
             </div>
-            <div className="flex flex-row min-w-[220px] justify-between items-end">
+            <div className="flex flex-row min-w-[220px] h-full justify-between items-end">
                 <div className="flex flex-row gap-2">
                     <Clock size={15} color={'#252B5C99'}/>
                     <span style={{fontWeight: 500}}>{formatDate(publishedDate)}</span>

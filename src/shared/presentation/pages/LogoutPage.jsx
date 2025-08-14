@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {useLogout} from "../../shared/hooks/useLogout.jsx";
-import useLoadingStore from "../../application/state/loadingStore.jsx";
+import useLoadingStore from "../../application/state/useLoadingStore.jsx";
 import {Spinner} from "../components/Spinner.jsx";
 import {useNavigate} from "react-router";
 

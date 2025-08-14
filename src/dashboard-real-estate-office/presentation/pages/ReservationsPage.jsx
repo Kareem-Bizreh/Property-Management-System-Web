@@ -3,7 +3,7 @@ import Header from "../../../shared/presentation/components/Header.jsx";
 import Filter from "../components/reservation/Filter.jsx";
 import Reservations from "../components/reservation/Reservations.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import useCityStore from "../../application/state/reservation/useCityStore.jsx";
 import useRegionStore from "../../application/state/reservation/useRegionStore.jsx";
 import useStatusStore from "../../application/state/reservation/useStatusStore.jsx";

@@ -1,6 +1,6 @@
 import {Navigate, useLocation} from "react-router";
 import {useEffect, useState} from "react";
-import useUserStore from "../../application/state/userStore.jsx";
+import useUserStore from "../../application/state/useUserStore.jsx";
 import {Spinner} from "./Spinner";
 
 const RequireAuth = ({children}) => {

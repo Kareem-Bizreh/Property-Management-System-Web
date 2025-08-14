@@ -1,8 +1,8 @@
-import Header from "./Header.jsx";
-import PropertySaleTouristCard from "../shared/PropertySaleTouristCard.jsx";
-import PropertyRentCard from "../shared/PropertyRentCard.jsx";
+import Header from "../../../../shared/presentation/components/dashboard/Header.jsx";
+import PropertySaleTouristCard from "../../../../shared/presentation/components/properties/PropertySaleTouristCard.jsx";
+import PropertyRentCard from "../../../../shared/presentation/components/properties/PropertyRentCard.jsx";
 // import {saleAndRentProperties} from "../../../shared/constants/properties.jsx";
-import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 import usePropertiesStore from "../../../application/state/property/usePropertiesStore.jsx";
 import {useEffect} from "react";
 import {getAll} from "../../../application/useCases/residentialOffice/getPropertiesUseCase.jsx";

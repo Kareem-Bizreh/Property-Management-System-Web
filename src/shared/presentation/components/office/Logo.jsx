@@ -1,9 +1,9 @@
-import Header from "./Header.jsx";
-import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
+import Header from "../../../../dashboard-real-estate-office/presentation/components/officeInfo/Header.jsx";
+import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../colors.jsx";
 import Button from "@mui/material/Button";
 import {useRef} from "react";
 
-const Logo = ({office, setOffice, name}) => {
+const Logo = ({office, setOffice, name, readOnly = false}) => {
     const inputRef = useRef(null);
 
     const handleUploadClick = () => {
@@ -18,7 +18,7 @@ const Logo = ({office, setOffice, name}) => {
     };
 
     return (
-        <div className="flex flex-col flex-1 justify-around items-center rounded-[25px] px-4 min-h-[300px]"
+        <div className="flex flex-col flex-1 justify-around items-center rounded-[25px] p-4 min-h-[300px] max-h-[390px]"
              style={{backgroundColor: BACKGROUND_COLORS.secondary2}}
         >
             <Header title={`شعار ${name}`} fontSize={'18px'}/>
@@ -40,7 +40,9 @@ const Logo = ({office, setOffice, name}) => {
                 )}
             </div>
 
-            <Button variant="contained"
+            {readOnly ||
+                <Button
+                    variant="contained"
                     onClick={handleUploadClick}
                     sx={{
                         width: 160,
@@ -53,10 +55,11 @@ const Logo = ({office, setOffice, name}) => {
                         lineHeight: '100%',
                         letterSpacing: '3%',
                         textAlign: 'center'
-                    }}>
-                رفع
-            </Button>
-
+                    }}
+                >
+                    رفع
+                </Button>
+            }
             <input
                 type="file"
                 accept="image/*"

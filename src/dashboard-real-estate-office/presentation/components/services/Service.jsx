@@ -1,5 +1,5 @@
 import {BACKGROUND_COLORS, DASHBOARD_CARDS_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import star from '../../../assets/shared/star.svg';
+import star from '../../../../shared/assets/shared/star.svg';
 import phone from '../../../assets/services/phone.svg';
 import locationIcon from '../../../assets/services/location.svg';
 

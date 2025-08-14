@@ -59,7 +59,7 @@ const UsersManagementPage = () => {
 
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col">
             <Header title={'إدارة المستخدمين'}/>
             <Tabs tabs={tabs} minWidth={"50px"} border={false} tab={tab} setTab={setTab}
                   tabHeight={'45px'} bgHeight={'65px'} borderRadius={'15px'}/>
@@ -76,7 +76,7 @@ const UsersManagementPage = () => {
 
             {/* المشرفين */}
             <CustomTabPanel value={tab} index={1}>
-                <div className="w-full h-[65px] mb-2 flex items-center px-4"
+                <div className="w-full h-[65px] mb-2 mt-4 flex items-center px-4"
                      style={{backgroundColor: BACKGROUND_COLORS.table}}
                 >
                     <Button

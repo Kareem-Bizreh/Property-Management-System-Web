@@ -1,5 +1,5 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
-import star from '../../../assets/shared/star.svg'
+import star from '../../../../shared/assets/shared/star.svg'
 
 const OfficeDetails = () => {
     const imgSrc = ''; // https://userpic.codeforces.org/3060832/title/c773068ec0bb8654.jpg

@@ -2,7 +2,7 @@ import Header2 from "./Header2.jsx";
 import {TEXT_COLORS} from "../../../../shared/colors.jsx";
 import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import TextInput from "../../../../shared/presentation/components/TextInput.jsx";
-import map from "../../../assets/shared/map-marker.svg";
+import map from "../../../../shared/assets/shared/map-marker.svg";
 import {useFormContext} from "react-hook-form";
 import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 import useRegionsStore from "../../../application/state/property/useRegionsStore.jsx";

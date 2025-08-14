@@ -1,12 +1,12 @@
-import mapIcon from "../../../assets/shared/map-marker.svg";
+import mapIcon from "../../../../shared/assets/shared/map-marker.svg";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import TextInput from "../../../../shared/presentation/components/TextInput.jsx";
 import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import {useFormContext} from "react-hook-form";
 import Button from "@mui/material/Button";
-import facebook from "../../../assets/office-info/facebook.svg"
-import whatsapp from "../../../assets/office-info/whatsapp.svg"
-import instagram from "../../../assets/office-info/instagram.svg"
+import facebook from "../../../../shared/assets/office-info/facebook.svg"
+import whatsapp from "../../../../shared/assets/office-info/whatsapp.svg"
+import instagram from "../../../../shared/assets/office-info/instagram.svg"
 import useOfficeStore from "../../../application/state/office/useOfficeStore.jsx";
 import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 import {useEffect} from "react";
@@ -187,7 +187,7 @@ const GeneralDetails = ({onEdit}) => {
                 {/* وقت إغلاق المكتب */}
                 <div className="flex flex-col justify-around max-w-[230px] min-w-[135px] flex-1">
                     <span
-                        className="mb-2 text-right"
+                        className="my-2 text-right"
                         style={{
                             color: TEXT_COLORS.secondary,
                             fontFamily: "Cairo",

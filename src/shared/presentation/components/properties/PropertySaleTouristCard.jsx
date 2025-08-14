@@ -1,15 +1,15 @@
-import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
+import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../colors.jsx";
 import {Link} from "react-router";
 import property_sale from "../../../assets/cards/property_sale.jpg"
 import property_tourist from "../../../assets/cards/property_tourist.jpg"
 import map from "../../../assets/cards/map.svg"
 import spaceIcon from "../../../assets/cards/space.svg"
-import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
+import {formatPrice} from "../../../shared/utils/formatPrice.js";
 
 const PropertySaleTouristCard = ({
                                      property: {
                                          id, status, postStatus, postTitle, location,
-                                         area, sell_details = {}, postImage , price
+                                         area, sell_details = {}, postImage, price
                                      },
                                      type
                                  }) => {
@@ -48,7 +48,7 @@ const PropertySaleTouristCard = ({
                     }}
                 >
                     {finalStatus}
-            </span>
+                </span>
                 {type === 'sale' && (
                     <span
                         className="absolute w-[54px] h-[22px] top-[159px] right-[22px] rounded-[5px] z-1"
@@ -63,8 +63,8 @@ const PropertySaleTouristCard = ({
                             color: TEXT_COLORS.white,
                         }}
                     >
-                    للبيع
-            </span>
+                        للبيع
+                    </span>
                 )}
                 <span
                     className="absolute w-[138px] h-[45px] top-[195px] mr-5"
@@ -77,8 +77,8 @@ const PropertySaleTouristCard = ({
                         textAlign: 'right'
                     }}
                 >
-                {postTitle}
-            </span>
+                    {postTitle}
+                </span>
                 <div className="absolute flex flex-row top-[250px] mr-5 gap-0.5">
                     <img
                         className="w-[18px] h-[18px]"
@@ -95,8 +95,8 @@ const PropertySaleTouristCard = ({
                             letterSpacing: '0%'
                         }}
                     >
-                {location}
-                </span>
+                        {location}
+                    </span>
                 </div>
                 <div className="absolute flex flex-row top-[280px] mr-5 gap-1">
                     <img
@@ -114,8 +114,8 @@ const PropertySaleTouristCard = ({
                               letterSpacing: '0%'
                           }}
                     >
-                     {area}
-                </span>
+                        {area}
+                    </span>
                     <span className="pt-1"
                           style={{
                               color: TEXT_COLORS.primary,
@@ -126,9 +126,8 @@ const PropertySaleTouristCard = ({
                               letterSpacing: '0%'
                           }}
                     >
-                     متر
-                </span>
-
+                        متر
+                    </span>
                 </div>
                 <span
                     className="absolute top-[325px] right-1/2 transform translate-x-1/2 whitespace-nowrap"
@@ -141,8 +140,8 @@ const PropertySaleTouristCard = ({
                         letterSpacing: '3%'
                     }}
                 >
-                {formatPrice(sell_details.selling_price || price)} $
-            </span>
+                    {formatPrice(sell_details.selling_price || price)} $
+                </span>
             </div>
         </Link>
 

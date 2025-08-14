@@ -6,7 +6,7 @@ import Popup from "reactjs-popup";
 import usePropertyRentalOpenStore from "../../../application/state/rental/usePropertyRentalOpenStore.jsx";
 import usePropertySelectionOpenStore from "../../../application/state/shared/usePropertySelectionOpenStore.jsx";
 import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
-import useLoadingStore from "../../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 import {useEffect, useRef} from "react";
 import SelectProperty from "../shared/SelectProperty.jsx";
 import PropertyCard from "../shared/PropertyCard.jsx";

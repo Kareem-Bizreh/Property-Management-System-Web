@@ -1,6 +1,6 @@
 import LoginForm from "../components/login/LoginForm.jsx";
 import {Spinner} from "../components/Spinner.jsx";
-import useLoadingStore from "../../application/state/loadingStore.jsx";
+import useLoadingStore from "../../application/state/useLoadingStore.jsx";
 
 const LoginPage = () => {
     const {isLoading} = useLoadingStore()

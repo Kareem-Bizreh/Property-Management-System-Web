@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {useParams} from "react-router";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/colors.jsx";
-import useLoadingStore from "../../../shared/application/state/loadingStore.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import useTouristStore from "../../application/state/tourism/useTouristStore.jsx";
 import {PropertyTags} from "../../shared/constants/propertyPostTag.jsx";
 import {TouristicStatus} from "../../shared/constants/TouristicStatus.jsx";

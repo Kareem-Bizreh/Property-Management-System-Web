@@ -1,9 +1,9 @@
-import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
+import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../colors.jsx";
 import {Link} from "react-router";
 import star from '../../../assets/shared/star.svg'
 import locationIcon from "../../../assets/cards/location.svg";
 import property_rent from "../../../assets/cards/property_rent.png";
-import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
+import {formatPrice} from "../../../shared/utils/formatPrice.js";
 
 const PropertyRentCard = ({property: {id, postTitle, rate, location, rent_details, postStatus, postImage, status}}) => {
     const finalStatus = postStatus !== "مقبول" ? postStatus : status;
@@ -62,8 +62,8 @@ const PropertyRentCard = ({property: {id, postTitle, rate, location, rent_detail
                         textAlign: 'right'
                     }}
                 >
-                {postTitle}
-            </span>
+                    {postTitle}
+                </span>
                 <div className="absolute flex flex-row top-[250px] mr-5 gap-0.5">
                     <img
                         className="w-[21px] h-[21px]"
@@ -80,8 +80,8 @@ const PropertyRentCard = ({property: {id, postTitle, rate, location, rent_detail
                             verticalAlign: 'center',
                         }}
                     >
-                    {rate}
-                </span>
+                        {rate}
+                    </span>
                 </div>
                 <div className="absolute flex flex-row top-[280px] mr-5 gap-1">
                     <img
