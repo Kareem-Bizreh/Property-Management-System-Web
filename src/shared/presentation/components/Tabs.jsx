@@ -28,7 +28,7 @@ export const Tabs = ({tabs, minWidth, tabHeight, bgHeight, border, borderRadius,
     const handleTabChange = (event, newValue) => setTab(newValue);
 
     const tabCount = tabs?.length ?? 0;
-    const width = `calc(${100 / tabCount}% - 5%)`;
+    const width = `calc(${100 / tabCount}% - 2%)`;
 
     const tabSx = {
         width,
@@ -36,6 +36,7 @@ export const Tabs = ({tabs, minWidth, tabHeight, bgHeight, border, borderRadius,
         maxWidth: 'none',
         height: tabHeight,
         padding: '10px',
+        marginX: '1%',
         borderWidth: border ? "3px" : "0px",
         borderRadius,
         whiteSpace: "nowrap",
@@ -71,8 +72,9 @@ export const Tabs = ({tabs, minWidth, tabHeight, bgHeight, border, borderRadius,
                 '& .MuiTabs-flexContainer': {
                     flexWrap: 'wrap',
                     justifyContent: 'center',
-                    gap: '16px',
-                    padding: '8px 0',
+                    alignItems: 'center',
+                    gapY: '16px',
+                    padding: '8px 2%',
                 },
             }}
         >

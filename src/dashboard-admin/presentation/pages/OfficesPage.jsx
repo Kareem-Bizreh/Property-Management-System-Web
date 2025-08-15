@@ -4,9 +4,10 @@ import {CustomTabPanel, Tabs} from "../../../shared/presentation/components/Tabs
 import OfficeCard from "../components/shared/OfficeCard.jsx";
 import TableHead from "../components/shared/TableHead.jsx";
 import JoinRequest from "../components/offices/JoinRequest.jsx";
+import PublicationRequests from "../components/offices/PublicationRequests.jsx";
 
 const OfficesPage = () => {
-    const tabs = ['مكتب وسيط', 'مزود خدمة', 'طلبات انضمام'];
+    const tabs = ['مكتب وسيط', 'مزود خدمة', 'طلبات انضمام', 'طلبات النشر'];
     const [tab, setTab] = useState(0);
 
     const joinRequest = [
@@ -51,7 +52,7 @@ const OfficesPage = () => {
     return (
         <div className="flex flex-col">
             <Header title={'المكاتب الوسيطة'}/>
-            <Tabs tabs={tabs} minWidth={"50px"} border={false} tab={tab} setTab={setTab}
+            <Tabs tabs={tabs} minWidth={"100px"} border={false} tab={tab} setTab={setTab}
                   tabHeight={'45px'} bgHeight={'65px'} borderRadius={'15px'}/>
 
             <div className="p-2 w-full h-full">
@@ -71,11 +72,19 @@ const OfficesPage = () => {
 
                 {/*طلبات انضمام*/}
                 <CustomTabPanel value={tab} index={2}>
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 px-4">
                         <TableHead titles={titles}/>
                         {joinRequest.map(({date, type, name, location, document}) => (
                             <JoinRequest name={name} location={location} document={document} type={type} date={date}/>
                         ))}
+                    </div>
+                </CustomTabPanel>
+
+                {/*طلبات النشر*/}
+                <CustomTabPanel value={tab} index={3}>
+                    <div className="flex flex-col gap-4 px-4">
+                        <PublicationRequests type={'عقاري'} location={'دمشق, شعلان'} officeLocation={'ريف دمشق, حرستا'}
+                        officeName={'أبو هادي'} amount={3000} postTitle={'شقة'} duration={'شهري'}/>
                     </div>
                 </CustomTabPanel>
             </div>
