@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput} from "@mui/material";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
@@ -27,7 +27,7 @@ export const TextField = ({type = 'text', label, value}) => {
                     '& .MuiOutlinedInput-notchedOutline': {
                         border: 'none'
                     },
-                    fontSize: showPassword ? '20px' : '25px',
+                    fontSize: '22px',
                     fontFamily: showPassword ? 'Cairo' : 'Arial',
                 }}
                 endAdornment={

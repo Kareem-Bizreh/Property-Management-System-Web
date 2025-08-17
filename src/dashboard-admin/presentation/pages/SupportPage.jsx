@@ -1,35 +1,68 @@
+import {useEffect} from "react";
 import Header from "../../../shared/presentation/components/Header.jsx";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/colors.jsx";
 import Button from "@mui/material/Button";
 import useQuestionAddOpenStore from "../../application/state/support/useQuestionAddOpenStore.jsx";
 import Question from "../../../shared/presentation/components/support/Question.jsx";
 import QuestionAdd from "../components/support/QuestionAdd.jsx";
+import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
+import useDataStore from "../../application/state/useDataStore.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
+import {getSupports} from "../../application/useCases/supports/getSupportsUseCase.jsx";
+import {deleteSupport} from "../../application/useCases/supports/deleteSupportUseCase.jsx";
+import {editSupport} from "../../application/useCases/supports/editSupportUseCase.jsx";
 
 const SupportPage = () => {
     const {isOpen, setIsOpen} = useQuestionAddOpenStore();
+    const {isLoading, setIsLoading} = useLoadingStore();
+    const {data, setDataForTab} = useDataStore();
+    const {notifyError, notifySuccess} = useNotification();
 
-    const questions = [
-        {
-            question: "ماذا أشاهد؟",
-            answer: "يمكنك مشاهدة الأفلام والمسلسلات الجديدة على المنصات الشهيرة مثل نتفليكس وأمازون برايم."
-        },
-        {
-            question: "أين استردادي؟",
-            answer: "يمكنك التحقق من حالة استرداد الأموال من خلال حسابك على الموقع الرسمي للجهة المعنية أو البنك."
-        },
-        {
-            question: "ما هو عنوان IP الخاص بي؟",
-            answer: "يمكنك معرفة عنوان IP الخاص بك من خلال زيارة مواقع مخصصة مثل whatismyip.com."
-        },
-        {
-            question: "كم عدد الأيام حتى عيد الميلاد؟",
-            answer: "يتبقى على عيد الميلاد حوالي 123 يومًا اعتبارًا من اليوم."
-        },
-        {
-            question: "من فاز في انتخابات 2024؟",
-            answer: "انتهت الانتخابات الأمريكية لعام 2024 بفوز المرشح المختار."
+    useEffect(() => {
+        setIsLoading(true);
+        const fetchData = async () => {
+            const {success, response} = await getSupports();
+            if (success) {
+                setDataForTab(0, response.data);
+            } else {
+                setDataForTab(0, []);
+                notifyError(response);
+            }
+            setIsLoading(false);
+        };
+
+        fetchData();
+    }, []);
+
+    const onDelete = async (id) => {
+        setIsLoading(true);
+        const {success, response} = await deleteSupport(id);
+        if (success) {
+            setDataForTab(0, data[0]?.filter((item) => item.id !== id));
+            notifySuccess("تم حذف السؤال");
+        } else {
+            notifyError(response);
         }
-    ];
+        setIsLoading(false);
+    }
+
+    const onEdit = async (id, question, answer) => {
+        setIsLoading(true);
+        const {success, response} = await editSupport(id, question, answer);
+        if (success) {
+            setDataForTab(0, data[0]?.map(item => {
+                if (item.id === id) {
+                    return {...item, question, answer,};
+                }
+                return item;
+            }));
+            notifySuccess("تم تعديل السؤال");
+        } else {
+            notifyError(response);
+        }
+        setIsLoading(false);
+    }
 
     return (
         <div className="flex flex-col">
@@ -54,16 +87,18 @@ const SupportPage = () => {
                         textAlign: 'center'
                     }}
                 >
-                    إضافة إشعار
+                    إضافة سؤال
                 </Button>
                 {isOpen && (<QuestionAdd/>)}
             </div>
 
-            <div className="flex flex-col py-4 px-6 gap-4">
-                {questions.map(({question, answer}) => (
-                    <Question question={question} answer={answer}/>
-                ))}
-            </div>
+            {(isLoading || !data) ? <Spinner/> :
+                <div className="flex flex-col py-4 px-6 gap-4">
+                    {data[0]?.map(({id, question, answer}) => (
+                        <Question id={id} question={question} answer={answer} onDelete={onDelete} onEdit={onEdit}/>
+                    ))}
+                </div>
+            }
         </div>
     )
 }

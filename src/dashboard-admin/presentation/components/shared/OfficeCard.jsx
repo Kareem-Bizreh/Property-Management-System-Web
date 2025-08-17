@@ -5,11 +5,11 @@ import star from "../../../../shared/assets/shared/star.svg";
 import alert from "../../../assets/complaints/alert.svg";
 import {Link} from "react-router";
 
-const OfficeCard = ({image, type, name, location, rate, id, complaints}) => {
+const OfficeCard = ({image, type, name, location, rate, id, complaints, officeType}) => {
 
     return (
-        <Link to={`/admin/offices/${id}`}>
-            <div className="w-[245px] h-[320px] flex flex-col items-center p-4 rounded-[25px] gap-4"
+        <Link to={`/admin/offices/${id}?officeType=${officeType}`}>
+            <div className="w-[245px] flex flex-col items-center p-4 rounded-[25px] gap-4"
                  style={{
                      backgroundColor: BACKGROUND_COLORS.secondary1,
                      fontFamily: 'Cairo',
@@ -19,18 +19,20 @@ const OfficeCard = ({image, type, name, location, rate, id, complaints}) => {
                      letterSpacing: '3%',
                      textAlign: 'center',
                  }}
+                 key={officeType + id}
             >
                 <div className="flex flex-col items-center">
                     <img src={image || property_tourist} alt="image"
                          className="w-[180px] h-[175px] rounded-full object-cover object-center"
                     />
                     <span
-                        className="rounded-[5px] z-1 w-[110px] h-[22px] -mt-5"
+                        className="rounded-[5px] z-1 w-[110px] min-h-[22px] -mt-5"
                         style={{
                             backgroundColor: BACKGROUND_COLORS.card,
                             borderColor: 'white',
                             borderWidth: '1px',
                             color: TEXT_COLORS.white,
+                            lineHeight: '1.4',
                         }}
                     >
                     {type}

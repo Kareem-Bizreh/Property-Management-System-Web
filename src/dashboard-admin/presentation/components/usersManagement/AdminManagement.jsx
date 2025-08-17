@@ -8,18 +8,51 @@ import SelectInput from "../../../../shared/presentation/components/SelectInput.
 import useCityStore from "../../../application/state/usersManagement/useCityStore.jsx";
 import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 import Button from "@mui/material/Button";
+import {useEffect} from "react";
 
-const AdminManagement = ({onPress, type, useOpenStore: {isOpen, setIsOpen}}) => {
-    const {register, handleSubmit} = useForm();
+const AdminManagement = ({onPress, type, useOpenStore: {isOpen, setIsOpen}, admin}) => {
+    const {register, handleSubmit, watch, setValue} = useForm();
     const {
         agentsManagement,
         financeAndAdsManagement,
         postsManagement,
         complaintsAndSupport,
         systemSupervisor,
-        setPermission
+        setPermission,
+        resetPermissions
     } = usePermissionsStore();
     const {city, setCity} = useCityStore();
+
+    useEffect(() => {
+        resetPermissions();
+        setCity(null);
+
+        if (admin) {
+            admin.permissions.map((permission) => {
+                const permissionInfo = permissions.find((per) => per.name === permission);
+                if (permissionInfo) {
+                    setPermission(permissionInfo.title, true);
+                }
+            });
+            setValue("firstName", admin.first_name);
+            setValue("lastName", admin.last_name);
+            setValue("email", admin.email);
+            if (admin.city_id) {
+                setCity(SyrianGovernorates.find((c) => c.id === admin.city_id).name);
+            }
+        }
+    }, []);
+
+    const adminData = () => {
+        const currentValues = watch();
+        return {
+            first_name: currentValues.firstName,
+            last_name: currentValues.lastName,
+            email: currentValues.email,
+            cityId: city ? SyrianGovernorates.find((c) => c.name === city)?.id : null,
+            permissionIds: permissions.filter((p) => p.value).map((per) => per.id),
+        }
+    }
 
     function Field({title, name}) {
         return (
@@ -27,6 +60,7 @@ const AdminManagement = ({onPress, type, useOpenStore: {isOpen, setIsOpen}}) => 
                 <span>{title}</span>
                 <input
                     type="text"
+                    {...(name === "email" ? {dir: 'ltr'} : {})}
                     {...register(name, {required: true})}
                     className='rounded-[15px] border-[1px] min-h-[45px] px-2 w-full'
                     style={{
@@ -54,11 +88,11 @@ const AdminManagement = ({onPress, type, useOpenStore: {isOpen, setIsOpen}}) => 
     }
 
     const permissions = [
-        {name: "إدارة الوسطاء", value: agentsManagement, title: 'agentsManagement'},
-        {name: "إدارة المالية والإعلانات", value: financeAndAdsManagement, title: 'financeAndAdsManagement'},
-        {name: "إدارة المنشورات", value: postsManagement, title: 'postsManagement'},
-        {name: "إدارة الشكاوي والدعم", value: complaintsAndSupport, title: 'complaintsAndSupport'},
-        {name: "مراقب النظام", value: systemSupervisor, title: 'systemSupervisor'},
+        {id: 1, name: "إدارة الوسطاء", value: agentsManagement, title: 'agentsManagement'},
+        {id: 2, name: "إدارة المالية والإعلانات", value: financeAndAdsManagement, title: 'financeAndAdsManagement'},
+        {id: 3, name: "إدارة المنشورات", value: postsManagement, title: 'postsManagement'},
+        {id: 4, name: "إدارة الشكاوي والدعم", value: complaintsAndSupport, title: 'complaintsAndSupport'},
+        {id: 5, name: "مراقب النظام", value: systemSupervisor, title: 'systemSupervisor'},
     ];
 
     return (
@@ -95,12 +129,6 @@ const AdminManagement = ({onPress, type, useOpenStore: {isOpen, setIsOpen}}) => 
                             <Field name={"firstName"} title={'الاسم الأول'}/>
                             <Field name={"lastName"} title={'الاسم الأخير'}/>
                         </div>
-                        {type === "تعديل" && (
-                            <div className="flex flex-row flex-wrap items-center justify-between">
-                                <Field name={"userName"} title={'اسم المستخدم'}/>
-                                <Field name={"password"} title={'كلمة السر'}/>
-                            </div>
-                        )}
                         <Field name={"email"} title={'البريد الإلكتروني'}/>
                     </div>
                     <div className="flex flex-row items-center justify-center w-full px-4 gap-8">
@@ -138,7 +166,7 @@ const AdminManagement = ({onPress, type, useOpenStore: {isOpen, setIsOpen}}) => 
                         </Button>
                         <Button
                             variant="contained"
-                            onClick={handleSubmit(onPress)}
+                            onClick={handleSubmit(() => onPress(adminData(), setIsOpen))}
                             sx={{
                                 width: 160,
                                 height: 47,

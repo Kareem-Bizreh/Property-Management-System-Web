@@ -3,10 +3,10 @@ import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
 
-const FinancialRecord = ({record: {id, paid_date, mid, type, day_period, amount, advertisement_status, document}}) => {
+const FinancialRecord = ({record: {id, paid_date, office_name, type, day_period, amount, image}}) => {
     function onPress() {
-        if (document && document.length > 0) {
-            window.open(document, '_blank');
+        if (image && image.length > 0) {
+            window.open(image, '_blank');
         }
     }
 
@@ -25,21 +25,13 @@ const FinancialRecord = ({record: {id, paid_date, mid, type, day_period, amount,
                 textAlign: 'center',
             }}
         >
-            <span className="min-w-[110px] h-[20px]">{formatDate(paid_date) || "----"}</span>
-            <span className="min-w-[140px] h-[20px]">{mid}</span>
-            <span className="min-w-[120px] h-[20px]">{type}</span>
-            <span className="min-w-[110px] h-[20px]">{day_period} أيام</span>
-            <span className="min-w-[110px] h-[20px]">{formatPrice(amount)} $</span>
-            <span className="min-w-[120px] h-[20px]"
-                  style={{
-                      color: (advertisement_status === 'قيد الانتظار' ? TEXT_COLORS.reserved :
-                          (advertisement_status === 'مدفوع' ? TEXT_COLORS.sold : TEXT_COLORS.cancelled))
-                  }}>
-                {advertisement_status}
-            </span>
-            <div className="min-w-[140px] h-[20px] flex items-center">
+            <span className="w-[110px] h-[20px]">{formatDate(paid_date) || "----"}</span>
+            <span className="w-[200px] h-[20px] break-words">{office_name}</span>
+            <span className="w-[120px] h-[20px]">{type}</span>
+            <span className="w-[110px] h-[20px]">{day_period} أيام</span>
+            <span className="w-[110px] h-[20px]">{formatPrice(amount)} $</span>
+            <div className="w-[140px] h-[20px] flex items-center">
                 <Button variant="contained"
-                        disabled={advertisement_status !== 'مدفوع' || !document}
                         onClick={onPress}
                         sx={{
                             width: 115,

@@ -1,3 +1,4 @@
+import {useState} from "react";
 import Popup from "reactjs-popup";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import useNotificationSendOpenStore from "../../../application/state/notifications/useNotificationSendOpenStore.jsx";
@@ -7,18 +8,26 @@ import TextInput from "../../../../shared/presentation/components/TextInput.jsx"
 import Header from "../../../../shared/presentation/components/Header.jsx";
 import {Checkbox} from "@mui/material";
 import Button from "@mui/material/Button";
+import {useNotification} from "../../../../shared/shared/hooks/useNotification.jsx";
+import {sendNotification} from "../../../application/useCases/notification/sendNotificationUseCase.jsx";
+import {Spinner} from "../../../../shared/presentation/components/Spinner.jsx";
 
 const NotificationSend = () => {
     const {isOpen, setIsOpen} = useNotificationSendOpenStore();
-    const {users, admins, offices, setPermission} = usePermissionsStore()
-    const {register, handleSubmit} = useForm();
+    const {users, admins, offices, setPermission, resetPermissions} = usePermissionsStore();
+    const {notifyError, notifySuccess, notifyWarning} = useNotification();
+    const {register, handleSubmit, watch} = useForm();
+    const [isLoading, setIsLoading] = useState(false);
 
     function Permission({name, value, title}) {
         return (
             <div className="w-full flex flex-row flex-wrap gap-4 px-2 items-center" key={title}>
                 <Checkbox
                     checked={value}
-                    onChange={(e) => setPermission(title, e.target.checked)}
+                    onChange={(e) => {
+                        resetPermissions();
+                        setPermission(title, e.target.checked);
+                    }}
                     sx={{'&.Mui-checked': {color: BACKGROUND_COLORS.button}}}
                 />
                 <span>{name}</span>
@@ -26,7 +35,24 @@ const NotificationSend = () => {
         )
     }
 
-    const onSubmit = async () => {}
+    const onSubmit = async () => {
+        if (!admins && !users && !offices) {
+            notifyWarning("يجب اختيار جهة مستهدفة على الأقل")
+            return;
+        }
+        setIsLoading(true);
+        const target = admins ? 'مشرفين' : (users ? 'مستخدمين' : 'وسطاء');
+        const {success, response} = await sendNotification(watch("title"), watch("body"), target);
+
+        if (success) {
+            notifySuccess(response.message);
+            notifyWarning("يرجى اعادة تحميل الصفحة لرؤية التغييرات");
+            setIsOpen(false);
+        } else {
+            notifyError(response);
+        }
+        setIsLoading(false);
+    }
 
     return (
         <Popup
@@ -45,6 +71,7 @@ const NotificationSend = () => {
             }}
         >
             {(close) => (
+                isLoading ? <div className="h-[100px]"><Spinner opacity="0"/></div> :
                 <div className="flex flex-col items-center flex-wrap gap-4"
                      style={{
                          fontFamily: 'Cairo',
@@ -71,7 +98,7 @@ const NotificationSend = () => {
                             register={register}
                         />
                     </div>
-                    <span>الصلاحيات</span>
+                    <span>المستهدفين</span>
                     <div className="flex flex-col items-start w-full">
                         <Permission name={'المستخدمين'} title={"users"} value={users}/>
                         <Permission name={'المشرفين'} title={"admins"} value={admins}/>

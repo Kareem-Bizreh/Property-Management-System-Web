@@ -1,55 +1,65 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Header from "../../../shared/presentation/components/Header.jsx";
 import {CustomTabPanel, Tabs} from "../../../shared/presentation/components/Tabs.jsx";
 import OfficeCard from "../components/shared/OfficeCard.jsx";
 import TableHead from "../components/shared/TableHead.jsx";
 import Complaint from "../components/complaints/Complaint.jsx";
+import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
+import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
+import useDataStore from "../../application/state/useDataStore.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
+import {getComplaints} from "../../application/useCases/complaints/getComplaintsUseCase.jsx";
+import {getPendingComplaints} from "../../application/useCases/complaints/getPendingComplaintsUseCase.jsx";
+import {respondToComplaints} from "../../application/useCases/complaints/respondToComplaintsUseCase.jsx";
 
 const ComplaintsPage = () => {
     const tabs = ['الشكاوي', 'طلبات الشكوى'];
     const [tab, setTab] = useState(0);
+    const {isLoading, setIsLoading} = useLoadingStore();
+    const {data, setDataForTab} = useDataStore();
+    const {notifyError, notifySuccess} = useNotification();
 
-    const complaints = [
-        {id: 1, type: 'سياحي', name: 'كريم البزرة', location: 'دمشق, المزة', complaints: 1},
-        {id: 2, type: 'سياحي', name: 'ليلى حداد', location: 'حمص, الحمراء', complaints: 0},
-        {id: 3, type: 'سياحي', name: 'سامر خليل', location: 'حلب, الشيخ مقصود', complaints: 3},
-        {id: 4, type: 'سياحي', name: 'رنا يعقوب', location: 'اللاذقية, الكازية', complaints: 2},
-        {id: 5, type: 'سياحي', name: 'أنس الزعيم', location: 'دير الزور, غويران', complaints: 1},
-    ];
+    useEffect(() => {
+        setIsLoading(true);
+        const fetchData = async () => {
+            let result;
+            switch (tab) {
+                case 0:
+                    result = await getComplaints();
+                    break;
+                case 1:
+                    result = await getPendingComplaints();
+                    break;
+            }
 
-    const complaintRequests = [
-        {
-            date: "2025-08-10",
-            name: "كريم البزرة",
-            phone: "0999123456",
-            reason: "تأخير في الرد على الاستفسارات."
-        },
-        {
-            date: "2025-08-08",
-            name: "ليلى حداد",
-            phone: "0987654321",
-            reason: "عدم توفر معلومات كافية عن المنتج."
-        },
-        {
-            date: "2025-08-05",
-            name: "سامر خليل",
-            phone: "0976543210",
-            reason: "خدمة العملاء لم تكن متعاونة."
-        },
-        {
-            date: "2025-07-30",
-            name: "رنا يعقوب",
-            phone: "0965432109",
-            reason: "تأخير في عملية التوصيل."
-        },
-        {
-            date: "2025-07-25",
-            name: "أنس الزعيم",
-            phone: "0954321098",
-            reason: "مشكلة في جودة المنتج المستلم."
+            if (result.success) {
+                setDataForTab(tab, result.response.data);
+            } else {
+                setDataForTab(tab, []);
+                notifyError(result.response);
+            }
+
+            setIsLoading(false);
+        };
+
+        fetchData();
+    }, [tab]);
+
+    const onRespond = async (id, approved, type) => {
+        setIsLoading(true);
+        const {success, response} = await respondToComplaints(id, approved, type);
+        if (success) {
+            setDataForTab(1, data[1].filter((item) => item.id !== id || item.type !== type));
+            if (!approved) {
+                notifySuccess("تم الرفض بنجاح");
+            } else {
+                notifySuccess("تم القبول بنجاح")
+            }
+        } else {
+            notifyError(response);
         }
-    ];
-
+        setIsLoading(false);
+    }
 
     return (
         <div className="flex flex-col">
@@ -57,28 +67,36 @@ const ComplaintsPage = () => {
             <Tabs tabs={tabs} minWidth={"50px"} border={false} tab={tab} setTab={setTab}
                   tabHeight={'45px'} bgHeight={'65px'} borderRadius={'15px'}/>
 
-            <div className="p-1 w-full h-full">
-                {/*الشكاوي*/}
-                <CustomTabPanel value={tab} index={0}>
-                    <div className="flex flex-row flex-wrap items-center gap-6 p-4">
-                        {complaints.map(({type, name, location, id, complaints}) => (
-                            <OfficeCard type={type} name={name} location={location} id={id} complaints={complaints}/>
-                        ))}
-                    </div>
-                </CustomTabPanel>
-
-                {/*طلبات الشكوى*/}
-                <CustomTabPanel value={tab} index={1}>
-                    <div className="p-2 flex flex-col gap-2">
-                        <TableHead titles={titles}/>
-                        <div className="flex flex-col gap-4">
-                            {complaintRequests.map(({date, name, phone, reason}) => (
-                                <Complaint name={name} date={date} phone={phone} reason={reason}/>
+            {(isLoading || !data) ? <Spinner/> :
+                <div className="p-1 w-full h-full">
+                    {/*الشكاوي*/}
+                    <CustomTabPanel value={tab} index={0}>
+                        <div className="flex flex-row flex-wrap items-center gap-6 p-4">
+                            {data[0]?.map((item) => (
+                                <OfficeCard id={item.id} officeType={item.type} name={item.name}
+                                            location={item.location}
+                                            image={item.logo} complaints={item.complaints_count}
+                                            type={item.office_type || item.career}/>
                             ))}
                         </div>
-                    </div>
-                </CustomTabPanel>
-            </div>
+                    </CustomTabPanel>
+
+                    {/*طلبات الشكوى*/}
+                    <CustomTabPanel value={tab} index={1}>
+                        <div className="p-2 flex flex-col gap-2">
+                            <TableHead titles={titles}/>
+                            <div className="flex flex-col gap-4">
+                                {data[1]?.map((item) => (
+                                    <Complaint id={item.id} type={item.type} name={item.office_name}
+                                               date={item.created_at}
+                                               phone={item.user_mobile} reason={item.complaint}
+                                               onReject={() => onRespond(item.id, false, item.type)}
+                                               onAccept={() => onRespond(item.id, true, item.type)}/>
+                                ))}
+                            </div>
+                        </div>
+                    </CustomTabPanel>
+                </div>}
         </div>
     )
 }

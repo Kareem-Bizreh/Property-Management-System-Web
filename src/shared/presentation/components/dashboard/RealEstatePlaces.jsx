@@ -1,6 +1,4 @@
-import React from 'react'
-
-const RealEstatePlaces = ({color, bgColor, title, icon}) => {
+const RealEstatePlaces = ({color, bgColor, title, icon, rent, sale}) => {
     return (
         <div
             className="flex flex-col justify-between items-center p-4 w-full h-full min-h-[174px]"
@@ -28,7 +26,7 @@ const RealEstatePlaces = ({color, bgColor, title, icon}) => {
             {/*Number and icon*/}
             <div className="flex flex-row items-end justify-center mb-4 mt-2 ml-4 gap-8">
                 {
-                    NumberAndDetail('بيع', 16, color)
+                    NumberAndDetail('بيع', sale, color)
                 }
                 <img
                     src={icon}
@@ -36,7 +34,7 @@ const RealEstatePlaces = ({color, bgColor, title, icon}) => {
                     className="w-[45px] h-[45px]"
                 />
                 {
-                    NumberAndDetail('إيجار', 11, color)
+                    NumberAndDetail('أجار', rent, color)
                 }
             </div>
         </div>

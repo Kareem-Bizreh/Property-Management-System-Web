@@ -5,8 +5,12 @@ import {Clock} from "lucide-react";
 import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 import Button from "@mui/material/Button";
+import {useState} from "react";
+import ConfirmActionModalWithMUI from "../../../../shared/presentation/components/ConfirmActionModal.jsx";
 
-const Post = ({post: {id, type, location, budget, publishedDate, description}, onReject, onAccept}) => {
+const Post = ({post: {id, type, location, budget, createdAt, description}, onReject, onAccept}) => {
+    const [acceptModel, setAcceptModel] = useState(false);
+    const [rejectModel, setRejectModel] = useState(false);
 
     const data = [
         {key: 'النوع', value: type, icon: null},
@@ -49,24 +53,37 @@ const Post = ({post: {id, type, location, budget, publishedDate, description}, o
             <div className="flex flex-row flex-wrap items-center justify-between gap-4 h-full">
                 <div className="flex flex-row h-full items-end gap-2">
                     <Clock size={15} color={'#252B5C99'}/>
-                    <span style={{fontWeight: 500}}>{formatDate(publishedDate)}</span>
+                    <span style={{fontWeight: 500}}>{formatDate(createdAt)}</span>
                 </div>
                 {(onAccept && onReject) && <div className="flex flex-col items-center gap-3">
                     <Button variant="contained"
-                            onClick={onAccept}
+                            onClick={() => setAcceptModel(true)}
                             sx={{backgroundColor: BACKGROUND_COLORS.accept, ...buttonSx}}
                     >
                         قبول
                     </Button>
                     <Button
                         variant="contained"
-                        onClick={onReject}
+                        onClick={() => setRejectModel(true)}
                         sx={{backgroundColor: BACKGROUND_COLORS.delete, ...buttonSx}}
                     >
                         رفض
                     </Button>
                 </div>}
             </div>
+            <ConfirmActionModalWithMUI
+                open={rejectModel}
+                onClose={() => setRejectModel(false)}
+                onConfirm={(reason) => onReject(id, reason)}
+                type={"الرفض"}
+            />
+            <ConfirmActionModalWithMUI
+                open={acceptModel}
+                onClose={() => setAcceptModel(false)}
+                onConfirm={() => onAccept(id)}
+                type={"القبول"}
+                withReason={false}
+            />
         </div>
     )
 }

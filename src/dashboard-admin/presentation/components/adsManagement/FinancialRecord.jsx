@@ -2,13 +2,21 @@ import {BACKGROUND_COLORS, TEXT_COLORS as TeXT_COLORS, TEXT_COLORS} from "../../
 import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
+import {useState} from "react";
+import ConfirmActionModalWithMUI from "../../../../shared/presentation/components/ConfirmActionModal.jsx";
 
-const FinancialRecord = ({record: {id, paid_date, mid, type, day_period, amount, document}, propertyName, control}) => {
+const FinancialRecord = ({
+                             record: {id, start_date, office_name, type, active_days, amount, image, title},
+                             onAccept, onReject
+                         }) => {
     function onPress() {
-        if (document && document.length > 0) {
-            window.open(document, '_blank');
+        if (image && image.length > 0) {
+            window.open(image, '_blank');
         }
     }
+
+    const [acceptModel, setAcceptModel] = useState(false);
+    const [rejectModel, setRejectModel] = useState(false);
 
     return (
         <div
@@ -25,11 +33,11 @@ const FinancialRecord = ({record: {id, paid_date, mid, type, day_period, amount,
                 textAlign: 'center',
             }}
         >
-            <span className="min-w-[100px] h-[20px]">{formatDate(paid_date) || "----"}</span>
-            <span className="min-w-[130px] h-[20px]">{mid}</span>
-            <span className="min-w-[110px] h-[20px]">{type}</span>
-            <span className="min-w-[100px] h-[20px]">{day_period} أيام</span>
-            <span className="min-w-[100px] h-[20px]">{formatPrice(amount)} $</span>
+            <span className="w-[100px] min-h-[20px]">{formatDate(start_date) || "----"}</span>
+            <span className="w-[200px] min-h-[20px]" style={{lineHeight: '1.4'}}>{office_name}</span>
+            <span className="w-[110px] min-h-[20px]">{type}</span>
+            <span className="w-[100px] min-h-[20px]">{active_days}</span>
+            <span className="w-[100px] min-h-[20px]">{formatPrice(amount)} $</span>
             <div className="w-[180px] h-[20px] flex items-center justify-center">
                 {type === 'إعلان صوري' ?
                     <Button variant="contained"
@@ -49,14 +57,14 @@ const FinancialRecord = ({record: {id, paid_date, mid, type, day_period, amount,
                     >
                         عرض الصورة
                     </Button> :
-                    <span className="p-2" style={{lineHeight: '24px'}}>{propertyName}</span>
+                    <span className="p-2" style={{lineHeight: '24px'}}>{title}</span>
                 }
             </div>
-            {control &&
+            {onAccept && onReject &&
                 <div className="w-fit">
                     <div className="flex flex-col items-center gap-3">
                         <Button variant="contained"
-                                // onClick={close}
+                                onClick={() => setAcceptModel(true)}
                                 sx={{
                                     width: 150,
                                     height: 30,
@@ -68,7 +76,7 @@ const FinancialRecord = ({record: {id, paid_date, mid, type, day_period, amount,
                         </Button>
                         <Button
                             variant="contained"
-                            // onClick={handleSubmit(onPress)}
+                            onClick={() => setRejectModel(true)}
                             sx={{
                                 width: 150,
                                 height: 30,
@@ -80,6 +88,19 @@ const FinancialRecord = ({record: {id, paid_date, mid, type, day_period, amount,
                         </Button>
                     </div>
                 </div>}
+            <ConfirmActionModalWithMUI
+                open={rejectModel}
+                onClose={() => setRejectModel(false)}
+                onConfirm={(reason) => onReject(id, reason)}
+                type={"الرفض"}
+            />
+            <ConfirmActionModalWithMUI
+                open={acceptModel}
+                onClose={() => setAcceptModel(false)}
+                onConfirm={() => onAccept(id)}
+                type={"القبول"}
+                withReason={false}
+            />
         </div>
     )
 }

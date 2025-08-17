@@ -79,7 +79,7 @@ export const Tabs = ({tabs, minWidth, tabHeight, bgHeight, border, borderRadius,
             }}
         >
             {tabs?.map((tab, index) => (
-                <Tab label={tab} {...a11yProps(index)} sx={tabSx}/>
+                <Tab label={tab} {...a11yProps(index)} sx={tabSx} key={tab}/>
             ))}
         </TabsMUI>
     )

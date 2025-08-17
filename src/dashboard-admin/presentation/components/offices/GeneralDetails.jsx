@@ -9,42 +9,17 @@ import instagram from "../../../../shared/assets/office-info/instagram.svg"
 import {useEffect} from "react";
 
 const GeneralDetails = ({office, name}) => {
-    const {register, setValue, getValues} = useForm();
+    const {register, setValue} = useForm();
 
     useEffect(() => {
-        const currentValues = getValues();
-
-        if (currentValues.name !== office?.name) {
-            setValue("name", office?.name);
-        }
-
-        if ((currentValues.contactNumber) !== office?.contactNumber) {
-            setValue("contactNumber", office?.contactNumber);
-        }
-
-        if (currentValues.openingTime !== office?.openingTime) {
-            setValue("openingTime", office?.openingTime);
-        }
-
-        if (currentValues.closingTime !== office?.closingTime) {
-            setValue("closingTime", office?.closingTime);
-        }
-
-        if (currentValues.facebookAccount !== office?.facebookAccount) {
-            setValue("facebookAccount", office?.facebookAccount);
-        }
-
-        if (currentValues.whatsappAccount !== office?.whatsappAccount) {
-            setValue("whatsappAccount", office?.whatsappAccount);
-        }
-
-        if (currentValues.instagramAccount !== office?.instagramAccount) {
-            setValue("instagramAccount", office?.instagramAccount);
-        }
-
-        if (currentValues.description !== office?.description) {
-            setValue("description", office?.description);
-        }
+        setValue("name", office?.name);
+        setValue("phone", office?.phone);
+        setValue("opening_time", office?.opening_time?.slice(0, 5));
+        setValue("closing_time", office?.closing_time?.slice(0,5));
+        office?.socials?.map((social) => {
+            setValue(social.platform, social.link);
+        })
+        setValue("details", office?.details);
     }, []);
 
     return (
@@ -57,6 +32,7 @@ const GeneralDetails = ({office, name}) => {
                  fontSize: "16px",
                  lineHeight: "100%",
              }}
+             key={office?.id}
         >
             {/* اسم المكتب */}
             <div className="w-[50%]" style={{color: TEXT_COLORS.black}}>
@@ -73,7 +49,7 @@ const GeneralDetails = ({office, name}) => {
                     readOnly={true}
                     title="رقم التواصل"
                     type="text"
-                    name={"contactNumber"}
+                    name={"phone"}
                     register={register}
                 />
             </div>
@@ -86,7 +62,7 @@ const GeneralDetails = ({office, name}) => {
                         readOnly={true}
                         height={'60px'}
                         maxWidth={'250px'}
-                        title={office?.city.name}
+                        title={office?.city_name}
                         style={{borderWidth: '1px'}}
                     />
                 </div>
@@ -98,7 +74,7 @@ const GeneralDetails = ({office, name}) => {
                         readOnly={true}
                         height={'60px'}
                         maxWidth={'250px'}
-                        title={office?.region.name}
+                        title={office?.region_name}
                         style={{borderWidth: '1px'}}
                     />
                 </div>
@@ -142,7 +118,7 @@ const GeneralDetails = ({office, name}) => {
                     <input
                         readOnly={true}
                         type="time"
-                        {...register("openingTime", {required: true})}
+                        {...register("opening_time", {required: true})}
                         className="rounded-[15px] border-[1px] h-[50px] px-4 w-full"
                         style={{
                             backgroundColor: BACKGROUND_COLORS.app,
@@ -173,7 +149,7 @@ const GeneralDetails = ({office, name}) => {
                     <input
                         readOnly={true}
                         type="time"
-                        {...register("closingTime", {required: true})}
+                        {...register("closing_time", {required: true})}
                         className="rounded-[15px] border-[1px] h-[50px] px-4 w-full max-w-[260px]"
                         style={{
                             backgroundColor: BACKGROUND_COLORS.app,
@@ -200,7 +176,7 @@ const GeneralDetails = ({office, name}) => {
                         <TextInput
                             readOnly={true}
                             type="text"
-                            name={"facebookAccount"}
+                            name={"facebook"}
                             register={register}
                             required={false}
                             inputClassName="pr-12"
@@ -217,7 +193,7 @@ const GeneralDetails = ({office, name}) => {
                         <TextInput
                             readOnly={true}
                             type="text"
-                            name={"whatsappAccount"}
+                            name={"whatsapp"}
                             register={register}
                             required={false}
                             inputClassName="pr-12"
@@ -234,7 +210,7 @@ const GeneralDetails = ({office, name}) => {
                         <TextInput
                             readOnly={true}
                             type="text"
-                            name={"instagramAccount"}
+                            name={"instagram"}
                             register={register}
                             required={false}
                             inputClassName="pr-12"
@@ -250,7 +226,7 @@ const GeneralDetails = ({office, name}) => {
                     <TextInput
                         readOnly={true}
                         type="text"
-                        name={"description"}
+                        name={"details"}
                         register={register}
                         multiline={true}
                         title="وصف الخدمة"
@@ -264,7 +240,7 @@ const GeneralDetails = ({office, name}) => {
                             readOnly={true}
                             height={'60px'}
                             maxWidth={'250px'}
-                            title={office?.region.name}
+                            title={office?.career}
                             style={{borderWidth: '1px'}}
                         />
                     </div>

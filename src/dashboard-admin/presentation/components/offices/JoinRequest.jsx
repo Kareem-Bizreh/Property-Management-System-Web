@@ -1,12 +1,15 @@
+import {useState} from "react";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 import Button from "@mui/material/Button";
 import map from "../../../../shared/assets/cards/map.svg";
+import ConfirmActionModalWithMUI from "../../../../shared/presentation/components/ConfirmActionModal.jsx";
 
-const JoinRequest = ({date, type, name, location, document, onAccept, onReject}) => {
+const JoinRequest = ({id, date, type, name, location, document, onAccept, onReject}) => {
     function onPress() {
         window.open(document, '_blank');
     }
+    const [modalOpen, setModalOpen] = useState(false);
 
     return (
         <div
@@ -21,6 +24,7 @@ const JoinRequest = ({date, type, name, location, document, onAccept, onReject})
                 letterSpacing: '3%',
                 textAlign: 'center'
             }}
+            key={id}
         >
             <span className="w-[120px]">{formatDate(date)}</span>
             <span className="w-[120px]">{type}</span>
@@ -45,19 +49,25 @@ const JoinRequest = ({date, type, name, location, document, onAccept, onReject})
             </div>
             <div className="flex flex-col items-center gap-3 w-[200px]">
                 <Button variant="contained"
-                        onClick={onAccept}
+                        onClick={() => onAccept(2, id)}
                         sx={{backgroundColor: BACKGROUND_COLORS.accept, ...statusSx}}
                 >
                     قبول
                 </Button>
                 <Button
                     variant="contained"
-                    onClick={onReject}
+                    onClick={() => setModalOpen(true)}
                     sx={{backgroundColor: BACKGROUND_COLORS.delete, ...statusSx}}
                 >
                     رفض
                 </Button>
             </div>
+
+            <ConfirmActionModalWithMUI
+                open={modalOpen}
+                onClose={() => setModalOpen(false)}
+                onConfirm={(reason) => onReject(2, id, reason)}
+            />
         </div>
     )
 }

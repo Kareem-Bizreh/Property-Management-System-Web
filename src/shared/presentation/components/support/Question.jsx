@@ -5,10 +5,13 @@ import Button from "@mui/material/Button";
 import {useState} from "react";
 import {motion, AnimatePresence} from "framer-motion";
 import {ChevronDown} from "lucide-react";
+import ConfirmActionModalWithMUI from "../ConfirmActionModal.jsx";
 
-const Question = ({question, answer, onEdit, onDelete, userMode = false}) => {
-    const {register, handleSubmit} = useForm({defaultValues: {question, answer}});
+const Question = ({id, question, answer, onEdit, onDelete, userMode = false}) => {
+    const {register, handleSubmit, watch} = useForm({defaultValues: {question, answer}});
     const [open, setOpen] = useState(false);
+    const [editModel, setEditModel] = useState(false);
+    const [deleteModel, setDeleteModel] = useState(false);
 
     if (userMode) {
         // User Mode → Accordion style
@@ -24,6 +27,7 @@ const Question = ({question, answer, onEdit, onDelete, userMode = false}) => {
 
                 }}
                 onClick={() => setOpen(!open)}
+                key={id}
             >
                 <div className="flex justify-between items-center">
                     <span style={{color: TEXT_COLORS.black}}>{question}</span>
@@ -31,7 +35,7 @@ const Question = ({question, answer, onEdit, onDelete, userMode = false}) => {
                         animate={{rotate: open ? 180 : 0}}
                         transition={{duration: 0.3}}
                     >
-                        <ChevronDown />
+                        <ChevronDown/>
                     </motion.div>
                 </div>
                 <AnimatePresence>
@@ -55,6 +59,7 @@ const Question = ({question, answer, onEdit, onDelete, userMode = false}) => {
     return (
         <div className="flex flex-row items-center flex-wrap rounded-[25px] w-full px-4"
              style={{backgroundColor: BACKGROUND_COLORS.filter}}
+             key={id}
         >
             <div className="flex flex-col flex-3 min-w-[450px]">
                 <TextInput
@@ -74,19 +79,33 @@ const Question = ({question, answer, onEdit, onDelete, userMode = false}) => {
             </div>
             <div className="flex flex-col items-center gap-3 w-[180px] flex-1">
                 <Button variant="contained"
-                        onClick={handleSubmit(onEdit)}
+                        onClick={handleSubmit(() => setEditModel(true))}
                         sx={{backgroundColor: BACKGROUND_COLORS.edit, ...statusSx}}
                 >
                     تعديل
                 </Button>
                 <Button
                     variant="contained"
-                    onClick={onDelete}
+                    onClick={() => setDeleteModel(true)}
                     sx={{backgroundColor: BACKGROUND_COLORS.delete, ...statusSx}}
                 >
                     حذف
                 </Button>
             </div>
+            <ConfirmActionModalWithMUI
+                open={editModel}
+                onClose={() => setEditModel(false)}
+                onConfirm={() => onEdit(id, watch("question"), watch("answer"))}
+                type={"التعديل"}
+                withReason={false}
+            />
+            <ConfirmActionModalWithMUI
+                open={deleteModel}
+                onClose={() => setDeleteModel(false)}
+                onConfirm={() => onDelete(id)}
+                type={"الحذف"}
+                withReason={false}
+            />
         </div>
     )
 };

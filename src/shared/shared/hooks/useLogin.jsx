@@ -20,6 +20,12 @@ export const useLogin = () => {
             if (data.data.user.role === "صاحب مكتب") {
                 navigate("/real-estate-office");
             }
+            else if (data.data.user.role === "مزود خدمة") {
+                navigate("/service-provider");
+            }
+            else {
+                navigate("/admin");
+            }
         } else {
             setError(message);
         }

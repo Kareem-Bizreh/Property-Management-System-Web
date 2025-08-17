@@ -1,8 +1,13 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 import Button from "@mui/material/Button";
+import ConfirmActionModalWithMUI from "../../../../shared/presentation/components/ConfirmActionModal.jsx";
+import {useState} from "react";
 
-const Complaint = ({date, name, phone, reason, onAccept, onReject}) => {
+const Complaint = ({id, type, date, name, phone, reason, onAccept, onReject}) => {
+    const [acceptModel, setAcceptModel] = useState(false);
+    const [rejectModel, setRejectModel] = useState(false);
+
     return (
         <div
             className="w-full min-h-[90px] flex flex-row flex-wrap items-center justify-between gap-6 rounded-[15px] py-4"
@@ -16,6 +21,7 @@ const Complaint = ({date, name, phone, reason, onAccept, onReject}) => {
                 letterSpacing: '3%',
                 textAlign: 'center'
             }}
+            key={type + id}
         >
             <span className="w-[120px]">{formatDate(date)}</span>
             <span className="w-[140px]">{name}</span>
@@ -23,19 +29,33 @@ const Complaint = ({date, name, phone, reason, onAccept, onReject}) => {
             <span className="w-[400px]">{reason}</span>
             <div className="flex flex-col items-center gap-3 w-[180px]">
                 <Button variant="contained"
-                        onClick={onAccept}
+                        onClick={() => setAcceptModel(true)}
                         sx={{backgroundColor: BACKGROUND_COLORS.accept, ...statusSx}}
                 >
                     قبول
                 </Button>
                 <Button
                     variant="contained"
-                    onClick={onReject}
+                    onClick={() => setRejectModel(true)}
                     sx={{backgroundColor: BACKGROUND_COLORS.delete, ...statusSx}}
                 >
                     رفض
                 </Button>
             </div>
+            <ConfirmActionModalWithMUI
+                open={acceptModel}
+                onClose={() => setAcceptModel(false)}
+                onConfirm={onAccept}
+                type={"القبول"}
+                withReason={false}
+            />
+            <ConfirmActionModalWithMUI
+                open={rejectModel}
+                onClose={() => setRejectModel(false)}
+                onConfirm={onReject}
+                type={"الرفض"}
+                withReason={false}
+            />
         </div>
     )
 }

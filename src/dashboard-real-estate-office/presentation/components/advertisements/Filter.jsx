@@ -17,7 +17,7 @@ const Filter = () => {
                         key={2}
                         title={type || "نوع"}
                         options={["إلغاء", ...AdType]}
-                        maxWidth={"160px"}
+                        maxWidth={"170px"}
                         height={"48px"}
                         onChange={setType}
                     />

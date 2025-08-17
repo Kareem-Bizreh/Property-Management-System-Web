@@ -15,9 +15,9 @@ import SupportPage from "../pages/SupportPage.jsx";
 export const PrivateRoutes = [{
     path: "/admin/",
     element:
-    // <RequireAuth>
-        <Sidebar items={SIDEBAR_ITEMS}/>,
-    // </RequireAuth>,
+    <RequireAuth>
+        <Sidebar items={SIDEBAR_ITEMS}/>
+    </RequireAuth>,
     children: [
         {
             index: true,
