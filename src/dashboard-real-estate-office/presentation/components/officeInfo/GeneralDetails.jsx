@@ -1,4 +1,5 @@
-import mapIcon from "../../../../shared/assets/shared/map-marker.svg";
+import {MapPin} from "lucide-react";
+import {Map} from "../../../../shared/presentation/components/Map.jsx"
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import TextInput from "../../../../shared/presentation/components/TextInput.jsx";
 import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
@@ -9,11 +10,12 @@ import whatsapp from "../../../../shared/assets/office-info/whatsapp.svg"
 import instagram from "../../../../shared/assets/office-info/instagram.svg"
 import useOfficeStore from "../../../application/state/office/useOfficeStore.jsx";
 import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 const GeneralDetails = ({onEdit}) => {
     const {register, watch, setValue, getValues, handleSubmit} = useFormContext();
     const {office, setOffice} = useOfficeStore();
+    const [showMap, setShowMap] = useState(false);
 
     useEffect(() => {
         const currentValues = getValues();
@@ -134,22 +136,30 @@ const GeneralDetails = ({onEdit}) => {
 
                 {/* تحديد الموقع */}
                 <div className="flex flex-col justify-around items-center flex-1 min-w-[95px]">
-                    <span className="my-2">
-                        تحديد الموقع
-                    </span>
-                    <div
-                        className="relative w-[63px] h-[60px] rounded-[15px] border-[1px] bg-[#DBEDF6]
-                                            transition-colors duration-200 cursor-pointer custom-hover"
-                        style={{
-                            "--hover-bg": "white",
+                    <span>{`${office.coordinates ? 'عرض' : 'تحديد'} الموقع`}</span>
+                    <Button
+                        color={BACKGROUND_COLORS.sidebar}
+                        variant="contained"
+                        onClick={() => setShowMap(true)}
+                        sx={{
+                            width: "63px", height: "60px",
                             borderColor: TEXT_COLORS.primary,
+                            borderStyle: 'solid',
+                            borderWidth: '1px',
+                            borderRadius: '15px',
                         }}
                     >
-                        <img
-                            className="absolute object-cover right-1/2 transform translate-x-1/2 top-1/2 -translate-y-1/2"
-                            src={mapIcon}
-                        />
-                    </div>
+                        <MapPin size={30} color={TEXT_COLORS.primary}/>
+                    </Button>
+                    {showMap &&
+                        <Map
+                            onClose={() => setShowMap(false)}
+                            onSelect={(coordinates) => setOffice({...office, coordinates})}
+                            {...(office.coordinates ? {
+                                center: office.coordinates,
+                                markers: [{location: office.coordinates, name: office.postTitle}],
+                            } : {zoom: 10})}
+                        />}
                 </div>
             </div>
 

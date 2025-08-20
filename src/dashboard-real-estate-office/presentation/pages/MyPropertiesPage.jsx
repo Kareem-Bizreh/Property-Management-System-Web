@@ -11,6 +11,7 @@ import useRegionStore from "../../application/state/residentialOffice/useRegionS
 import useListingTypeStore from "../../application/state/residentialOffice/useListingTypeStore.jsx";
 import useStatusStore from "../../application/state/residentialOffice/useStatusStore.jsx";
 import {getFilterProperties} from "../../application/useCases/residentialOffice/getFilterPropertiesUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const MyPropertiesPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore()
@@ -20,6 +21,7 @@ const MyPropertiesPage = () => {
     const {listingType} = useListingTypeStore();
     const {status} = useStatusStore();
     const {register} = useForm();
+    const {notifyError} = useNotification();
 
 
     useEffect(() => {
@@ -30,7 +32,7 @@ const MyPropertiesPage = () => {
                 setProperties(response.data);
             } else {
                 setProperties([]);
-                alert(response);
+                notifyError(response);
             }
             setIsLoading(false);
         }

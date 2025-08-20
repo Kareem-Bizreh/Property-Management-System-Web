@@ -4,12 +4,16 @@ import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 import Button from "@mui/material/Button";
 import map from "../../../../shared/assets/cards/map.svg";
 import ConfirmActionModalWithMUI from "../../../../shared/presentation/components/ConfirmActionModal.jsx";
+import {Map} from "../../../../shared/presentation/components/Map.jsx";
 
 const JoinRequest = ({id, date, type, name, location, document, onAccept, onReject}) => {
     function onPress() {
         window.open(document, '_blank');
     }
-    const [modalOpen, setModalOpen] = useState(false);
+
+    const [acceptModel, setAcceptModel] = useState(false);
+    const [rejectModel, setRejectModel] = useState(false);
+    const [showMap, setShowMap] = useState(false);
 
     return (
         <div
@@ -30,10 +34,7 @@ const JoinRequest = ({id, date, type, name, location, document, onAccept, onReje
             <span className="w-[120px]">{type}</span>
             <span className="w-[140px]">{name}</span>
             <div className="w-[150px] flex justify-center">
-                <Button
-                    variant="contained"
-                    sx={buttonSx}
-                >
+                <Button variant="contained" sx={buttonSx} onClick={() => setShowMap(true)}>
                     <span>عرض الموقع</span>
                     <img className="w-[18px] h-[18px] mr-2" src={map} alt="map"/>
                 </Button>
@@ -49,14 +50,14 @@ const JoinRequest = ({id, date, type, name, location, document, onAccept, onReje
             </div>
             <div className="flex flex-col items-center gap-3 w-[200px]">
                 <Button variant="contained"
-                        onClick={() => onAccept(2, id)}
+                        onClick={() => setAcceptModel(true)}
                         sx={{backgroundColor: BACKGROUND_COLORS.accept, ...statusSx}}
                 >
                     قبول
                 </Button>
                 <Button
                     variant="contained"
-                    onClick={() => setModalOpen(true)}
+                    onClick={() => setRejectModel(true)}
                     sx={{backgroundColor: BACKGROUND_COLORS.delete, ...statusSx}}
                 >
                     رفض
@@ -64,10 +65,19 @@ const JoinRequest = ({id, date, type, name, location, document, onAccept, onReje
             </div>
 
             <ConfirmActionModalWithMUI
-                open={modalOpen}
-                onClose={() => setModalOpen(false)}
+                open={rejectModel}
+                onClose={() => setRejectModel(false)}
                 onConfirm={(reason) => onReject(2, id, reason)}
+                type={"الرفض"}
             />
+            <ConfirmActionModalWithMUI
+                open={acceptModel}
+                onClose={() => setAcceptModel(false)}
+                onConfirm={() => onAccept(2, id)}
+                type={"القبول"}
+                withReason={false}
+            />
+            {showMap && <Map onClose={() => setShowMap(false)} center={location} markers={[{location, name}]}/>}
         </div>
     )
 }

@@ -9,9 +9,11 @@ import useLoadingStore from "../../../shared/application/state/useLoadingStore.j
 import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import {getAdInvoices} from "../../application/useCases/financeAndAds/getAdInvoicesUseCase.jsx";
+import useUserStore from "../../../shared/application/state/useUserStore.jsx";
 
 const FinancialManagementPage = () => {
-    const tabs = ['السجلات المالية', 'عرض المحفظة'];
+    const {user} = useUserStore();
+    const tabs = ['السجلات المالية', ...(user.role === 'مدير' ? ['عرض المحفظة'] : [])];
     const [tab, setTab] = useState(0);
     const {isLoading, setIsLoading} = useLoadingStore();
     const {data, setDataForTab} = useDataStore();

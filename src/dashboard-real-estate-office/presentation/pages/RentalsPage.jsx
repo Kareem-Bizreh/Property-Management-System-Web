@@ -9,6 +9,7 @@ import useCityStore from "../../application/state/rental/useCityStore.jsx";
 import useRegionStore from "../../application/state/rental/useRegionStore.jsx";
 import useStatusStore from "../../application/state/rental/useStatusStore.jsx";
 import {getFilterRentals} from "../../application/useCases/rentals/getFilterRentalsUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const RentalsPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
@@ -16,6 +17,7 @@ const RentalsPage = () => {
     const {region} = useRegionStore();
     const {status} = useStatusStore();
     const {setRentals} = useRentalsStore();
+    const {notifyError} = useNotification();
 
     useEffect(() => {
         setIsLoading(true);
@@ -25,7 +27,7 @@ const RentalsPage = () => {
                 setRentals(response.data);
             } else {
                 setRentals([]);
-                alert(response);
+                notifyError(response);
             }
             setIsLoading(false);
         }

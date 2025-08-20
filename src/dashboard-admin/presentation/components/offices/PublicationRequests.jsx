@@ -11,7 +11,8 @@ const PublicationRequests = ({
                                  id, type, postTitle, location, officeLocation, duration,
                                  officeName, image, amount, listing_type, onAccept, onReject
                              }) => {
-    const [modalOpen, setModalOpen] = useState(false);
+    const [acceptModel, setAcceptModel] = useState(false);
+    const [rejectModel, setRejectModel] = useState(false);
 
     return (
         <div
@@ -56,24 +57,31 @@ const PublicationRequests = ({
             </div>
             <div className="flex flex-col items-center gap-3 w-[200px]">
                 <Button variant="contained"
-                        onClick={() => onAccept(3, id)}
+                        onClick={() => setAcceptModel(true)}
                         sx={{backgroundColor: BACKGROUND_COLORS.accept, ...statusSx}}
                 >
                     قبول
                 </Button>
                 <Button
                     variant="contained"
-                    onClick={() => setModalOpen(true)}
+                    onClick={() => setRejectModel(true)}
                     sx={{backgroundColor: BACKGROUND_COLORS.delete, ...statusSx}}
                 >
                     رفض
                 </Button>
             </div>
-
             <ConfirmActionModalWithMUI
-                open={modalOpen}
-                onClose={() => setModalOpen(false)}
+                open={rejectModel}
+                onClose={() => setRejectModel(false)}
                 onConfirm={(reason) => onReject(3, id, reason)}
+                type={"الرفض"}
+            />
+            <ConfirmActionModalWithMUI
+                open={acceptModel}
+                onClose={() => setAcceptModel(false)}
+                onConfirm={() => onAccept(3, id)}
+                type={"القبول"}
+                withReason={false}
             />
         </div>
     )

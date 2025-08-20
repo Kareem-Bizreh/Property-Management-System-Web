@@ -8,11 +8,13 @@ import useTypeStore from "../../application/state/advertisement/useTypeStore.jsx
 import useAdvertisementsStore from "../../application/state/advertisement/useAdvertisementsStore.jsx";
 import {useEffect} from "react";
 import {getInvoices} from "../../application/useCases/advertisement/getInvoicesUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const AdvertisementsPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore()
     const {type} = useTypeStore()
     const {setAdvertisements} = useAdvertisementsStore()
+    const {notifyError} = useNotification();
 
     useEffect(() => {
         const loadAdvertisements = async () => {
@@ -22,7 +24,7 @@ const AdvertisementsPage = () => {
                 setAdvertisements(response.data);
             } else {
                 setAdvertisements([])
-                alert(response)
+                notifyError(response)
             }
             setIsLoading(false)
         }

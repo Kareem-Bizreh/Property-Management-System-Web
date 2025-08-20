@@ -15,6 +15,7 @@ import {getMeterPrice} from "../../application/useCases/region/getExpectedPriceU
 import {useForm, FormProvider} from "react-hook-form";
 import {add} from "../../application/useCases/residentialOffice/addResidentialUseCase.jsx";
 import {upload} from "../../application/useCases/propertyImage/uploadUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 
 const AddPropertyPage = () => {
@@ -22,6 +23,7 @@ const AddPropertyPage = () => {
     const {property, setProperty, newImages, resetImageTracking, setNewImages, setDeletedImages} = usePropertyStore();
     const {setCommission} = useCommissionStore();
     const {setMeterPrice} = useMeterPriceStore();
+    const {notifySuccess, notifyError, notifyWarning} = useNotification();
 
     useEffect(() => {
         const loadAllData = async () => {
@@ -38,7 +40,7 @@ const AddPropertyPage = () => {
                     setCommission(response);
                 } else {
                     setCommission(null);
-                    alert(response);
+                    notifyError(response);
                 }
             };
 
@@ -48,7 +50,7 @@ const AddPropertyPage = () => {
                     setMeterPrice(response);
                 } else {
                     setMeterPrice(null);
-                    alert(response);
+                    notifyError(response);
                 }
             };
 
@@ -64,6 +66,14 @@ const AddPropertyPage = () => {
     }, []);
 
     const onSubmit = async () => {
+        if(!property.coordinates.lng) {
+            notifyWarning("يرجى تحديد موقع العقار");
+            return;
+        }
+        if(!property.postImage) {
+            notifyWarning("يرجى ادخال صورة المنشور");
+            return;
+        }
         setIsLoading(true);
 
         try {
@@ -71,7 +81,7 @@ const AddPropertyPage = () => {
             const {success, response} = await add(property);
 
             if (!success) {
-                alert(response);
+                notifyError(response);
                 return;
             }
 
@@ -82,16 +92,16 @@ const AddPropertyPage = () => {
 
                 const uploadResponse = await upload(response.data.id, formData);
                 if (!uploadResponse.success) {
-                    alert("فشل في رفع الصور");
+                    notifyError("فشل في رفع الصور");
                 }
             }
 
             // 3. Reset temporary tracking
             resetImageTracking();
 
-            alert("تم إضافة العقار بنجاح");
+            notifySuccess("تم إضافة العقار بنجاح");
         } catch (err) {
-            alert("حدث خطأ أثناء الإضافة");
+            notifyError("حدث خطأ أثناء الإضافة");
         } finally {
             setIsLoading(false);
         }
@@ -99,7 +109,7 @@ const AddPropertyPage = () => {
 
     const methods = useForm();
 
-    if (isLoading) return <Spinner/>;
+    if (isLoading || !property) return <Spinner/>;
 
     return (
         <FormProvider {...methods}>

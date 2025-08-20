@@ -133,7 +133,7 @@ const OfficesPage = () => {
                             <TableHead titles={titles}/>
                             {data[2]?.map((item) => (
                                 <JoinRequest id={item.id} name={item.full_name} type={item.agent_type}
-                                             location={{longitude: item.longitude, latitude: item.latitude}}
+                                             location={{lng: item.longitude, lat: item.latitude}}
                                              document={item.proof_document} date={item.created_at}
                                              onAccept={onAccept} onReject={onReject}/>
                             ))}

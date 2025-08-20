@@ -18,6 +18,7 @@ import usePropertySelectionOpenStore from "../../../application/state/shared/use
 import {
     getPropertyRentalInformation
 } from "../../../application/useCases/reservations/getPropertyRentalInformationUseCase.jsx";
+import {useNotification} from "../../../../shared/shared/hooks/useNotification.jsx";
 
 const PropertyReservation = () => {
     const {
@@ -29,6 +30,7 @@ const PropertyReservation = () => {
     const {setIsLoading} = useLoadingStore();
     const {isOpen, setIsOpen} = usePropertyReservationOpenStore();
     const {setIsOpen: setSelectionOpen} = usePropertySelectionOpenStore();
+    const {notifyError, notifySuccess, notifyWarning} = useNotification();
 
     const fileInputRef = useRef(null);
 
@@ -44,17 +46,17 @@ const PropertyReservation = () => {
         } else {
             resetReservationDetails()
             setProperty(null)
-            alert(response);
+            notifyError(response);
         }
     };
 
     const reserve = async () => {
         if (!invoice_image) {
-            alert("يرجى إدخال وثيقة الحجز")
+            notifyWarning("يرجى إدخال وثيقة الحجز")
             return;
         }
         if (!property) {
-            alert("يرجى اختيار العقار")
+            notifyWarning("يرجى اختيار العقار")
             return;
         }
         setIsLoading(true)
@@ -63,11 +65,11 @@ const PropertyReservation = () => {
             response
         } = await addUserPropertyInvoice(property.id, watch("phone"), invoice_image.file, installment_allowed);
         if (success) {
-            alert("تم حجز العقار بنجاح");
+            notifySuccess("تم حجز العقار بنجاح");
             window.location.reload();
             resetReservationDetails();
         } else {
-            alert(response);
+            notifyError(response);
         }
         setIsLoading(false);
     };

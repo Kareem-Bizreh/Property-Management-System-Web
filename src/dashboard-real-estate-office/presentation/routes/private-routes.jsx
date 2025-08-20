@@ -12,7 +12,7 @@ import RentalsPage from "../pages/RentalsPage.jsx";
 import UserRequestsPage from "../pages/UserRequestsPage.jsx";
 import AdvertisementsPage from "../pages/AdvertisementsPage.jsx";
 import ServicesPage from "../pages/ServicesPage.jsx";
-import NotificationsPage from "../pages/NotificationsPage.jsx";
+import NotificationsPage from "../../../shared/presentation/pages/NotificationsPage.jsx";
 import SupportPage from "../pages/SupportPage.jsx";
 import OfficeInfoPage from "../pages/OfficeInfoPage.jsx";
 import Sidebar from "../../../shared/presentation/components/Sidebar.jsx";

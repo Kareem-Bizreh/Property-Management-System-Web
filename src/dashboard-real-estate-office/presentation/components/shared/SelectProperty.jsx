@@ -42,7 +42,7 @@ const SelectProperty = ({onSelect, listingType}) => {
         close();
     };
 
-    if (isLoading) return <Spinner/>;
+    if (isLoading) return <Spinner opacity={'0'}/>;
 
     return (
         <Popup

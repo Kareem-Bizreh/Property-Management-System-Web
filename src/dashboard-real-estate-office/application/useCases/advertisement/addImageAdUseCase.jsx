@@ -1,6 +1,6 @@
 import AdvertisementRepository from "../../../domain/repositories/advertisementRepository.jsx";
 
-export const addImageAd   = async (day_period, image) => {
+export const addImageAd = async (day_period, image) => {
     try {
         const formData = new FormData();
         formData.append("day_period", day_period);

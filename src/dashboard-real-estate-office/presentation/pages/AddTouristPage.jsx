@@ -11,10 +11,12 @@ import {Tourism} from "../../domain/entities/Tourism.jsx";
 import TourismDetails from "../components/tourism/TourismDetails.jsx";
 import {addTourism} from "../../application/useCases/tourism/addTourismUseCase.jsx";
 import {upload} from "../../application/useCases/propertyImage/uploadUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const AddTouristPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
     const {tourist, setTourist, setDeletedImages, setNewImages, newImages, resetImageTracking} = useTouristStore();
+    const {notifyError, notifySuccess, notifyWarning} = useNotification();
 
     useEffect(() => {
         setIsLoading(true);
@@ -23,6 +25,14 @@ const AddTouristPage = () => {
     }, []);
 
     const onSubmit = async () => {
+        if(!tourist.coordinates.lng) {
+            notifyWarning("يرجى تحديد موقع العقار");
+            return;
+        }
+        if(!tourist.postImage) {
+            notifyWarning("يرجى ادخال صورة المنشور");
+            return;
+        }
         setIsLoading(true)
 
         try {
@@ -30,7 +40,7 @@ const AddTouristPage = () => {
             const {success, response} = await addTourism(tourist);
 
             if (!success) {
-                alert(response);
+                notifyError(response);
                 return;
             }
 
@@ -40,16 +50,16 @@ const AddTouristPage = () => {
                 newImages.forEach((file) => formData.append("images", file));
                 const uploadResponse = await upload(response.data.id, formData);
                 if (!uploadResponse.success) {
-                    alert("فشل في رفع الصور");
+                    notifyError("فشل في رفع الصور");
                 }
             }
 
             // 3. Reset temporary tracking
             resetImageTracking();
 
-            alert("تم إضافة المكان السياحي بنجاح");
+            notifySuccess("تم إضافة المكان السياحي بنجاح");
         } catch (err) {
-            alert("حدث خطأ أثناء الإضافة");
+            notifyError("حدث خطأ أثناء الإضافة");
         } finally {
             setIsLoading(false);
         }

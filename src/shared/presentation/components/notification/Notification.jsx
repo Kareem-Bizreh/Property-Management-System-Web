@@ -2,7 +2,7 @@ import bell from '../../../assets/notifications/bell-ringing.svg'
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../colors.jsx";
 import {formatDate} from "../../../shared/utils/formatDate.js";
 
-const Notification = ({notification: {id, sent_at, source, title, body}}) => {
+const Notification = ({notification: {id, sent_at, name, title, body}}) => {
     return (
         <div className="flex flex-row flex-wrap justify-around items-center rounded-[25px] min-h-[85px] gap-6 p-4"
              key={id}
@@ -21,7 +21,7 @@ const Notification = ({notification: {id, sent_at, source, title, body}}) => {
 
             <span className="w-[130px]">{formatDate(sent_at)}</span>
 
-            <span className="w-[150px]">{source}</span>
+            <span className="w-[150px]">{name}</span>
 
             <span className="w-[200px]">{title}</span>
 

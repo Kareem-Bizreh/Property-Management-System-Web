@@ -37,7 +37,7 @@ const NotificationSend = () => {
 
     const onSubmit = async () => {
         if (!admins && !users && !offices) {
-            notifyWarning("يجب اختيار جهة مستهدفة على الأقل")
+            notifyWarning("يجب اختيار الجهة المستهدفة")
             return;
         }
         setIsLoading(true);
@@ -96,6 +96,7 @@ const NotificationSend = () => {
                             type="text"
                             name={"body"}
                             register={register}
+                            multiline={true}
                         />
                     </div>
                     <span>المستهدفين</span>

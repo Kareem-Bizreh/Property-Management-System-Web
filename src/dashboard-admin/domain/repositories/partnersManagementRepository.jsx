@@ -1,16 +1,19 @@
 import {
     getOffices,
+    getOffice,
+    getOfficeProperties,
     getPropertyPosts,
     getServiceProviders,
     getServiceProvider,
     getJoinRequests,
     propertyPostsRespond,
-    joinRequestsRespond, getOffice,
+    joinRequestsRespond,
 } from "../../infrastructure/api/partnersManagementApis.jsx";
 
 const PartnersManagementRepository = {
     getOffices: async () => await getOffices(),
     getOffice: async (id) => await getOffice(id),
+    getOfficeProperties: async (id) => await getOfficeProperties(id),
     getPropertyPosts: async () => await getPropertyPosts(),
     getServiceProviders: async () => await getServiceProviders(),
     getServiceProvider: async (id) => await getServiceProvider(id),

@@ -13,6 +13,7 @@ import {useEffect} from "react";
 import useServicePriceStore from "../../../application/state/advertisement/useServicePriceStore.jsx";
 import {getServicePrice} from "../../../application/useCases/servicePrice/getServicePriceUseCase.jsx";
 import {Spinner} from "../../../../shared/presentation/components/Spinner.jsx";
+import {useNotification} from "../../../../shared/shared/hooks/useNotification.jsx";
 
 const ImageAd = () => {
     const {register, watch, handleSubmit, setValue} = useForm({defaultValues: {days: 1}});
@@ -20,6 +21,7 @@ const ImageAd = () => {
     const {setIsOpen, isOpen} = useImageAdOpenStore();
     const {imagePrice, setImagePrice} = useServicePriceStore();
     const {setIsLoading, isLoading} = useLoadingStore();
+    const {notifySuccess, notifyError, notifyWarning} = useNotification();
 
     useEffect(() => {
         const loadServicePrice = async () => {
@@ -28,7 +30,7 @@ const ImageAd = () => {
             if (success) {
                 setImagePrice(response.price);
             } else {
-                alert(response);
+                notifyError(response);
                 setIsOpen(false);
             }
             setIsLoading(false);
@@ -38,16 +40,16 @@ const ImageAd = () => {
 
     const pay = async () => {
         if(!image) {
-            alert("يرجى ادخال صورة الإعلان");
+            notifyWarning("يرجى ادخال صورة الإعلان");
             return;
         }
         setIsLoading(true);
         const {success, response} = await addImageAd(watch("days"), image);
         if (success) {
-            alert("تم طلب اعلان صوري بنجاح");
+            notifySuccess("تم طلب اعلان صوري بنجاح");
             window.location.reload();
         } else {
-            alert(response);
+            notifyError(response);
         }
         setIsLoading(false);
     }

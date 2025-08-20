@@ -4,6 +4,7 @@ import {TouristicStatus} from "../../shared/constants/TouristicStatus.jsx";
 import {TourismPlaceWaterStatus} from "../../shared/constants/TourismPlaceWaterStatus.jsx";
 import {TourismPlacePoolStatus} from "../../shared/constants/TourismPlacePoolStatus.jsx";
 import {TourismPlaceElectricityStatus} from "../../shared/constants/TourismPlaceElectricityStatus.jsx";
+import {SyrianGovernorates} from "../../../shared/shared/constants/syrianGovernorates.jsx";
 
 export class Tourism {
     constructor(data) {
@@ -16,18 +17,13 @@ export class Tourism {
         this.tag = data.tag;
         this.area = parseFloat(data.area).toFixed(2);
         this.coordinates = {
-            latitude: data.latitude,
-            longitude: data.longitude,
+            lat: data.latitude,
+            lng: data.longitude
         };
         this.status = data.status;
-        this.city = {
-            id: 1,
-            name: data.city,
-        };
-        this.region = {
-            id: 2,
-            name: data.region,
-        };
+        const city = SyrianGovernorates.find((gov) => gov.name === data.city);
+        this.city = city;
+        this.region = city.regions.find((reg) => reg.name === data.region);
         this.location = data.location;
         this.street = data.street;
         this.room_counts = {
@@ -47,9 +43,21 @@ export class Tourism {
         this.financialRecord = data.financialRecord ?? [];
     }
 
+    static cardData(data) {
+        return {
+            id: data.id,
+            postTitle: data.title,
+            postImage: data.postImage,
+            location: data.location,
+            area: data.area,
+            price: data.price,
+            postStatus: data.status,
+        }
+    }
+
     static createInitial() {
         return {
-            postTitle: '',
+            postTitle: 'موقع العقار',
             postDescription: '',
             postImage: '',
             postDate: '',
@@ -73,6 +81,10 @@ export class Tourism {
                 living_room: 0,
                 kitchen: 0,
                 bathroom: 0,
+            },
+            coordinates: {
+                lat: null,
+                lng: null
             },
             price: 0,
             has_furniture: PropertyFurnishingTypes[0],
@@ -99,8 +111,8 @@ export class Tourism {
 
         formData.append("public_information[region_id]", tourism.region?.id?.toString() ?? '0');
         formData.append("public_information[room_count]", tourism.room_counts?.total?.toString() ?? '0');
-        formData.append("public_information[latitude]", tourism.coordinates?.latitude?.toString() ?? '0');
-        formData.append("public_information[longitude]", tourism.coordinates?.longitude?.toString() ?? '0');
+        formData.append("public_information[latitude]", tourism.coordinates?.lat?.toString());
+        formData.append("public_information[longitude]", tourism.coordinates?.lng?.toString());
         formData.append("public_information[area]", tourism.area?.toString() ?? '0');
         formData.append("public_information[has_furniture]", tourism.has_furniture ?? '');
         formData.append("public_information[living_room_count]", tourism.room_counts?.living_room?.toString() ?? '0');

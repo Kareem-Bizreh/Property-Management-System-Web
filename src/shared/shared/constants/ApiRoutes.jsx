@@ -3,3 +3,8 @@ export const AUTH = {
     LOGOUT: "/auth/logout",
     REFRESH: "/auth/refresh",
 };
+
+export const Notifications = {
+    baseURL: 'notifications/',
+    getAll: '',
+}

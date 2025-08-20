@@ -9,13 +9,17 @@ import useLoadingStore from "../../../shared/application/state/useLoadingStore.j
 import {useEffect} from "react";
 import {
     getNotifications
-} from "../../../dashboard-real-estate-office/application/useCases/notification/getNotificationsUseCase.jsx";
+} from "../../../shared/application/useCases/notification/getNotificationsUseCase.jsx";
 import useDataStore from "../../application/state/useDataStore.jsx";
+import useUserStore from "../../../shared/application/state/useUserStore.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const NotificationsPage = () => {
     const {isOpen, setIsOpen} = useNotificationSendOpenStore();
     const {isLoading, setIsLoading} = useLoadingStore();
     const {data, setDataForTab} = useDataStore();
+    const {user} = useUserStore();
+    const {notifyError} = useNotification();
 
     useEffect(() => {
         setIsLoading(true)
@@ -25,7 +29,7 @@ const NotificationsPage = () => {
                 setDataForTab(0, response)
             } else {
                 setDataForTab(0, []);
-                alert(response)
+                notifyError(response)
             }
             setIsLoading(false)
         }
@@ -36,29 +40,30 @@ const NotificationsPage = () => {
         <div className="flex flex-col">
             <Header title={'مركز الإشعارات'}/>
 
-            <div className="w-full h-[65px] mb-2 flex items-center px-4"
-                 style={{backgroundColor: BACKGROUND_COLORS.table}}
-            >
-                <Button
-                    onClick={() => setIsOpen(true)}
-                    variant="contained"
-                    sx={{
-                        color: TEXT_COLORS.white,
-                        width: 180,
-                        height: 45,
-                        backgroundColor: BACKGROUND_COLORS.card,
-                        borderRadius: '15px',
-                        fontWeight: 700,
-                        fontSize: '16px',
-                        lineHeight: '100%',
-                        letterSpacing: '3%',
-                        textAlign: 'center'
-                    }}
+            {user?.permissions?.includes('مراقب النظام') &&
+                <div className="w-full h-[65px] mb-2 flex items-center px-4"
+                     style={{backgroundColor: BACKGROUND_COLORS.table}}
                 >
-                    إرسال إشعار
-                </Button>
-                {isOpen && (<NotificationSend/>)}
-            </div>
+                    <Button
+                        onClick={() => setIsOpen(true)}
+                        variant="contained"
+                        sx={{
+                            color: TEXT_COLORS.white,
+                            width: 180,
+                            height: 45,
+                            backgroundColor: BACKGROUND_COLORS.card,
+                            borderRadius: '15px',
+                            fontWeight: 700,
+                            fontSize: '16px',
+                            lineHeight: '100%',
+                            letterSpacing: '3%',
+                            textAlign: 'center'
+                        }}
+                    >
+                        إرسال إشعار
+                    </Button>
+                    {isOpen && (<NotificationSend/>)}
+                </div>}
 
             <div className="flex flex-col py-4 px-6 gap-4">
                 {(isLoading || !data[0]) ? <Spinner/> :

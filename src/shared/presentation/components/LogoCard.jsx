@@ -31,7 +31,7 @@ const LogoCard = ({ width, height, top, fontSize }) => {
                     flexShrink: 0
                 }}
             >
-                Name App
+                {import.meta.env.VITE_APP_NAME}
             </p>
         </div>
     )

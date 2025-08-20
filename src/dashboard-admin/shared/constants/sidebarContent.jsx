@@ -7,14 +7,14 @@ import support from '../../../shared/assets/sidebar/support.svg'
 import logout from '../../../shared/assets/sidebar/logout.svg'
 
 export const SIDEBAR_ITEMS = [
-    { name: 'لوحة التحكم', icon: dashboard, href: 'dashboard' },
-    { name: 'إدارة المستخدمين', icon: users, href: 'users' },
-    { name: 'إدارة المالية', icon: dashboard, href: 'financial-management' },
-    { name: 'إدارة الإعلانات', icon: ads, href: 'ads-management' },
-    { name: 'المكاتب الوسيطة', icon: office, href: 'offices' },
-    { name: 'المنشورات والطلبات', icon: dashboard, href: 'posts-requests' },
-    { name: 'مركز الإشعارات', icon: notifications, href: 'notifications' },
-    { name: 'الشكاوي', icon: notifications, href: 'complaints' },
-    { name: 'مركز الدعم', icon: support, href: 'support' },
-    { name: 'تسجيل الخروج', icon: logout, href: '/logout' },
+    {name: 'لوحة التحكم', icon: dashboard, href: 'dashboard', permissions: ['مراقب النظام']},
+    {name: 'إدارة المستخدمين', icon: users, href: 'users', permissions: [], onlyManager: true},
+    {name: 'إدارة المالية', icon: dashboard, href: 'financial-management', permissions: ['إدارة المالية والإعلانات']},
+    {name: 'إدارة الإعلانات', icon: ads, href: 'ads-management', permissions: ['إدارة المالية والإعلانات']},
+    {name: 'المكاتب الوسيطة', icon: office, href: 'offices', permissions: ['إدارة الوسطاء']},
+    {name: 'المنشورات والطلبات', icon: dashboard, href: 'posts-requests', permissions: ['إدارة المنشورات']},
+    {name: 'مركز الإشعارات', icon: notifications, href: 'notifications', permissions: []},
+    {name: 'الشكاوي', icon: notifications, href: 'complaints', permissions: ['إدارة الشكاوي والدعم']},
+    {name: 'مركز الدعم', icon: support, href: 'support', permissions: ['إدارة الشكاوي والدعم']},
+    {name: 'تسجيل الخروج', icon: logout, href: '/logout', permissions: []},
 ];

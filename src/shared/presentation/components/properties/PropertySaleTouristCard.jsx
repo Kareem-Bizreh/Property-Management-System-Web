@@ -1,5 +1,5 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../colors.jsx";
-import {Link} from "react-router";
+import {useNavigate} from "react-router";
 import property_sale from "../../../assets/cards/property_sale.jpg"
 import property_tourist from "../../../assets/cards/property_tourist.jpg"
 import map from "../../../assets/cards/map.svg"
@@ -10,17 +10,25 @@ const PropertySaleTouristCard = ({
                                      property: {
                                          id, status, postStatus, postTitle, location,
                                          area, sell_details = {}, postImage, price
-                                     },
-                                     type
+                                     }, type, onClick = true
                                  }) => {
     const image = {
         'property_tourist': property_tourist,
         'property_sale': property_sale,
     }
     const finalStatus = postStatus !== "مقبول" ? postStatus : status;
+    const navigate = useNavigate();
 
     return (
-        <Link to={`/real-estate-office/${type === 'sale' ? 'my-properties' : 'tourism'}/${id}`}>
+        <div
+            onClick={() => {
+                if (onClick) {
+                    navigate(`/real-estate-office/${type === 'sale' ? 'my-properties' : 'tourism'}/${id}`)
+                }
+            }}
+            className={`${onClick ? 'cursor-pointer' : 'select-none'}`}
+            title={onClick ? `/real-estate-office/${type === 'sale' ? 'my-properties' : 'tourism'}/${id}` : ''}
+        >
             <div className="relative w-[212px] h-[363px] rounded-[25px]"
                  style={{backgroundColor: BACKGROUND_COLORS.secondary1}}>
                 <div
@@ -143,7 +151,7 @@ const PropertySaleTouristCard = ({
                     {formatPrice(sell_details.selling_price || price)} $
                 </span>
             </div>
-        </Link>
+        </div>
 
     )
 }

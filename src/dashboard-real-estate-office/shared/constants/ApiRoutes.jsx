@@ -72,11 +72,6 @@ export const ServiceProvider = {
     filters: 'filters',
 }
 
-export const Notifications = {
-    baseURL: 'notifications/',
-    getAll: '',
-}
-
 export const Advertisement = {
     baseURL: 'advertisement/',
     addImageAd: 'imageAd',

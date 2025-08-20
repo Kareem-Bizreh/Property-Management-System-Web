@@ -12,6 +12,7 @@ import useServiceProvidersStore from "../../application/state/service-provider/u
 import {
     getFilterServiceProviders
 } from "../../application/useCases/serviceProvider/getFilterServiceProvidersUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const ServicesPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore()
@@ -20,6 +21,7 @@ const ServicesPage = () => {
     const {region} = useRegionStore();
     const {type} = useTypeStore();
     const {setServiceProviders} = useServiceProvidersStore();
+    const {notifyError} = useNotification();
 
     useEffect(() => {
         setIsLoading(true)
@@ -29,7 +31,7 @@ const ServicesPage = () => {
                 setServiceProviders(response);
             } else {
                 setServiceProviders([]);
-                alert(response);
+                notifyError(response);
             }
             setIsLoading(false)
         }

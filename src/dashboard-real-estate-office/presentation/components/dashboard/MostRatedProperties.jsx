@@ -6,10 +6,12 @@ import useLoadingStore from "../../../../shared/application/state/useLoadingStor
 import usePropertiesStore from "../../../application/state/property/usePropertiesStore.jsx";
 import {useEffect} from "react";
 import {getAll} from "../../../application/useCases/residentialOffice/getPropertiesUseCase.jsx";
+import {useNotification} from "../../../../shared/shared/hooks/useNotification.jsx";
 
 const MostRatedProperties = () => {
     const {setIsLoading} = useLoadingStore();
     const {properties, setProperties} = usePropertiesStore();
+    const {notifyError} = useNotification();
 
     useEffect(() => {
         setIsLoading(true);
@@ -19,6 +21,7 @@ const MostRatedProperties = () => {
                 setProperties(response.data);
             } else {
                 setProperties([]);
+                notifyError(response);
             }
         }
 

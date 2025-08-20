@@ -2,7 +2,7 @@
 import { create } from 'zustand';
 
 const usePropertyStore = create((set) => ({
-    property: [],
+    property: null,
     setProperty: (property) => set({ property }),
 
     newImages: [],

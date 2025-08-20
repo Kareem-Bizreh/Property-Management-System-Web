@@ -10,27 +10,33 @@ import PropertyCard from "../shared/PropertyCard.jsx";
 import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 import {suggestProperty} from "../../../application/useCases/userPost/suggestPropertyUseCase.jsx";
 import usePropertySelectionOpenStore from "../../../application/state/shared/usePropertySelectionOpenStore.jsx";
+import {useNotification} from "../../../../shared/shared/hooks/useNotification.jsx";
 
 const PropertySuggestion = ({userPostId, listingType}) => {
     const {isOpen, setIsOpen, setPostId} = useSuggestionOpenStore();
     const {setIsOpen: setSelectOpen} = usePropertySelectionOpenStore();
     const {property, setProperty} = usePropertyStore();
     const {setIsLoading} = useLoadingStore();
+    const {notifyError, notifySuccess, notifyWarning} = useNotification();
 
     useEffect(() => setProperty(null), []);
 
     const suggestPropertyToUser = async () => {
+        if(!property) {
+            notifyWarning("يرجى اختيار العقار");
+            return;
+        }
         setIsLoading(true);
         const {success, response} = await suggestProperty(property.id, userPostId);
         setIsLoading(false);
         if (success) {
             setSelectOpen(false)
             setIsOpen(false)
-            alert("تم اقتراح العقار بنجاح")
+            notifySuccess("تم اقتراح العقار بنجاح")
             window.location.reload();
         } else {
             setProperty(null)
-            alert(response);
+            notifyError(response);
         }
     };
 

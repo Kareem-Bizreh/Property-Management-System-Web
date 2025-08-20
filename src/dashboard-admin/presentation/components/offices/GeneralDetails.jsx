@@ -1,4 +1,3 @@
-import mapIcon from "../../../../shared/assets/shared/map-marker.svg";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import TextInput from "../../../../shared/presentation/components/TextInput.jsx";
 import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
@@ -6,16 +5,21 @@ import {useForm} from "react-hook-form";
 import facebook from "../../../../shared/assets/office-info/facebook.svg"
 import whatsapp from "../../../../shared/assets/office-info/whatsapp.svg"
 import instagram from "../../../../shared/assets/office-info/instagram.svg"
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {MapPin} from "lucide-react";
+import {Button} from "@mui/material";
+import {Map} from "../../../../shared/presentation/components/Map.jsx";
 
 const GeneralDetails = ({office, name}) => {
     const {register, setValue} = useForm();
+    const [showMap, setShowMap] = useState(false);
+    const location = {lat: office?.latitude, lng: office?.longitude};
 
     useEffect(() => {
         setValue("name", office?.name);
         setValue("phone", office?.phone);
         setValue("opening_time", office?.opening_time?.slice(0, 5));
-        setValue("closing_time", office?.closing_time?.slice(0,5));
+        setValue("closing_time", office?.closing_time?.slice(0, 5));
         office?.socials?.map((social) => {
             setValue(social.platform, social.link);
         })
@@ -80,24 +84,25 @@ const GeneralDetails = ({office, name}) => {
                 </div>
 
                 {/* تحديد الموقع */}
-                <div className="flex flex-col justify-around items-center flex-1 min-w-[95px]">
+                {name === 'المكتب' && <div className="flex flex-col justify-around items-center flex-1 min-w-[95px]">
                     <span className="my-2">
-                        تحديد الموقع
+                        عرض الموقع
                     </span>
-                    <div
-                        className="relative w-[63px] h-[60px] rounded-[15px] border-[1px] bg-[#DBEDF6]
-                                            transition-colors duration-200 cursor-pointer custom-hover"
-                        style={{
-                            "--hover-bg": "white",
+                    <Button
+                        color={BACKGROUND_COLORS.sidebar}
+                        variant="contained"
+                        onClick={() => setShowMap(true)}
+                        sx={{
+                            width: "63px", height: "60px",
                             borderColor: TEXT_COLORS.primary,
+                            borderStyle: 'solid',
+                            borderWidth: '1px',
+                            borderRadius: '15px',
                         }}
                     >
-                        <img
-                            className="absolute object-cover right-1/2 transform translate-x-1/2 top-1/2 -translate-y-1/2"
-                            src={mapIcon}
-                        />
-                    </div>
-                </div>
+                        <MapPin size={30} color={TEXT_COLORS.primary}/>
+                    </Button>
+                </div>}
             </div>
 
             <div className="flex flex-row flex-wrap min-h-[100px] gap-8" style={{color: TEXT_COLORS.black}}>
@@ -246,6 +251,8 @@ const GeneralDetails = ({office, name}) => {
                     </div>
                 </div>
             }
+            {showMap && <Map onClose={() => setShowMap(false)}
+                             center={location} markers={[{location, name: office?.name}]}/>}
         </div>
     )
 }

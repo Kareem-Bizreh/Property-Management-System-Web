@@ -1,16 +1,19 @@
 import Header2 from "./Header2.jsx";
-import {TEXT_COLORS} from "../../../../shared/colors.jsx";
+import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import TextInput from "../../../../shared/presentation/components/TextInput.jsx";
-import map from "../../../../shared/assets/shared/map-marker.svg";
 import {useFormContext} from "react-hook-form";
 import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 import useRegionsStore from "../../../application/state/property/useRegionsStore.jsx";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import Button from "@mui/material/Button";
+import {Map} from "../../../../shared/presentation/components/Map.jsx";
+import {MapPin} from "lucide-react";
 
 const PropertyLocation = ({readOnly, property, setProperty, inputTitle, inputType, fieldName}) => {
     const {regions, setRegions} = useRegionsStore();
     const {register, watch, setValue, getValues} = useFormContext();
+    const [showMap, setShowMap] = useState(false);
 
     useEffect(() => {
         const currentValue = getValues(inputTitle);
@@ -96,20 +99,30 @@ const PropertyLocation = ({readOnly, property, setProperty, inputTitle, inputTyp
                         />
                     </div>
                     <div className="flex-1 flex flex-row flex-wrap justify-around items-center gap-4">
-                        <span style={styles}>تحديد الموقع</span>
-                        <div
-                            className="relative w-[63px] h-[60px] rounded-[15px] border-[1px] bg-[#DBEDF6]
-                                            transition-colors duration-200 cursor-pointer custom-hover"
-                            style={{
-                                "--hover-bg": "white",
+                        <span style={styles}>{`${property.coordinates.lng ? 'عرض' : 'تحديد'} الموقع`}</span>
+                        <Button
+                            color={BACKGROUND_COLORS.sidebar}
+                            variant="contained"
+                            onClick={() => setShowMap(true)}
+                            sx={{
+                                width: "63px", height: "60px",
                                 borderColor: TEXT_COLORS.primary,
+                                borderStyle: 'solid',
+                                borderWidth: '1px',
+                                borderRadius: '15px',
                             }}
                         >
-                            <img
-                                className="absolute object-cover right-1/2 transform translate-x-1/2 top-1/2 -translate-y-1/2"
-                                src={map}
-                            />
-                        </div>
+                            <MapPin size={30} color={TEXT_COLORS.primary}/>
+                        </Button>
+                        {showMap &&
+                            <Map
+                                onClose={() => setShowMap(false)}
+                                onSelect={readOnly ? null : (coordinates) => setProperty({...property, coordinates})}
+                                {...(property.coordinates.lng ? {
+                                    center: property.coordinates,
+                                    markers: [{location: property.coordinates, name: property.postTitle}],
+                                } : {zoom: 10})}
+                            />}
                     </div>
                 </div>
             </div>

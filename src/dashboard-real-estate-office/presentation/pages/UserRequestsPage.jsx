@@ -10,6 +10,7 @@ import useTypeStore from "../../application/state/userPost/useTypeStore.jsx";
 import useCityStore from "../../application/state/rental/useCityStore.jsx";
 import {SyrianGovernorates} from "../../../shared/shared/constants/syrianGovernorates.jsx";
 import {getFilterUserPosts} from "../../application/useCases/userPost/getFilterUserPostsUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const UserRequestsPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore()
@@ -17,6 +18,7 @@ const UserRequestsPage = () => {
     const {region, setRegions} = useRegionStore();
     const {city, setCity} = useCityStore();
     const {type} = useTypeStore();
+    const {notifyError} = useNotification();
 
     useEffect(() => {
         setIsLoading(true);
@@ -29,7 +31,7 @@ const UserRequestsPage = () => {
                 setRegions(selectedGovernorate?.regions || []);
             } else {
                 setUserPosts([]);
-                alert(response);
+                notifyError(response);
             }
             setIsLoading(false);
         }

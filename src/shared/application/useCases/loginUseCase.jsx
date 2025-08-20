@@ -6,6 +6,7 @@ export const loginUseCase = async (formData) => {
 
         localStorage.setItem("accessToken", response.data.tokens.accessToken);
         localStorage.setItem("refreshToken", response.data.tokens.refreshToken);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
 
         return {success: true, data: response, message: "Login Success"};
     } catch (error) {

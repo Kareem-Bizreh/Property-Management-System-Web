@@ -31,6 +31,7 @@ export const PartnersManagement = {
     baseURL: baseURL + 'partners-management',
     getOffices: 'offices',
     getOffice: (id) => `offices/${id}`,
+    getOfficeProperties: (id) => `offices/${id}/properties`,
     getPropertyPosts: 'property-posts',
     getServiceProviders: 'service-providers',
     getServiceProvider: (id) => `service-providers/${id}`,

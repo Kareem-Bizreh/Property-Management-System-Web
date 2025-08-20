@@ -15,6 +15,12 @@ export const getOffice = async (id) => {
     return response.data;
 };
 
+// Get all properties of office by ID
+export const getOfficeProperties = async (id) => {
+    const response = await axiosInstance.get(PartnersManagement.getOfficeProperties(id), {baseURL});
+    return response.data;
+};
+
 // Get all property posts
 export const getPropertyPosts = async () => {
     const response = await axiosInstance.get(PartnersManagement.getPropertyPosts, {baseURL});

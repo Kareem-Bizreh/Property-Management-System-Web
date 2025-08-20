@@ -17,7 +17,10 @@ export class Property {
         this.ownership_type = data.ownership_type;
         this.direction = data.direction;
         this.status = data.status;
-        this.coordinates = data.coordinates;
+        this.coordinates = {
+            lat: data.coordinates.latitude,
+            lng: data.coordinates.longitude
+        };
         this.floor_number = data.floor_number;
         this.notes = data.notes;
         this.highlighted = data.highlighted;
@@ -39,7 +42,7 @@ export class Property {
 
     static createInitial() {
         return new Property({
-            postTitle: '',
+            postTitle: 'موقع العقار',
             postDescription: '',
             postImage: '',
             postDate: '',
@@ -50,8 +53,8 @@ export class Property {
             direction: Direction[0],
             status: 'متوفر',
             coordinates: {
-                latitude: '0.0',
-                longitude: '0.0'
+                latitude: null,
+                longitude: null
             },
             floor_number: 0,
             notes: '',
@@ -85,75 +88,46 @@ export class Property {
         });
     }
 
-    static toFormData(tourism) {
+    static toFormData(property) {
         const formData = new FormData();
 
-        if (tourism.postImage instanceof File) {
-            formData.append("postImage", tourism.postImage);
+        formData.append('postDescription', property.postDescription ?? '');
+        formData.append('postTitle', property.postTitle ?? '');
+
+        if (property.postImage instanceof File) {
+            formData.append('postImage', property.postImage);
         }
 
-        // ✅ Post
-        if (tourism.postDescription) {
-            formData.append("post[description]", tourism.postDescription);
-        }
-        if (tourism.tag) {
-            formData.append("post[tag]", tourism.tag);
-        }
+        formData.append('tag', property.tag ?? '');
+        formData.append('regionId', property.region?.id ?? '');
+        formData.append('floor_number', property.floor_number ?? '');
+        formData.append('latitude', property.coordinates?.lat ?? '');
+        formData.append('longitude', property.coordinates?.lng ?? '');
+        formData.append('area', property.area ?? '');
+        formData.append('ownership_type', property.ownership_type ?? '');
+        formData.append('direction', property.direction ?? '');
+        formData.append('has_furniture', property.has_furniture);
+        formData.append('status', property.status ?? 'متوفر');
 
-        // ✅ Public Information
-        if (tourism.region?.id !== undefined) {
-            formData.append("public_information[region_id]", tourism.region.id.toString());
-        }
-        if (tourism.room_counts?.total !== undefined) {
-            formData.append("public_information[room_count]", tourism.room_counts.total.toString());
-        }
-        if (tourism.coordinates?.latitude !== undefined) {
-            formData.append("public_information[latitude]", tourism.coordinates.latitude.toString());
-        }
-        if (tourism.coordinates?.longitude !== undefined) {
-            formData.append("public_information[longitude]", tourism.coordinates.longitude.toString());
-        }
-        if (tourism.area !== undefined) {
-            formData.append("public_information[area]", tourism.area.toString());
-        }
-        if (tourism.has_furniture) {
-            formData.append("public_information[has_furniture]", tourism.has_furniture);
-        }
-        if (tourism.room_counts?.living_room !== undefined) {
-            formData.append("public_information[living_room_count]", tourism.room_counts.living_room.toString());
-        }
-        if (tourism.room_counts?.kitchen !== undefined) {
-            formData.append("public_information[kitchen_count]", tourism.room_counts.kitchen.toString());
-        }
-        if (tourism.room_counts?.bathroom !== undefined) {
-            formData.append("public_information[bathroom_count]", tourism.room_counts.bathroom.toString());
-        }
-        if (tourism.room_counts?.bedroom !== undefined) {
-            formData.append("public_information[bedroom_count]", tourism.room_counts.bedroom.toString());
-        }
+        const room = property.room_counts ?? {};
+        formData.append('room_details[room_count]', room.total ?? '');
+        formData.append('room_details[bedroom_count]', room.bedroom ?? '');
+        formData.append('room_details[living_room_count]', room.living_room ?? '');
+        formData.append('room_details[kitchen_count]', room.kitchen ?? '');
+        formData.append('room_details[bathroom_count]', room.bathroom ?? '');
 
-        // ✅ Tourism Place
-        if (tourism.price !== undefined) {
-            formData.append("tourism_place[price]", tourism.price.toString());
-        }
-        if (tourism.street) {
-            formData.append("tourism_place[street]", tourism.street);
-        }
-        if (tourism.electricity) {
-            formData.append("tourism_place[electricity]", tourism.electricity);
-        }
-        if (tourism.water) {
-            formData.append("tourism_place[water]", tourism.water);
-        }
-        if (tourism.pool) {
-            formData.append("tourism_place[pool]", tourism.pool);
-        }
+        formData.append('listing_type', property.listing_type ?? '');
 
-        // ✅ Additional Services
-        if (Array.isArray(tourism.additional_services)) {
-            tourism.additional_services.forEach((service, index) => {
-                formData.append(`tourism_place[additional_services][${index}]`, service);
-            });
+
+        if (property.listing_type === 'أجار') {
+            // formData.append('rent_details', property.rent_details ?? {});
+            formData.append('rent_details[rentalPrice]', property.rent_details?.rentalPrice ?? 0);
+            formData.append('rent_details[rental_period]', property.rent_details?.rental_period ?? 0);
+        } else {
+            // formData.append('sell_details', property.sell_details ?? {});
+            formData.append('sell_details[installment_allowed]', property.sell_details?.installment_allowed ?? false);
+            formData.append('sell_details[installment_duration]', property.sell_details?.installment_duration ?? 1);
+            formData.append('sell_details[selling_price]', property.sell_details?.selling_price ?? 0);
         }
         return formData;
     }

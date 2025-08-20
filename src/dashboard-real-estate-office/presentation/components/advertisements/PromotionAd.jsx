@@ -14,6 +14,7 @@ import useLoadingStore from "../../../../shared/application/state/useLoadingStor
 import {useEffect} from "react";
 import {getServicePrice} from "../../../application/useCases/servicePrice/getServicePriceUseCase.jsx";
 import {Spinner} from "../../../../shared/presentation/components/Spinner.jsx";
+import {useNotification} from "../../../../shared/shared/hooks/useNotification.jsx";
 
 const PromotionAd = () => {
     const {register, watch, setValue, handleSubmit} = useForm({defaultValues: {days: 1}});
@@ -22,6 +23,7 @@ const PromotionAd = () => {
     const {property, setProperty} = usePropertyStore();
     const {promotionPrice, setPromotionPrice} = useServicePriceStore();
     const {setIsLoading, isLoading} = useLoadingStore();
+    const {notifyError, notifyWarning} = useNotification();
 
     useEffect(() => {
         setProperty(null)
@@ -31,7 +33,7 @@ const PromotionAd = () => {
             if (success) {
                 setPromotionPrice(response.price);
             } else {
-                alert(response);
+                notifyError(response);
                 setIsOpen(false);
             }
             setIsLoading(false);
@@ -41,7 +43,7 @@ const PromotionAd = () => {
 
     const pay = async () => {
         if (!property) {
-            alert("يرجى اختيار العقار")
+            notifyWarning("يرجى اختيار العقار")
         }
         console.log(watch("days"), property.id)
     }

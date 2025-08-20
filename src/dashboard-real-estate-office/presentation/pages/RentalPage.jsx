@@ -13,12 +13,14 @@ import Button from "@mui/material/Button";
 import {useEffect} from "react";
 import {getRental} from "../../application/useCases/rentals/getRentalContractsUseCase.jsx";
 import {uploadRentalDocument} from "../../application/useCases/rentals/uploadDocumentUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const RentalPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore()
     const {id} = useParams();
     const {rental, setRental} = useRentalStore();
     // const {setIsOpen, isOpen} = usePropertyContractOpenStore();
+    const {notifyError} = useNotification();
 
     useEffect(() => {
         const loadRental = async () => {
@@ -29,7 +31,7 @@ const RentalPage = () => {
                 setRental(data);
             } else {
                 setRental(null);
-                alert(response);
+                notifyError(response);
             }
             setIsLoading(false);
         };

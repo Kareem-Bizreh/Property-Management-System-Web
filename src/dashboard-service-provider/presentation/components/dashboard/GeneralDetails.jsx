@@ -62,10 +62,10 @@ const GeneralDetails = ({onEdit}) => {
                  lineHeight: "100%",
              }}
         >
-            {/* اسم المكتب */}
+            {/* اسم المزود */}
             <div className="w-[50%]" style={{color: TEXT_COLORS.black}}>
                 <TextInput
-                    title="اسم المكتب"
+                    title="اسم مزود الخدمة"
                     type="text"
                     name={"name"}
                     register={register}
@@ -118,30 +118,10 @@ const GeneralDetails = ({onEdit}) => {
                         }}
                     />
                 </div>
-
-                {/* تحديد الموقع */}
-                <div className="flex flex-col justify-around items-center flex-1 min-w-[95px]">
-                    <span className="my-2">
-                        تحديد الموقع
-                    </span>
-                    <div
-                        className="relative w-[63px] h-[60px] rounded-[15px] border-[1px] bg-[#DBEDF6]
-                                            transition-colors duration-200 cursor-pointer custom-hover"
-                        style={{
-                            "--hover-bg": "white",
-                            borderColor: TEXT_COLORS.primary,
-                        }}
-                    >
-                        <img
-                            className="absolute object-cover right-1/2 transform translate-x-1/2 top-1/2 -translate-y-1/2"
-                            src={mapIcon}
-                        />
-                    </div>
-                </div>
             </div>
 
             <div className="flex flex-row flex-wrap min-h-[100px] gap-8" style={{color: TEXT_COLORS.black}}>
-                {/* وقت فتح المكتب */}
+                {/* وقت فتح مزود الخدمة */}
                 <div className="flex flex-col justify-around max-w-[230px] min-w-[135px] flex-1">
                     <span
                         className="my-2 text-right"
@@ -153,7 +133,7 @@ const GeneralDetails = ({onEdit}) => {
                             lineHeight: "100%",
                         }}
                     >
-                      وقت فتح المكتب
+                      وقت فتح مزود الخدمة
                     </span>
                     <input
                         type="time"
@@ -171,7 +151,7 @@ const GeneralDetails = ({onEdit}) => {
                     />
                 </div>
 
-                {/* وقت إغلاق المكتب */}
+                {/* وقت إغلاق مزود الخدمة */}
                 <div className="flex flex-col justify-around max-w-[230px] min-w-[135px] flex-1">
                     <span
                         className="my-2 text-right"
@@ -183,7 +163,7 @@ const GeneralDetails = ({onEdit}) => {
                             lineHeight: "100%",
                         }}
                     >
-                        وقت إغلاق المكتب
+                        وقت إغلاق مزود الخدمة
                     </span>
                     <input
                         type="time"

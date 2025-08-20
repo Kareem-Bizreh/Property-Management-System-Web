@@ -9,6 +9,7 @@ import useRegionStore from "../../application/state/reservation/useRegionStore.j
 import useStatusStore from "../../application/state/reservation/useStatusStore.jsx";
 import useReservationsStore from "../../application/state/reservation/useReservationsStore.jsx";
 import {getFilterReservation} from "../../application/useCases/reservations/getFilterReservationUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const ReservationsPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
@@ -16,6 +17,7 @@ const ReservationsPage = () => {
     const {region} = useRegionStore();
     const {status} = useStatusStore();
     const {setReservations} = useReservationsStore();
+    const {notifyError} = useNotification();
 
     useEffect(() => {
         setIsLoading(true);
@@ -25,7 +27,7 @@ const ReservationsPage = () => {
                 setReservations(response.data);
             } else {
                 setReservations([]);
-                alert(response);
+                notifyError(response);
             }
             setIsLoading(false);
         }

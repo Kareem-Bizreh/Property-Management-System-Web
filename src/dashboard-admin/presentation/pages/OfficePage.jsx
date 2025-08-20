@@ -12,6 +12,7 @@ import useLoadingStore from "../../../shared/application/state/useLoadingStore.j
 import useDataStore from "../../application/state/useDataStore.jsx";
 import {getOffice} from "../../application/useCases/partnersManagement/getOfficeUseCase.jsx";
 import {getServiceProvider} from "../../application/useCases/partnersManagement/getServiceProviderUseCase.jsx";
+import {getOfficeProperties} from "../../application/useCases/partnersManagement/getOfficePropertiesUseCase.jsx";
 
 const OfficePage = () => {
     const [tab, setTab] = useState(0);
@@ -41,17 +42,18 @@ const OfficePage = () => {
                         }
                         break;
                     case 1:
-                        // result = await getProperties(id);
+                        result = await getOfficeProperties(id);
                         break;
                 }
                 if (result?.success) {
                     if (tab === 0) {
                         setDataForTab(0, [result.response.data]);
                     } else {
-                        setDataForTab(1, []);
+                        console.log(result.response.data)
+                        setDataForTab(1, result.response.data);
                     }
                 } else {
-                    notifyError(result?.response?? "حدث خطأ");
+                    notifyError(result?.response ?? "حدث خطأ");
                 }
                 setIsLoading(false);
             }
@@ -87,15 +89,16 @@ const OfficePage = () => {
                     {/*العقارات*/}
                     <CustomTabPanel value={tab} index={1}>
                         <div className="flex flex-row flex-wrap gap-5 h-auto">
-                            {/*{properties.map((property) => (*/}
-                            {/*    <div key={property.id} className="flex-shrink-0">*/}
-                            {/*        {(property.listing_type === 'أجار') ? (*/}
-                            {/*            <PropertyRentCard property={property}/>*/}
-                            {/*        ) : (*/}
-                            {/*            <PropertySaleTouristCard property={property} type={'sale'}/>*/}
-                            {/*        )}*/}
-                            {/*    </div>*/}
-                            {/*))}*/}
+                            {data[1]?.map((property) => (
+                                <div key={property.id} className="flex-shrink-0">
+                                    {(property.listing_type === 'أجار') ? (
+                                        <PropertyRentCard property={property} onClick={false}/>
+                                    ) : (
+                                        <PropertySaleTouristCard property={property} onClick={false}
+                                                                 type={(property.listing_type ? 'sale' : 'tourist')}/>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </CustomTabPanel>
                 </div>

@@ -21,6 +21,7 @@ import {editTourism} from "../../application/useCases/tourism/editTourismUseCase
 import {Tabs} from "../../../shared/presentation/components/Tabs.jsx";
 import {CustomTabPanel} from "../../../shared/presentation/components/Tabs.jsx";
 import useTabStore from "../../application/state/tourism/useTabStore.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const TourismPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
@@ -29,6 +30,7 @@ const TourismPage = () => {
         resetImageTracking, setNewImages, setDeletedImages
     } = useTouristStore();
     const {id} = useParams();
+    const {notifyError, notifySuccess, notifyWarning} = useNotification();
 
     useEffect(() => {
         setIsLoading(true);
@@ -39,7 +41,7 @@ const TourismPage = () => {
                 setTourist(data);
             } else {
                 setTourist(null);
-                alert(response);
+                notifyError(response);
             }
             setIsLoading(false);
         }
@@ -47,6 +49,10 @@ const TourismPage = () => {
     }, []);
 
     const onSubmit = async () => {
+        if(!tourist.postImage) {
+            notifyWarning("يرجى ادخال صورة المنشور");
+            return;
+        }
         setIsLoading(true);
 
         try {
@@ -54,7 +60,7 @@ const TourismPage = () => {
             const {success, response} = await editTourism(tourist, id);
 
             if (!success) {
-                alert(response);
+                notifyError(response);
                 return;
             }
 
@@ -65,7 +71,7 @@ const TourismPage = () => {
 
                 const uploadResponse = await upload(id, formData);
                 if (!uploadResponse.success) {
-                    alert("فشل في رفع الصور");
+                    notifyError("فشل في رفع الصور");
                     return;
                 }
             }
@@ -74,7 +80,7 @@ const TourismPage = () => {
             for (const imageId of deletedImages) {
                 const deleteResponse = await deleteImage(id, imageId);
                 if (!deleteResponse.success) {
-                    alert('فشل في حذف الصورة');
+                    notifyError('فشل في حذف الصورة');
                     return;
                 }
             }
@@ -82,10 +88,10 @@ const TourismPage = () => {
             // 4. Reset temporary tracking
             resetImageTracking();
 
-            alert("تم حفظ التعديلات بنجاح");
+            notifySuccess("تم حفظ التعديلات بنجاح");
 
         } catch (err) {
-            alert("حدث خطأ أثناء التعديل");
+            notifyError("حدث خطأ أثناء التعديل");
         } finally {
             setIsLoading(false);
         }

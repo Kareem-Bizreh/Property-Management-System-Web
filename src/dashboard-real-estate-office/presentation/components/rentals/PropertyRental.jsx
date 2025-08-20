@@ -14,6 +14,7 @@ import {useForm} from "react-hook-form";
 import useRentalDetailsStore from "../../../application/state/rental/useRentalDetailsStore.jsx";
 import {getOfficeCommission} from "../../../application/useCases/office/getCommissionUseCase.jsx";
 import {addUserPropertyInvoice} from "../../../application/useCases/rentals/addRentalUseCase.jsx";
+import {useNotification} from "../../../../shared/shared/hooks/useNotification.jsx";
 
 const PropertyRental = () => {
     const {setIsOpen, isOpen} = usePropertyRentalOpenStore();
@@ -24,6 +25,7 @@ const PropertyRental = () => {
     const {invoice_image, office_commission_amount, setRentalDetails, resetRentalDetails} = useRentalDetailsStore();
     const fileInputRef = useRef(null);
     const price = property?.rent_details?.rentalPrice || property?.rent_details?.price || 0;
+    const {notifyError, notifySuccess, notifyWarning} = useNotification();
 
     useEffect(() => {
         setIsLoading(true);
@@ -33,7 +35,7 @@ const PropertyRental = () => {
                 setRentalDetails({office_commission_amount: response});
             } else {
                 setRentalDetails({office_commission_amount: 0});
-                alert(response);
+                notifyError(response);
             }
             setIsLoading(false);
         };
@@ -59,11 +61,11 @@ const PropertyRental = () => {
 
     const rent = async () => {
         if (!invoice_image) {
-            alert("يرجى إدخال وثيقة الحجز")
+            notifyWarning("يرجى إدخال وثيقة الحجز")
             return;
         }
         if (!property) {
-            alert("يرجى اختيار العقار")
+            notifyWarning("يرجى اختيار العقار")
             return;
         }
         setIsLoading(true);
@@ -71,10 +73,10 @@ const PropertyRental = () => {
             property.id, property.residentialId, invoice_image.file);
         if (success) {
             resetRentalDetails();
-            alert("تم إيجار العقار");
+            notifySuccess("تم إيجار العقار");
             window.location.reload();
         } else {
-            alert(response);
+            notifyError(response);
         }
         setIsLoading(false);
     }

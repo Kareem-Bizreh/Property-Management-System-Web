@@ -13,7 +13,7 @@ const User = ({user, onDelete, onEdit, role}) => {
     return (
         <div
             className="flex flex-row flex-wrap justify-between items-center
-            h-auto min-h-[90px] gap-6 whitespace-nowrap rounded-[15px] my-4 p-2"
+            h-auto min-h-[90px] gap-6 whitespace-nowrap rounded-[15px] my-4"
             style={{
                 color: TEXT_COLORS.primary,
                 backgroundColor: BACKGROUND_COLORS.filter,

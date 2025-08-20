@@ -1,15 +1,27 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../colors.jsx";
-import {Link} from "react-router";
+import {useNavigate} from "react-router";
 import star from '../../../assets/shared/star.svg'
 import locationIcon from "../../../assets/cards/location.svg";
 import property_rent from "../../../assets/cards/property_rent.png";
 import {formatPrice} from "../../../shared/utils/formatPrice.js";
 
-const PropertyRentCard = ({property: {id, postTitle, rate, location, rent_details, postStatus, postImage, status}}) => {
+const PropertyRentCard = ({
+                              property: {id, postTitle, rate, location, rent_details, postStatus, postImage, status},
+                              onClick = true
+                          }) => {
     const finalStatus = postStatus !== "مقبول" ? postStatus : status;
+    const navigate = useNavigate();
 
     return (
-        <Link to={`/real-estate-office/my-properties/${id}`}>
+        <div
+            className={`${onClick ? 'cursor-pointer' : 'select-none'}`}
+            onClick={() => {
+                if (onClick) {
+                    navigate(`/real-estate-office/my-properties/${id}`)
+                }
+            }}
+            title={onClick ? `/real-estate-office/my-properties/${id}` : ''}
+        >
             <div className="relative w-[212px] h-[363px] rounded-[25px]"
                  style={{backgroundColor: BACKGROUND_COLORS.secondary1}}>
                 <div
@@ -128,7 +140,7 @@ const PropertyRentCard = ({property: {id, postTitle, rate, location, rent_detail
                     </span>
                 </div>
             </div>
-        </Link>
+        </div>
 
     )
 }

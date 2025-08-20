@@ -1,8 +1,10 @@
-import {useRef} from "react";
+import {useRef, useState} from "react";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
+import {useNotification} from "../../../../shared/shared/hooks/useNotification.jsx";
+import ConfirmActionModalWithMUI from "../../../../shared/presentation/components/ConfirmActionModal.jsx";
 
 const FinancialRecord = ({
                              record: {
@@ -11,6 +13,9 @@ const FinancialRecord = ({
                              }, upload
                          }) => {
     const fileInputRef = useRef(null);
+    const {notifyError, notifySuccess, notifyWarning} = useNotification();
+    const [uploadModel, setUploadModel] = useState(false);
+    const [invoice, setInvoice] = useState(null);
 
     const onPress = () => {
         if (status !== 'قيد الانتظار') {
@@ -20,18 +25,26 @@ const FinancialRecord = ({
         }
     };
 
-    const handleFileChange = async (e) => {
+    const handleFileChange = (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
+        setInvoice(file);
+        setUploadModel(true);
+    };
 
-        const {success, response} = await upload(id, file);
+    const onUpload = async () => {
+        if (!invoice) {
+            notifyWarning("يرجى رفع الوثيقة");
+            return;
+        }
+        const {success, response} = await upload(id, invoice);
         if (success) {
-            alert("تم رفع الوثيقة بنجاح");
+            notifySuccess("تم رفع الوثيقة بنجاح");
             window.location.reload();
         } else {
-            alert(response);
+            notifyError(response);
         }
-    };
+    }
 
     return (
         <div
@@ -92,6 +105,14 @@ const FinancialRecord = ({
                             className="hidden"
                             ref={fileInputRef}
                             onChange={handleFileChange}
+                        />
+
+                        <ConfirmActionModalWithMUI
+                            open={uploadModel}
+                            onClose={() => setUploadModel(false)}
+                            onConfirm={onUpload}
+                            type={"رفع الوثيقة"}
+                            withReason={false}
                         />
                     </>
                 }

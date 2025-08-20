@@ -18,6 +18,7 @@ import {edit} from "../../application/useCases/residentialOffice/editResidential
 import {deleteImage} from "../../application/useCases/propertyImage/deleteUseCase.jsx";
 import {upload} from "../../application/useCases/propertyImage/uploadUseCase.jsx";
 import {STATUS_OPTIONS} from "../../shared/constants/statusOptions.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const PropertyPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
@@ -28,6 +29,7 @@ const PropertyPage = () => {
     const {setCommission} = useCommissionStore();
     const {setMeterPrice} = useMeterPriceStore();
     const {id} = useParams();
+    const {notifyError, notifySuccess, notifyWarning} = useNotification();
 
     useEffect(() => {
         const loadAllData = async () => {
@@ -41,7 +43,7 @@ const PropertyPage = () => {
                     await fetchMeterPrice(data.region.id);
                 } else {
                     setProperty(null);
-                    alert(response);
+                    notifyError(response);
                 }
             };
 
@@ -51,7 +53,7 @@ const PropertyPage = () => {
                     setCommission(response);
                 } else {
                     setCommission(null);
-                    alert(response);
+                    notifyError(response);
                 }
             };
 
@@ -61,7 +63,7 @@ const PropertyPage = () => {
                     setMeterPrice(response);
                 } else {
                     setMeterPrice(null);
-                    alert(response);
+                    notifyError(response);
                 }
             };
 
@@ -77,6 +79,10 @@ const PropertyPage = () => {
     }, []);
 
     const onSubmit = async () => {
+        if(!property.postImage) {
+            notifyWarning("يرجى ادخال صورة المنشور");
+            return;
+        }
         setIsLoading(true);
 
         try {
@@ -84,7 +90,7 @@ const PropertyPage = () => {
             const {success, response} = await edit(property, id);
 
             if (!success) {
-                alert(response);
+                notifyError(response);
                 return;
             }
 
@@ -95,7 +101,7 @@ const PropertyPage = () => {
 
                 const uploadResponse = await upload(id, formData);
                 if (!uploadResponse.success) {
-                    alert("فشل في رفع الصور");
+                    notifyError("فشل في رفع الصور");
                     return;
                 }
             }
@@ -104,7 +110,7 @@ const PropertyPage = () => {
             for (const imageId of deletedImages) {
                 const deleteResponse = await deleteImage(id, imageId);
                 if (!deleteResponse.success) {
-                    alert('فشل في حذف الصورة');
+                    notifyError('فشل في حذف الصورة');
                     return;
                 }
             }
@@ -112,10 +118,10 @@ const PropertyPage = () => {
             // 4. Reset temporary tracking
             resetImageTracking();
 
-            alert("تم حفظ التعديلات بنجاح");
+            notifySuccess("تم حفظ التعديلات بنجاح");
 
         } catch (err) {
-            alert("حدث خطأ أثناء التعديل");
+            notifyError("حدث خطأ أثناء التعديل");
         } finally {
             setIsLoading(false);
         }

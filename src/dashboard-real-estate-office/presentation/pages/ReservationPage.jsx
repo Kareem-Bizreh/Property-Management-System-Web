@@ -10,11 +10,13 @@ import FinancialRecord from "../components/shared/FinancialRecord.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import {getReservation} from "../../application/useCases/reservations/getReservationUseCase.jsx";
 import {uploadInvoiceDocument} from "../../application/useCases/userPropertyInvoices/uploadDocumentUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const ReservationPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
     const {reservation, setReservation} = useReservationStore();
     const {id} = useParams();
+    const {notifyError} = useNotification();
 
     useEffect(() => {
         const loadReservation = async () => {
@@ -27,10 +29,10 @@ const ReservationPage = () => {
                     setReservation(data);
                 } else {
                     setReservation(null);
-                    alert(response);
+                    notifyError(response);
                 }
             } catch (error) {
-                alert("حدث خطأ أثناء تحميل الحجز");
+                notifyError("حدث خطأ أثناء تحميل الحجز");
                 setReservation(null);
             } finally {
                 setIsLoading(false);
