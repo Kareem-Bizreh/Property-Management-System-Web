@@ -36,9 +36,9 @@ const Service = ({service: {id, name, location, userPhone, career, logo, avgRate
                         />
                     )}
                 </div>
-                <div className="flex flex-col justify-around items-start w-[120px] h-full">
+                <div className="flex flex-col justify-around items-start w-[140px] h-full">
                     <span style={{fontWeight: 700, color: TEXT_COLORS.post}}>{name}</span>
-                    <div className="flex flex-row gap-1 w-full">
+                    <div className="flex flex-row gap-1 w-full text-right">
                         <img src={locationIcon} className="w-[14px] h-[14px]"/>
                         <span style={{fontWeight: 400, fontSize: '14px'}}>{location}</span>
                     </div>

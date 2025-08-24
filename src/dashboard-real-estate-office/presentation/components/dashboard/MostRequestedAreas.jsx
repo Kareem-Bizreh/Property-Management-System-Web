@@ -1,26 +1,13 @@
 import Header from "../../../../shared/presentation/components/dashboard/Header.jsx";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 
-const MostRequestedAreas = () => {
-    const data = [
-        'دمشق , ميدان',
-        'دمشق , ميدان',
-        'دمشق , ميدان',
-        'دمشق , ميدان',
-        'دمشق , ميدان',
-        'دمشق , ميدان',
-        'دمشق , ميدان',
-        'دمشق , ميدان',
-        'دمشق , ميدان',
-        'دمشق , ميدان',
-    ]
-
+const MostRequestedAreas = ({tourism, residential}) => {
     return (
-        <div className="flex flex-col max-w-screen mr-4">
+        <div className="flex flex-col max-w-screen">
             <Header name={'أفضل المناطق طلباً'}/>
             <div className='flex flex-col md:flex-row gap-4 w-full h-auto'>
-                {MostRequested('عقاري', data)}
-                {MostRequested('سياحي', data)}
+                {MostRequested('عقاري', residential)}
+                {MostRequested('سياحي', tourism)}
             </div>
         </div>
     )
@@ -44,42 +31,39 @@ const MostRequested = (title, data) => {
                 {title}
             </span>
             <div className="grid grid-rows-5 grid-cols-2 gap-2 grid-flow-col">
-                {
-                    (data && data.length > 0) && (
-                        data.map((item, index) => {
-                            return (
-                                <div key={index} className='flex md:flex-row flex-col justify-around p-3 items-center gap-6 rounded-[14px]'
-                                     style={{backgroundColor: (index < 3 ? BACKGROUND_COLORS.sidebar : 'none')}}
-                                >
-                                    <span style={{
-                                        color: (index < 3 ? TEXT_COLORS.firstThree : TEXT_COLORS.secondary),
-                                        fontFamily: 'Cairo',
-                                        fontWeight: '700',
-                                        fontSize: '18px',
-                                        lineHeight: '100%',
-                                        letterSpacing: '3%',
-                                        textAlign: 'center',
-                                    }}>
-                                        {index + 1}
-                                    </span>
-                                    <span
-                                        className="-mr-6"
-                                        style={{
-                                            color: (index < 3 ? TEXT_COLORS.firstThree : TEXT_COLORS.secondary),
-                                            fontFamily: 'Cairo',
-                                            fontWeight: '700',
-                                            fontSize: '16px',
-                                            lineHeight: '100%',
-                                            letterSpacing: '3%',
-                                            textAlign: 'center'
-                                        }}>
-                                        {item}
-                                    </span>
-                                </div>
-                            );
-                        })
-                    )
-                }
+                {data?.map((item, index) => {
+                    return (
+                        <div key={index}
+                             className='flex md:flex-row flex-col justify-around p-3 items-center gap-6 rounded-[14px]'
+                             style={{backgroundColor: (index < 3 ? BACKGROUND_COLORS.sidebar : 'none')}}
+                        >
+                            <span style={{
+                                color: (index < 3 ? TEXT_COLORS.firstThree : TEXT_COLORS.secondary),
+                                fontFamily: 'Cairo',
+                                fontWeight: '700',
+                                fontSize: '18px',
+                                lineHeight: '100%',
+                                letterSpacing: '3%',
+                                textAlign: 'center',
+                            }}>
+                                {index + 1}
+                            </span>
+                            <span
+                                className="-mr-6"
+                                style={{
+                                    color: (index < 3 ? TEXT_COLORS.firstThree : TEXT_COLORS.secondary),
+                                    fontFamily: 'Cairo',
+                                    fontWeight: '700',
+                                    fontSize: '16px',
+                                    lineHeight: '100%',
+                                    letterSpacing: '3%',
+                                    textAlign: 'center'
+                                }}>
+                                {item}
+                            </span>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     )

@@ -7,6 +7,7 @@ import useOfficeStore from "../../../application/state/office/useOfficeStore.jsx
 
 const PaymentMethod = () => {
     const {office, setOffice} = useOfficeStore();
+    const paymentMethod = office?.payment_method;
 
     return (
         <div className="flex flex-col flex-1 items-center rounded-[25px] p-4 justify-around"
@@ -25,10 +26,20 @@ const PaymentMethod = () => {
             <Header title={'طريقة الدفع'} fontSize={'18px'}/>
             <div className="grid grid-cols-[auto_auto_1fr] grid-rows-2 place-items-center gap-2">
                 <Checkbox
-                    checked={office?.manualPayment}
-                    onChange={(e) =>
-                        setOffice({...office, manualPayment: e.target.checked})
-                    }
+                    checked={paymentMethod === "both" || paymentMethod === "دفع يدوي"}
+                    onChange={(e) => {
+                        if (e.target.checked) {
+                            setOffice({
+                                ...office,
+                                payment_method: paymentMethod === "دفع الكتروني" ? "both" : "دفع يدوي"
+                            })
+                        } else {
+                            setOffice({
+                                ...office,
+                                payment_method: paymentMethod === "both" ? "دفع الكتروني" : ""
+                            })
+                        }
+                    }}
                     sx={{'&.Mui-checked': {color: BACKGROUND_COLORS.button}}}
                 />
                 <img
@@ -37,10 +48,20 @@ const PaymentMethod = () => {
                 />
                 <span>الدفع اليدوي</span>
                 <Checkbox
-                    checked={office?.electronicPayment}
-                    onChange={(e) =>
-                        setOffice({...office, electronicPayment: e.target.checked})
-                    }
+                    checked={paymentMethod === "both" || paymentMethod === "دفع الكتروني"}
+                    onChange={(e) => {
+                        if (e.target.checked) {
+                            setOffice({
+                                ...office,
+                                payment_method: paymentMethod === "دفع يدوي" ? "both" : "دفع الكتروني"
+                            })
+                        } else {
+                            setOffice({
+                                ...office,
+                                payment_method: paymentMethod === "both" ? "دفع يدوي" : ""
+                            })
+                        }
+                    }}
                     sx={{'&.Mui-checked': {color: BACKGROUND_COLORS.button}}}
                 />
                 <img

@@ -7,26 +7,45 @@ import Fees from "../components/officeInfo/Fees.jsx";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
 import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import useOfficeStore from "../../application/state/office/useOfficeStore.jsx";
+import {getOfficeDetails} from "../../application/useCases/office/getOfficeDetailsUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
+import {editOfficeDetails} from "../../application/useCases/office/editOfficeDetailsUseCase.jsx";
 
 const OfficeInfoPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
     const {office, setOffice} = useOfficeStore();
+    const {notifySuccess, notifyError, notifyWarning} = useNotification();
     const methods = useForm()
 
     useEffect(() => {
         setIsLoading(true);
-        setOffice({
-            city: {
-                id: 1,
-                name: 'دمشق',
-            },
-            region: {
-                id: 1,
-                name: 'المزة'
+        const fetchData = async () => {
+            const {success, response} = await getOfficeDetails();
+            if (success) {
+                setOffice(response.data);
+            } else {
+                setOffice(null);
+                notifyError(response);
             }
-        });
+            setIsLoading(false);
+        }
+        fetchData()
+    }, []);
+
+    const onEdit = async () => {
+        if (office.payment_method === "") {
+            notifyWarning("يجب اختيار طريقة دفع واحدة على الأقل");
+            return;
+        }
+        setIsLoading(true);
+        const {success, response} = await editOfficeDetails(office);
+        if (success) {
+            notifySuccess("تم حفظ التعديلات بنجاح");
+        } else {
+            notifyError(response);
+        }
         setIsLoading(false);
-    }, [])
+    }
 
     if (isLoading || !office) return <Spinner/>;
 
@@ -42,7 +61,7 @@ const OfficeInfoPage = () => {
                         <PaymentMethod/>
                     </div>
                 </div>
-                <Fees/>
+                <Fees onEdit={onEdit}/>
             </div>
         </FormProvider>
     )

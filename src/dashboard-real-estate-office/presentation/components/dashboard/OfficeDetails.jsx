@@ -1,11 +1,7 @@
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import star from '../../../../shared/assets/shared/star.svg'
 
-const OfficeDetails = () => {
-    const imgSrc = ''; // https://userpic.codeforces.org/3060832/title/c773068ec0bb8654.jpg
-    const officeName = 'اسم المكتب'
-    const rating = '4.75';
-    const address = 'دمشق ,ميدان';
+const OfficeDetails = ({logo, name, rate, location}) => {
 
     return (
         <div className="w-full bg-white p-4 sm:p-6">
@@ -20,9 +16,9 @@ const OfficeDetails = () => {
                         borderWidth: '1px',
                     }}
                 >
-                    {imgSrc && (
+                    {logo && (
                         <img
-                            src={imgSrc}
+                            src={logo}
                             alt="profile"
                             className="w-full h-full rounded-full object-cover"
                         />
@@ -42,7 +38,7 @@ const OfficeDetails = () => {
                             textAlign: 'right'
                         }}
                     >
-                        {officeName}
+                        {name}
                     </h2>
 
                     <div
@@ -76,7 +72,7 @@ const OfficeDetails = () => {
                                     horizontalAlign: 'center'
                                 }}
                             >
-                                {rating}
+                                {rate}
                             </span>
                         </div>
                     </div>
@@ -95,7 +91,7 @@ const OfficeDetails = () => {
                             textAlign: 'right'
                         }}
                    >
-                        {address}
+                        {location}
                    </span>
                 </div>
             </div>

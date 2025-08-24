@@ -24,29 +24,23 @@ const GeneralDetails = ({onEdit}) => {
             setValue("name", office?.name);
         }
 
-        if ((currentValues.contactNumber) !== office?.contactNumber) {
-            setValue("contactNumber", office?.contactNumber);
+        if ((currentValues.phone) !== office?.phone) {
+            setValue("phone", office?.phone);
         }
 
-        if (currentValues.openingTime !== office?.openingTime) {
-            setValue("openingTime", office?.openingTime);
+        if (currentValues.opening_time !== office?.opening_time.slice(0, 5)) {
+            setValue("opening_time", office?.opening_time.slice(0, 5));
         }
 
-        if (currentValues.closingTime !== office?.closingTime) {
-            setValue("closingTime", office?.closingTime);
+        if (currentValues.closing_time !== office?.closing_time.slice(0, 5)) {
+            setValue("closing_time", office?.closing_time.slice(0, 5));
         }
 
-        if (currentValues.facebookAccount !== office?.facebookAccount) {
-            setValue("facebookAccount", office?.facebookAccount);
-        }
-
-        if (currentValues.whatsappAccount !== office?.whatsappAccount) {
-            setValue("whatsappAccount", office?.whatsappAccount);
-        }
-
-        if (currentValues.instagramAccount !== office?.instagramAccount) {
-            setValue("instagramAccount", office?.instagramAccount);
-        }
+        office?.socials.forEach((social) => {
+            if (currentValues[social.name] !== social.link) {
+                setValue(social.name, social.link);
+            }
+        });
     }, []);
 
     useEffect(() => {
@@ -55,16 +49,17 @@ const GeneralDetails = ({onEdit}) => {
         setOffice({
             ...office,
             name: currentValues.name,
-            contactNumber: currentValues.contactNumber,
-            openingTime: currentValues.openingTime,
-            closingTime: currentValues.closingTime,
-            facebookAccount: currentValues.facebookAccount,
-            whatsappAccount: currentValues.whatsappAccount,
-            instagramAccount: currentValues.instagramAccount,
+            phone: currentValues.phone,
+            opening_time: currentValues.opening_time,
+            closing_time: currentValues.closing_time,
+            socials: office.socials.map(social => ({
+                ...social,
+                link: currentValues[social.name]
+            }))
         });
 
-    }, [watch("name"), watch("contactNumber"), watch("openingTime"), watch("closingTime"),
-        watch("facebookAccount"), watch("whatsappAccount"), watch("instagramAccount")]);
+    }, [watch("name"), watch("phone"), watch("opening_time"), watch("closing_time"),
+        watch("facebook"), watch("whatsapp"), watch("instagram")]);
 
     return (
         <div className="flex flex-col justify-between py-4 px-6 rounded-[25px] min-h-full h-auto"
@@ -90,7 +85,7 @@ const GeneralDetails = ({onEdit}) => {
                 <TextInput
                     title="رقم التواصل"
                     type="text"
-                    name={"contactNumber"}
+                    name={"phone"}
                     register={register}
                 />
             </div>
@@ -157,7 +152,7 @@ const GeneralDetails = ({onEdit}) => {
                             onSelect={(coordinates) => setOffice({...office, coordinates})}
                             {...(office.coordinates ? {
                                 center: office.coordinates,
-                                markers: [{location: office.coordinates, name: office.postTitle}],
+                                markers: [{location: office.coordinates, name: office.name}],
                             } : {zoom: 10})}
                         />}
                 </div>
@@ -180,7 +175,7 @@ const GeneralDetails = ({onEdit}) => {
                     </span>
                     <input
                         type="time"
-                        {...register("openingTime", {required: true})}
+                        {...register("opening_time", {required: true})}
                         className="rounded-[15px] border-[1px] h-[50px] px-4 w-full"
                         style={{
                             backgroundColor: BACKGROUND_COLORS.app,
@@ -210,7 +205,7 @@ const GeneralDetails = ({onEdit}) => {
                     </span>
                     <input
                         type="time"
-                        {...register("closingTime", {required: true})}
+                        {...register("closing_time", {required: true})}
                         className="rounded-[15px] border-[1px] h-[50px] px-4 w-full max-w-[260px]"
                         style={{
                             backgroundColor: BACKGROUND_COLORS.app,
@@ -234,7 +229,7 @@ const GeneralDetails = ({onEdit}) => {
                 <div className="relative w-full">
                     <TextInput
                         type="text"
-                        name={"facebookAccount"}
+                        name={"facebook"}
                         register={register}
                         required={false}
                         inputClassName="pr-12"
@@ -250,7 +245,7 @@ const GeneralDetails = ({onEdit}) => {
                 <div className="relative w-full">
                     <TextInput
                         type="text"
-                        name={"whatsappAccount"}
+                        name={"whatsapp"}
                         register={register}
                         required={false}
                         inputClassName="pr-12"
@@ -266,7 +261,7 @@ const GeneralDetails = ({onEdit}) => {
                 <div className="relative w-full">
                     <TextInput
                         type="text"
-                        name={"instagramAccount"}
+                        name={"instagram"}
                         register={register}
                         required={false}
                         inputClassName="pr-12"

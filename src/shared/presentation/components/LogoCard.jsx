@@ -1,26 +1,13 @@
 import logo from '/logo.svg';
 import {TEXT_COLORS} from "../../colors.jsx";
 
-const LogoCard = ({ width, height, top, fontSize }) => {
+const LogoCard = ({width, height, top, fontSize}) => {
     return (
         <div
-            className="absolute flex flex-col items-center right-1/2 transform translate-x-1/2 select-none"
-            style={{
-                width: width,
-                height: height,
-                top: top,
-                minHeight: height
-            }}
+            className="absolute flex flex-col items-center right-1/2 transform translate-x-1/2"
+            style={{width: width, height: height, top: top, minHeight: height}}
         >
-            <img
-                src={logo}
-                alt="App Logo"
-                style={{
-                    width: '80%',
-                    height: 'auto',
-                    maxHeight: '70%'
-                }}
-            />
+            <img src={logo} alt="App Logo" className="select-none w-[80%] max-h-[70%] h-auto"/>
 
             <p
                 style={{

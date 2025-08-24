@@ -11,6 +11,11 @@ export const ResidentialOffice = {
 
 export const Office = {
     baseURL: 'office/',
+    get: '',
+    edit: '', // POST
+    dashboard: 'dashboard',
+    topRegions: 'top-regions',
+    topRatedProperties: 'properties/top-rated',
     commission: 'commission'
 }
 
