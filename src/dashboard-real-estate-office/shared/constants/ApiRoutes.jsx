@@ -36,8 +36,9 @@ export const Tourism = {
     baseURL: 'tourism/',
     add: '',
     filters: 'filter',
-    get: (tourismId) => tourismId,
-    edit: (tourismId) => tourismId,
+    get: (tourismId) => `${tourismId}`,
+    edit: (tourismId) => `${tourismId}`,
+    reservations: (tourismId, year) => `${tourismId}/year/${year}`,
 }
 
 export const PropertyReservation = {
@@ -54,12 +55,16 @@ export const UserPropertyInvoice = {
     add: 'upload-docement',
 }
 
+export const UserInvoice = {
+    baseURL: 'user-invoice/',
+    uploadDocument: (invoiceId) => `${invoiceId}/document`,
+}
+
 export const RentalContracts = {
     baseURL: 'rental-contracts/',
     add: '',
     filters: '',
     getRentalContracts: (id) => `${id}/details`,
-    uploadDocument: (invoiceId) => `${invoiceId}/document`,
 }
 
 export const UserPost = {

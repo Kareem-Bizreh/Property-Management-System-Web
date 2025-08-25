@@ -6,12 +6,12 @@ export const getTopRatedProperties = async (type) => {
     try {
         const response = await OfficeRepository.getTopRatedProperties(type);
         if (type === "سياحي") {
-            response.data.results = response.data.results.map((item) => Tourism.cardData(item));
+            response.data = response.data.map((item) => Tourism.cardData(item));
         } else {
-            response.data.results = response.data.results.map((item) => new Property(item));
+            response.data = response.data.map((item) => new Property(item));
         }
 
-        return {success: true, response: response.data.results};
+        return {success: true, response: response.data};
     } catch (error) {
         return {success: false, response: error.response.data.message};
     }

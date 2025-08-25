@@ -20,7 +20,6 @@ const DashboardPage = () => {
     const {topRegions, setTopRegions} = useTopRegionsStore();
     const {topRatedProperties, setTopRatedProperties} = useTopRatedPropertiesStore();
     const {notifyError} = useNotification();
-    console.log(topRatedProperties?.tourism)
 
     useEffect(() => {
         setIsLoading(true);

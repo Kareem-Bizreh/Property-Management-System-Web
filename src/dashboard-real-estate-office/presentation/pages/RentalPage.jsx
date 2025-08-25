@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 // import usePropertyContractOpenStore from "../../application/state/rental/usePropertyContractOpenStore.jsx";
 import {useEffect} from "react";
 import {getRental} from "../../application/useCases/rentals/getRentalContractsUseCase.jsx";
-import {uploadRentalDocument} from "../../application/useCases/rentals/uploadDocumentUseCase.jsx";
+import {uploadDocument} from "../../application/useCases/userInvoice/uploadDocumentUseCase.jsx";
 import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const RentalPage = () => {
@@ -84,7 +84,7 @@ const RentalPage = () => {
                 </div>
                 <div className="flex flex-col gap-4">
                     {rental?.invoices.map((item) => (
-                        <FinancialRecord record={item} key={item.id} upload={uploadRentalDocument}/>
+                        <FinancialRecord record={item} key={item.id} upload={uploadDocument}/>
                     ))}
                 </div>
             </div>

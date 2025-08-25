@@ -15,8 +15,8 @@ const Filter = () => {
                 <div className="flex flex-1 flex-wrap gap-4 md:gap-6">
                     <SelectInput
                         key={2}
-                        title={type || "نوع"}
-                        options={["إلغاء", ...AdType]}
+                        title={type}
+                        options={AdType}
                         maxWidth={"170px"}
                         height={"48px"}
                         onChange={setType}

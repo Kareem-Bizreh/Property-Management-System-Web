@@ -19,7 +19,7 @@ export const editOfficeDetails = async (office) => {
         payload.append("region_id", office.region.id);
         payload.append("latitude", office.coordinates.lat);
         payload.append("longitude", office.coordinates.lng);
-        office.socials.forEach((social, index) => {
+        office.socials.filter((social) => social.link && social.link.length > 0).forEach((social, index) => {
             payload.append(`socials[${index}][id]`, social.id);
             payload.append(`socials[${index}][link]`, social.link);
         })

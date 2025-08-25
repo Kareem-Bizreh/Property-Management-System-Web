@@ -42,7 +42,7 @@ const OfficeInfoPage = () => {
         if (success) {
             notifySuccess("تم حفظ التعديلات بنجاح");
         } else {
-            notifyError(response);
+            notifyError(response[0]);
         }
         setIsLoading(false);
     }

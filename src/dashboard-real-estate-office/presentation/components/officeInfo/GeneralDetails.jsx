@@ -226,7 +226,7 @@ const GeneralDetails = ({onEdit}) => {
                 </span>
 
                 {/* Facebook */}
-                <div className="relative w-full">
+                <div className="relative w-full" dir={'ltr'}>
                     <TextInput
                         type="text"
                         name={"facebook"}
@@ -242,7 +242,7 @@ const GeneralDetails = ({onEdit}) => {
                 </div>
 
                 {/* WhatsApp */}
-                <div className="relative w-full">
+                <div className="relative w-full" dir={'ltr'}>
                     <TextInput
                         type="text"
                         name={"whatsapp"}
@@ -258,7 +258,7 @@ const GeneralDetails = ({onEdit}) => {
                 </div>
 
                 {/* Instagram */}
-                <div className="relative w-full">
+                <div className="relative w-full" dir={'ltr'}>
                     <TextInput
                         type="text"
                         name={"instagram"}

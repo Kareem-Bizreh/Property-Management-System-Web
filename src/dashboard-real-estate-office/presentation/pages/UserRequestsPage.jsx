@@ -43,8 +43,7 @@ const UserRequestsPage = () => {
         <div className="flex flex-col">
             <Header title={'طلبات المستخدمين'}/>
             <Filter/>
-            <Requests/>
-            {(isLoading ? (<Spinner/>) : null)}
+            {(isLoading ? (<Spinner/>) : <Requests/>)}
         </div>
     )
 }

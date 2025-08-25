@@ -40,3 +40,10 @@ export const editTourism = async (tourismId, data) => {
     });
     return response.data;
 }
+
+export const getTourismReservations = async (tourismId, year) => {
+    const response = await axiosInstance.get(Tourism.reservations(tourismId, year), {
+        baseURL: import.meta.env.VITE_API_BASE_URL + baseURL
+    });
+    return response.data;
+}

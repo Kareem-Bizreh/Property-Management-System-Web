@@ -1,16 +1,24 @@
-import {useRef} from "react";
+import {useRef, useState} from "react";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import {formatDate} from "../../../../shared/shared/utils/formatDate.js";
 import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
+import {useNotification} from "../../../../shared/shared/hooks/useNotification.jsx";
+import ConfirmActionModalWithMUI from "../../../../shared/presentation/components/ConfirmActionModal.jsx";
+import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
+import {uploadDocument} from "../../../application/useCases/userInvoice/uploadDocumentUseCase.jsx";
 
 const FinancialRecord = ({
                              record: {
                                  id, reason, startDate, endDate, phone,
-                                 paymentMethod, amount, status, invoiceImage
-                             }, upload
+                                 paymentMethod, price, status, invoiceImage
+                             }
                          }) => {
     const fileInputRef = useRef(null);
+    const {notifyError, notifySuccess, notifyWarning} = useNotification();
+    const [uploadModel, setUploadModel] = useState(false);
+    const [invoice, setInvoice] = useState(null);
+    const {setIsLoading} = useLoadingStore();
 
     const onPress = () => {
         if (status !== 'قيد الانتظار') {
@@ -23,19 +31,29 @@ const FinancialRecord = ({
     const handleFileChange = async (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
+        setInvoice(file);
+        setUploadModel(true);
+    };
 
-        const {success, response} = await upload(id, file);
+    const onUpload = async () => {
+        if (!invoice) {
+            notifyWarning("يرجى رفع الوثيقة");
+            return;
+        }
+        setIsLoading(true)
+        const {success, response} = await uploadDocument(id, invoice);
         if (success) {
-            alert("تم رفع الوثيقة بنجاح");
+            notifySuccess("تم رفع الوثيقة بنجاح");
             window.location.reload();
         } else {
-            alert(response);
+            notifyError(response);
         }
-    };
+        setIsLoading(false);
+    }
 
     return (
         <div
-            className="min-h-[85px] w-full h-auto rounded-[25px] flex flex-row flex-wrap justify-between items-center py-4"
+            className="min-h-[85px] w-full h-auto rounded-[25px] flex flex-row flex-wrap justify-between items-center py-4 gap-4"
             style={{
                 backgroundColor: BACKGROUND_COLORS.filter,
                 color: TEXT_COLORS.primary,
@@ -46,6 +64,7 @@ const FinancialRecord = ({
                 letterSpacing: '3%',
                 textAlign: 'center',
             }}
+            key={id}
         >
             <span className="min-w-[73px] h-[20px]">{id}</span>
             <div className="flex flex-col items-center justify-center h-[56px] min-w-[144px] gap-4">
@@ -55,16 +74,16 @@ const FinancialRecord = ({
             <span className="min-w-[170px] h-[20px]">{phone}</span>
             <span className="min-w-[170px] h-[20px]">{reason}</span>
             <span className="min-w-[170px] h-[20px]">{status !== 'قيد الانتظار' ? paymentMethod : '----'}</span>
-            <span className="min-w-[110px] h-[20px]">{formatPrice(amount)} $</span>
+            <span className="min-w-[110px] h-[20px]">{formatPrice(price)} $</span>
             <div className="flex flex-row items-center justify-center px-4 w-[300px]">
                 <span className="min-w-[140px] h-[20px]"
-                    style={{
-                        color: (status === 'قيد الانتظار' ? TEXT_COLORS.reserved :
-                            (status === 'تم الدفع' ? TEXT_COLORS.sold : TEXT_COLORS.cancelled))
-                    }}
+                      style={{
+                          color: (status === 'قيد الانتظار' ? TEXT_COLORS.reserved :
+                              (status === 'تم الدفع' ? TEXT_COLORS.sold : TEXT_COLORS.cancelled))
+                      }}
                 >
-                        {status}
-                    </span>
+                    {status}
+                </span>
                 {status !== 'لم يتم الدفع' &&
                     <>
                         <Button
@@ -93,6 +112,14 @@ const FinancialRecord = ({
                             className="hidden"
                             ref={fileInputRef}
                             onChange={handleFileChange}
+                        />
+
+                        <ConfirmActionModalWithMUI
+                            open={uploadModel}
+                            onClose={() => setUploadModel(false)}
+                            onConfirm={onUpload}
+                            type={"رفع الوثيقة"}
+                            withReason={false}
                         />
                     </>
                 }

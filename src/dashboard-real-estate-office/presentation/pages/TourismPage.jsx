@@ -1,6 +1,5 @@
 import {useEffect} from "react";
 import {useParams} from "react-router";
-import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../shared/colors.jsx";
 import useLoadingStore from "../../../shared/application/state/useLoadingStore.jsx";
 import useTouristStore from "../../application/state/tourism/useTouristStore.jsx";
 import {PropertyTags} from "../../shared/constants/propertyPostTag.jsx";
@@ -22,6 +21,10 @@ import {Tabs} from "../../../shared/presentation/components/Tabs.jsx";
 import {CustomTabPanel} from "../../../shared/presentation/components/Tabs.jsx";
 import useTabStore from "../../application/state/tourism/useTabStore.jsx";
 import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
+import {getTourismReservations} from "../../application/useCases/tourism/getTourismReservationsUseCase.jsx";
+import useReservationsStore from "../../application/state/tourism/useReservationsStore.jsx";
+import useDateStore from "../../application/state/tourism/useDateStore.jsx";
+import PropertyRate from "../components/shared/PropertyRate.jsx";
 
 const TourismPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
@@ -29,27 +32,57 @@ const TourismPage = () => {
         tourist, setTourist, newImages, deletedImages,
         resetImageTracking, setNewImages, setDeletedImages
     } = useTouristStore();
+    const {setReservations} = useReservationsStore();
+    const {year, setHighlightedDays} = useDateStore();
     const {id} = useParams();
     const {notifyError, notifySuccess, notifyWarning} = useNotification();
+    const {tab, setTab} = useTabStore();
+    const tabs = ['تفاصيل المكان', 'الحجوزات والسجل المالي'];
 
     useEffect(() => {
         setIsLoading(true);
         const loadTourist = async () => {
-            const {success, response} = await getTourism(id);
-            if (success) {
-                const data = response.data;
-                setTourist(data);
-            } else {
-                setTourist(null);
-                notifyError(response);
+            let result;
+            switch (tab) {
+                case 0:
+                    result = await getTourism(id);
+                    if (result.success) {
+                        const data = result.response.data;
+                        setTourist(data);
+                    } else {
+                        setTourist(null);
+                        notifyError(result.response);
+                    }
+                    break;
+                case 1:
+                    result = await getTourismReservations(id, year);
+                    if (result.success) {
+                        const data = result.response.data;
+                        const days = [];
+                        data?.forEach(({records}) => records?.forEach(({startDate, endDate}) => {
+                                const start = new Date(startDate);
+                                const end = new Date(endDate);
+                                for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+                                    days.push(new Date(d));
+                                }
+                            }
+                        ))
+
+                        setHighlightedDays(days);
+                        setReservations(data);
+                    } else {
+                        setReservations([]);
+                        notifyError(result.response);
+                    }
+                    break;
             }
             setIsLoading(false);
         }
         loadTourist();
-    }, []);
+    }, [tab, year]);
 
     const onSubmit = async () => {
-        if(!tourist.postImage) {
+        if (!tourist.postImage) {
             notifyWarning("يرجى ادخال صورة المنشور");
             return;
         }
@@ -99,25 +132,21 @@ const TourismPage = () => {
 
     const methods = useForm();
 
-    const {tab, setTab} = useTabStore();
-
     if (isLoading || !tourist) return <Spinner/>;
 
     const readOnly = tourist.postStatus === "قيد الانتظار" || tourist.status === TouristicStatus[3];
-
-    const tabs = ['تفاصيل المكان', 'الحجوزات والسجل المالي'];
 
     return (
         <Box>
             <Header title="عرض مكان سياحي"/>
             {/* Tabs */}
             <Tabs tabs={tabs} tabHeight={'70px'} borderRadius={'25px'} border={true}
-            bgHeight={'85px'} minWidth={"265px"} tab={tab} setTab={setTab}/>
+                  bgHeight={'85px'} minWidth={"265px"} tab={tab} setTab={setTab}/>
 
             {/* Tab Panel 1 */}
             <CustomTabPanel value={tab} index={0}>
                 <FormProvider {...methods}>
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 pt-4">
                         <PostDetails
                             options={PropertyTags}
                             property={tourist}
@@ -131,7 +160,8 @@ const TourismPage = () => {
                                     readOnly={readOnly}
                                 />
                             </div>
-                            <div className="flex-2 min-w-[300px]">
+                            <div className="flex-2 flex flex-col min-w-[300px] gap-4">
+                                {tourist.rate !== undefined && <PropertyRate rate={tourist.rate}/>}
                                 <PropertyImages
                                     readOnly={readOnly}
                                     setProperty={setTourist}
@@ -147,7 +177,7 @@ const TourismPage = () => {
 
             {/* Tab Panel 2 */}
             <CustomTabPanel value={tab} index={1}>
-                <div className="flex flex-col items-center gap-8">
+                <div className="flex flex-col items-center gap-8 p-4">
                     <Calendar/>
                     <FinancialRecords/>
                 </div>

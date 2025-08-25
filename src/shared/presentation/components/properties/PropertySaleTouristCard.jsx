@@ -75,7 +75,7 @@ const PropertySaleTouristCard = ({
                     </span>
                 )}
                 <span
-                    className="absolute w-[138px] h-[45px] top-[195px] mr-5"
+                    className="absolute w-full h-[45px] top-[195px] pr-5"
                     style={{
                         fontFamily: 'Tajawal',
                         fontWeight: '700',

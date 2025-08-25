@@ -41,6 +41,7 @@ export class Tourism {
         this.additional_services = data.additionalServices ?? [];
         this.images = data.images ?? [];
         this.financialRecord = data.financialRecord ?? [];
+        this.rate = data.rate ?? 0;
     }
 
     static cardData(data) {

@@ -5,6 +5,7 @@ import {formatPrice} from "../../../../shared/shared/utils/formatPrice.js";
 import Button from "@mui/material/Button";
 import {useNotification} from "../../../../shared/shared/hooks/useNotification.jsx";
 import ConfirmActionModalWithMUI from "../../../../shared/presentation/components/ConfirmActionModal.jsx";
+import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 
 const FinancialRecord = ({
                              record: {
@@ -16,6 +17,7 @@ const FinancialRecord = ({
     const {notifyError, notifySuccess, notifyWarning} = useNotification();
     const [uploadModel, setUploadModel] = useState(false);
     const [invoice, setInvoice] = useState(null);
+    const {setIsLoading} = useLoadingStore();
 
     const onPress = () => {
         if (status !== 'قيد الانتظار') {
@@ -37,6 +39,7 @@ const FinancialRecord = ({
             notifyWarning("يرجى رفع الوثيقة");
             return;
         }
+        setIsLoading(true);
         const {success, response} = await upload(id, invoice);
         if (success) {
             notifySuccess("تم رفع الوثيقة بنجاح");
@@ -44,6 +47,7 @@ const FinancialRecord = ({
         } else {
             notifyError(response);
         }
+        setIsLoading(false);
     }
 
     return (

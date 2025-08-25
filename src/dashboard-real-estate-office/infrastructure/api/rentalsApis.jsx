@@ -34,11 +34,3 @@ export const getRental = async (rentalId) => {
     });
     return response.data;
 }
-
-export const uploadDocument = async (invoiceId, formData) => {
-    const response = await axiosInstance.post(
-        RentalContracts.uploadDocument(invoiceId),
-        formData, {baseURL: import.meta.env.VITE_API_BASE_URL + baseURL}
-    );
-    return response.data;
-};

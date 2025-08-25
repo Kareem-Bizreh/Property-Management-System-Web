@@ -19,6 +19,7 @@ import {deleteImage} from "../../application/useCases/propertyImage/deleteUseCas
 import {upload} from "../../application/useCases/propertyImage/uploadUseCase.jsx";
 import {STATUS_OPTIONS} from "../../shared/constants/statusOptions.jsx";
 import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
+import PropertyRate from "../components/shared/PropertyRate.jsx";
 
 const PropertyPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
@@ -79,7 +80,7 @@ const PropertyPage = () => {
     }, []);
 
     const onSubmit = async () => {
-        if(!property.postImage) {
+        if (!property.postImage) {
             notifyWarning("يرجى ادخال صورة المنشور");
             return;
         }
@@ -145,7 +146,8 @@ const PropertyPage = () => {
                     <div className="flex-5">
                         <PropertyDetails readOnly={readOnly} onClick={methods.handleSubmit(onSubmit)}/>
                     </div>
-                    <div className="flex-2">
+                    <div className="flex-2 flex flex-col gap-4">
+                        {property?.rate !== undefined && <PropertyRate rate={property?.rate}/>}
                         <PropertyImages readOnly={readOnly} setProperty={setProperty} property={property}
                                         setDeletedImages={setDeletedImages} setNewImages={setNewImages}/>
                     </div>
