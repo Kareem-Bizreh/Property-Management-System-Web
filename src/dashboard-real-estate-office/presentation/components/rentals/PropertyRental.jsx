@@ -74,7 +74,7 @@ const PropertyRental = () => {
         if (success) {
             resetRentalDetails();
             notifySuccess("تم إيجار العقار");
-            window.location.reload();
+            setIsOpen(false)
         } else {
             notifyError(response);
         }

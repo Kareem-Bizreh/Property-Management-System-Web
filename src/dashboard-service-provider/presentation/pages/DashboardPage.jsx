@@ -4,28 +4,49 @@ import useLoadingStore from "../../../shared/application/state/useLoadingStore.j
 import {FormProvider, useForm} from "react-hook-form";
 import {useEffect} from "react";
 import {Spinner} from "../../../shared/presentation/components/Spinner.jsx";
-import useServiceProviderStore from "../../application/state/dashboard/useServiceProviderStore.jsx";
+import useServiceProviderStore from "../../application/state/serviceProvider/useServiceProviderStore.jsx";
 import ServiceStatus from "../components/dashboard/ServiceStatus.jsx";
+import {getServiceProvider} from "../../application/useCases/serviceProvider/getServiceProviderUseCase.jsx";
+import {editServiceProvider} from "../../application/useCases/serviceProvider/editServiceProviderUseCase.jsx";
+import {useNotification} from "../../../shared/shared/hooks/useNotification.jsx";
 
 const DashboardPage = () => {
     const {isLoading, setIsLoading} = useLoadingStore();
     const {serviceProvider, setServiceProvider} = useServiceProviderStore();
+    const {notifyError, notifySuccess, notifyWarning} = useNotification();
     const methods = useForm()
 
     useEffect(() => {
         setIsLoading(true);
-        setServiceProvider({
-            city: {
-                id: 1,
-                name: 'دمشق',
-            },
-            region: {
-                id: 1,
-                name: 'المزة'
+
+        const fetchServiceProvider = async () => {
+            const {success, response} = await getServiceProvider();
+
+            if (success) {
+                setServiceProvider(response.data);
+            } else {
+                notifyError(response);
+                setServiceProvider(null);
             }
-        });
+            setIsLoading(false);
+        }
+        fetchServiceProvider();
+    }, []);
+
+    const onEdit = async () => {
+        if (!serviceProvider?.image) {
+            notifyWarning("يجب رفع شعار مزود الخدمة");
+            return;
+        }
+        setIsLoading(true);
+        const {success, response} = await editServiceProvider(serviceProvider, setServiceProvider);
+        if (success) {
+            notifySuccess("تم التعديل بنجاح");
+        } else {
+            notifyError(response);
+        }
         setIsLoading(false);
-    }, [])
+    }
 
     if (isLoading || !serviceProvider) return <Spinner/>;
 
@@ -33,7 +54,7 @@ const DashboardPage = () => {
         <FormProvider {...methods}>
             <div className="flex flex-row flex-wrap gap-5 p-4">
                 <div className="flex-5">
-                    <GeneralDetails/>
+                    <GeneralDetails onEdit={onEdit}/>
                 </div>
                 <div className="flex flex-col gap-4 w-[290px] flex-2">
                     <Logo office={serviceProvider} setOffice={setServiceProvider} name="مزود الخدمة"/>

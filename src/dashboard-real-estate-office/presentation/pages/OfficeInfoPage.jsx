@@ -41,6 +41,9 @@ const OfficeInfoPage = () => {
         const {success, response} = await editOfficeDetails(office);
         if (success) {
             notifySuccess("تم حفظ التعديلات بنجاح");
+            if (office.image instanceof File) {
+                setOffice({...office, image: URL.createObjectURL(office.image)});
+            }
         } else {
             notifyError(response[0]);
         }

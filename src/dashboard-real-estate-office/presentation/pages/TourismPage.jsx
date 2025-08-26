@@ -96,6 +96,9 @@ const TourismPage = () => {
                 notifyError(response);
                 return;
             }
+            if (tourist.postImage instanceof File) {
+                setTourist({...tourist, postImage: URL.createObjectURL(tourist.postImage)});
+            }
 
             // 2. Upload new images (if any)
             if (newImages.length > 0) {

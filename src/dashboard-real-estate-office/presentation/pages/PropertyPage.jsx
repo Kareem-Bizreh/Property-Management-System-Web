@@ -94,6 +94,9 @@ const PropertyPage = () => {
                 notifyError(response);
                 return;
             }
+            if (property.postImage instanceof File) {
+                setProperty({...property, postImage: URL.createObjectURL(property.postImage)});
+            }
 
             // 2. Upload new images (if any)
             if (newImages.length > 0) {

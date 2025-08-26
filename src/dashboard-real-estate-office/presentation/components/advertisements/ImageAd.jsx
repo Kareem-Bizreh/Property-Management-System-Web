@@ -47,7 +47,8 @@ const ImageAd = () => {
         const {success, response} = await addImageAd(watch("days"), image);
         if (success) {
             notifySuccess("تم طلب اعلان صوري بنجاح");
-            window.location.reload();
+            setImage(null)
+            setIsOpen(false)
         } else {
             notifyError(response);
         }

@@ -13,7 +13,7 @@ import UserRequestsPage from "../pages/UserRequestsPage.jsx";
 import AdvertisementsPage from "../pages/AdvertisementsPage.jsx";
 import ServicesPage from "../pages/ServicesPage.jsx";
 import NotificationsPage from "../../../shared/presentation/pages/NotificationsPage.jsx";
-import SupportPage from "../pages/SupportPage.jsx";
+import SupportPage from "../../../shared/presentation/pages/SupportPage.jsx";
 import OfficeInfoPage from "../pages/OfficeInfoPage.jsx";
 import Sidebar from "../../../shared/presentation/components/Sidebar.jsx";
 import {SIDEBAR_ITEMS} from "../../shared/constants/sidebarContent.jsx";

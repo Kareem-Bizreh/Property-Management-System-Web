@@ -8,3 +8,8 @@ export const Notifications = {
     baseURL: 'notifications/',
     getAll: '',
 }
+
+export const Supports = {
+    baseURL: 'admin/supports/',
+    getFaqs: 'Pfaqs'
+}

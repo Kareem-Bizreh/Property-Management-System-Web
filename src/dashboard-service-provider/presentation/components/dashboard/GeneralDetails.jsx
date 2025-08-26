@@ -1,10 +1,9 @@
-import mapIcon from "../../../../shared/assets/shared/map-marker.svg";
 import {BACKGROUND_COLORS, TEXT_COLORS} from "../../../../shared/colors.jsx";
 import TextInput from "../../../../shared/presentation/components/TextInput.jsx";
 import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
 import {useFormContext} from "react-hook-form";
 import {useEffect} from "react";
-import useServiceProviderStore from "../../../application/state/dashboard/useServiceProviderStore.jsx";
+import useServiceProviderStore from "../../../application/state/serviceProvider/useServiceProviderStore.jsx";
 import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
 import Button from "@mui/material/Button";
 import {ServiceProviderType} from "../../../../shared/shared/constants/ServiceProviderType.jsx";
@@ -20,20 +19,20 @@ const GeneralDetails = ({onEdit}) => {
             setValue("name", serviceProvider?.name);
         }
 
-        if ((currentValues.contactNumber) !== serviceProvider?.contactNumber) {
-            setValue("contactNumber", serviceProvider?.contactNumber);
+        if ((currentValues.phone) !== serviceProvider?.phone) {
+            setValue("phone", serviceProvider?.phone);
         }
 
-        if (currentValues.openingTime !== serviceProvider?.openingTime) {
-            setValue("openingTime", serviceProvider?.openingTime);
+        if (currentValues.opening_time !== serviceProvider?.opening_time) {
+            setValue("opening_time", serviceProvider?.opening_time);
         }
 
-        if (currentValues.closingTime !== serviceProvider?.closingTime) {
-            setValue("closingTime", serviceProvider?.closingTime);
+        if (currentValues.closing_time !== serviceProvider?.closing_time) {
+            setValue("closing_time", serviceProvider?.closing_time);
         }
 
-        if (currentValues.description !== serviceProvider?.description) {
-            setValue("description", serviceProvider?.description);
+        if (currentValues.details !== serviceProvider?.details) {
+            setValue("details", serviceProvider?.details);
         }
     }, []);
 
@@ -43,13 +42,13 @@ const GeneralDetails = ({onEdit}) => {
         setServiceProvider({
             ...serviceProvider,
             name: currentValues.name,
-            contactNumber: currentValues.contactNumber,
-            openingTime: currentValues.openingTime,
-            closingTime: currentValues.closingTime,
-            description: currentValues.description,
+            phone: currentValues.phone,
+            opening_time: currentValues.opening_time,
+            closing_time: currentValues.closing_time,
+            details: currentValues.details,
         });
 
-    }, [watch("name"), watch("contactNumber"), watch("openingTime"), watch("closingTime"), watch("description")]);
+    }, [watch("name"), watch("phone"), watch("opening_time"), watch("closing_time"), watch("details")]);
 
     return (
         <div className="flex flex-col justify-between py-4 px-6 rounded-[25px] min-h-full h-auto"
@@ -75,7 +74,7 @@ const GeneralDetails = ({onEdit}) => {
                 <TextInput
                     title="رقم التواصل"
                     type="text"
-                    name={"contactNumber"}
+                    name={"phone"}
                     register={register}
                 />
             </div>
@@ -87,7 +86,7 @@ const GeneralDetails = ({onEdit}) => {
                     <SelectInput
                         height={'60px'}
                         maxWidth={'250px'}
-                        title={serviceProvider?.city.name}
+                        title={serviceProvider?.city?.name}
                         style={{borderWidth: '1px'}}
                         options={SyrianGovernorates.map((city) => city.name)}
                         onChange={(cityName) => {
@@ -108,12 +107,12 @@ const GeneralDetails = ({onEdit}) => {
                     <SelectInput
                         height={'60px'}
                         maxWidth={'250px'}
-                        title={serviceProvider?.region.name}
+                        title={serviceProvider?.region?.name}
                         style={{borderWidth: '1px'}}
-                        options={SyrianGovernorates.find((city) => city.id === serviceProvider?.city.id).regions.map((region) => region.name)}
+                        options={SyrianGovernorates.find((city) => city.id === serviceProvider?.city?.id)?.regions.map((region) => region.name)}
                         onChange={(regionName) => {
                             const city = SyrianGovernorates.find((gov) => gov.id === serviceProvider?.city.id);
-                            const region = city?.regions.find((region) => region.name === regionName);
+                            const region = city?.regions?.find((region) => region.name === regionName);
                             setServiceProvider({...serviceProvider, region})
                         }}
                     />
@@ -137,7 +136,7 @@ const GeneralDetails = ({onEdit}) => {
                     </span>
                     <input
                         type="time"
-                        {...register("openingTime", {required: true})}
+                        {...register("opening_time", {required: true})}
                         className="rounded-[15px] border-[1px] h-[50px] px-4 w-full"
                         style={{
                             backgroundColor: BACKGROUND_COLORS.app,
@@ -167,7 +166,7 @@ const GeneralDetails = ({onEdit}) => {
                     </span>
                     <input
                         type="time"
-                        {...register("closingTime", {required: true})}
+                        {...register("closing_time", {required: true})}
                         className="rounded-[15px] border-[1px] h-[50px] px-4 w-full max-w-[260px]"
                         style={{
                             backgroundColor: BACKGROUND_COLORS.app,
@@ -189,9 +188,9 @@ const GeneralDetails = ({onEdit}) => {
                 <SelectInput
                     height={'60px'}
                     maxWidth={'215px'}
-                    title={serviceProvider?.type}
+                    title={serviceProvider?.career}
                     options={ServiceProviderType}
-                    onChange={(type) => setServiceProvider({...serviceProvider, type})}
+                    onChange={(career) => setServiceProvider({...serviceProvider, career})}
                     style={{borderWidth: '1px'}}
                 />
             </div>
@@ -199,7 +198,7 @@ const GeneralDetails = ({onEdit}) => {
             <div className="flex flex-col w-full mt-6" style={{color: TEXT_COLORS.black}}>
                 <TextInput
                     type="text"
-                    name={"description"}
+                    name={"details"}
                     register={register}
                     multiline={true}
                     title="وصف الخدمة"
