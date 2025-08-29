@@ -33,12 +33,14 @@ const OfficeInfoPage = () => {
     }, []);
 
     const onEdit = async () => {
-        if (office.payment_method === "") {
-            notifyWarning("يجب اختيار طريقة دفع واحدة على الأقل");
+        const creditCard = methods.watch("creditCard").replace(/\s+/g, "");
+        setOffice({...office, creditCard});
+        if (creditCard.length !== 16 && office.stripe_payment) {
+            notifyWarning("يجب ان تكون بطاقة الدفع الالكتروني من 16 رقم");
             return;
         }
         setIsLoading(true);
-        const {success, response} = await editOfficeDetails(office);
+        const {success, response} = await editOfficeDetails(office, creditCard);
         if (success) {
             notifySuccess("تم حفظ التعديلات بنجاح");
             if (office.image instanceof File) {

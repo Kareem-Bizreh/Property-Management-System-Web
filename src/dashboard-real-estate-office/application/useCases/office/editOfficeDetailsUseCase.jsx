@@ -1,6 +1,6 @@
 import OfficeRepository from "../../../domain/repositories/officeRepository.jsx";
 
-export const editOfficeDetails = async (office) => {
+export const editOfficeDetails = async (office, creditCard) => {
     try {
         const payload = new FormData();
         if (office.image instanceof File) {
@@ -13,7 +13,7 @@ export const editOfficeDetails = async (office) => {
         payload.append("booking_period", office.booking_period);
         payload.append("deposit_per_m2", office.deposit_per_m2);
         payload.append("tourism_deposit", office.tourism_deposit);
-        payload.append("payment_method", office.payment_method);
+        payload.append("stripe_payment", office.stripe_payment ? '1' : '0');
         payload.append("opening_time", office.opening_time);
         payload.append("closing_time", office.closing_time);
         payload.append("region_id", office.region.id);
@@ -23,6 +23,9 @@ export const editOfficeDetails = async (office) => {
             payload.append(`socials[${index}][id]`, social.id);
             payload.append(`socials[${index}][link]`, social.link);
         })
+        if (office.stripe_payment) {
+            payload.append("creditCard", creditCard);
+        }
 
         const response = await OfficeRepository.editDetails(payload);
         return {success: true, response: response};

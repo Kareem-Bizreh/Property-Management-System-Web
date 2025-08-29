@@ -48,7 +48,7 @@ const PromotionAd = () => {
         console.log(watch("days"), property.id)
     }
 
-    if (isLoading) return <Spinner/>
+    if (isLoading) return <Spinner opacity={"0"}/>
 
     return (
         <Popup
@@ -174,7 +174,7 @@ const PromotionAd = () => {
                                     letterSpacing: '3%',
                                     textAlign: 'center'
                                 }}>
-                            دفع
+                            رفع
                         </Button>
                     </div>
                 </div>

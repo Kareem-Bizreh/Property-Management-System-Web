@@ -5,13 +5,17 @@ import Button from "@mui/material/Button";
 
 const FinancialRecord = ({
                              record: {
-                                 advertisement_id, type, paid_date,
+                                 advertisement_id, type, paid_date, stripeUrl,
                                  day_period, amount, advertisement_status, document
                              }
                          }) => {
     function onPress() {
-        if (document && document.length > 0) {
-            window.open(document, '_blank');
+        if (advertisement_status === 'مدفوع') {
+            if (document && document.length > 0) {
+                window.open(document, '_blank');
+            }
+        } else {
+            window.open(stripeUrl, '_blank');
         }
     }
 
@@ -37,13 +41,13 @@ const FinancialRecord = ({
             <span className="min-w-[120px] h-[20px]"
                   style={{
                       color: (advertisement_status === 'قيد الانتظار' ? TEXT_COLORS.reserved :
-                          (advertisement_status === 'مدفوع' ? TEXT_COLORS.sold : TEXT_COLORS.cancelled))
+                          (advertisement_status === 'مرفوض' ? TEXT_COLORS.cancelled : TEXT_COLORS.sold))
                   }}>
                 {advertisement_status}
             </span>
             <div className="min-w-[140px] h-[20px] flex items-center">
                 <Button variant="contained"
-                        disabled={advertisement_status !== 'مدفوع' || !document}
+                        disabled={advertisement_status !== 'مدفوع' && advertisement_status !== 'تم الموافقة'}
                         onClick={onPress}
                         sx={{
                             width: 115,
@@ -58,7 +62,7 @@ const FinancialRecord = ({
                             textAlign: 'center'
                         }}
                 >
-                    عرض وثيقة
+                    {advertisement_status === 'مدفوع' ? 'عرض وثيقة' : 'دفع'}
                 </Button>
             </div>
         </div>

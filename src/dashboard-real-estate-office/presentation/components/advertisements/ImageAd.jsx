@@ -55,7 +55,7 @@ const ImageAd = () => {
         setIsLoading(false);
     }
 
-    if (isLoading) return <Spinner/>
+    if (isLoading) return <Spinner opacity={"0"}/>
 
     return (
         <Popup
@@ -159,7 +159,7 @@ const ImageAd = () => {
                                     letterSpacing: '3%',
                                     textAlign: 'center'
                                 }}>
-                            دفع
+                            رفع
                         </Button>
                     </div>
                 </div>

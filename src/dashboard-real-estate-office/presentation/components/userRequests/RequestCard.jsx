@@ -8,13 +8,11 @@ import PropertySuggestion from "./PropertySuggestion.jsx";
 import Button from "@mui/material/Button";
 import useSuggestionOpenStore from "../../../application/state/userPost/useSuggestionOpenStore.jsx";
 import usePropertyStore from "../../../application/state/property/usePropertyStore.jsx";
-import useLoadingStore from "../../../../shared/application/state/useLoadingStore.jsx";
 
 const RequestCard = ({post: {id, type, location, budget, publishedDate, isProposed, description}}) => {
 
     const {setIsOpen, setPostId, postId} = useSuggestionOpenStore();
     const {setProperty} = usePropertyStore();
-    const {isLoading} = useLoadingStore();
 
     const data = [
         {key: 'النوع', value: type, icon: null},

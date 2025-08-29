@@ -2,25 +2,11 @@ import LogoCard from "../LogoCard.jsx";
 import {TextField} from "./TextField.jsx";
 import {EnterButton} from "./EnterButton.jsx";
 import {useForm} from "react-hook-form"
-import {useLogin} from "../../../shared/hooks/useLogin.jsx";
 import useErrorStore from "../../../application/state/login/errorStore.jsx";
-import useLoadingStore from "../../../application/state/useLoadingStore.jsx";
 
-const LoginForm = () => {
+const LoginForm = ({onSubmit}) => {
     const {register, handleSubmit} = useForm();
     const {error} = useErrorStore();
-    const {login} = useLogin();
-    const {setIsLoading} = useLoadingStore();
-
-    const onSubmit = async (data) => {
-        setIsLoading(true);
-        try {
-            await login(data);
-        }
-        finally {
-            setIsLoading(false);
-        }
-    };
 
     return (
         <div

@@ -8,7 +8,7 @@ import useOfficeStore from "../../../application/state/office/useOfficeStore.jsx
 
 const Fees = ({onEdit}) => {
     const {office, setOffice} = useOfficeStore();
-    const {register, watch, setValue, getValues} = useFormContext();
+    const {register, watch, setValue, getValues, handleSubmit} = useFormContext();
 
     useEffect(() => {
         const currentValues = getValues();
@@ -92,7 +92,7 @@ const Fees = ({onEdit}) => {
             </div>
             <div className="flex items-center justify-end">
                 <Button variant="contained"
-                        onClick={onEdit}
+                        onClick={handleSubmit(onEdit)}
                         sx={{
                             width: 160,
                             height: 47,

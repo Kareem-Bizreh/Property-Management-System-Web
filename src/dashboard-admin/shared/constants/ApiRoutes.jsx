@@ -25,6 +25,8 @@ export const FinanceAndAdsManagement = {
     respondToAdRequest: (id) => `ad-request/${id}/respond`, // POST
     getApprovedAds: 'approved-ads',
     getAdInvoices: 'ad-invoices',
+    getStripe: 'stripe',
+    editStripe: 'stripe', // PUT
 }
 
 export const PartnersManagement = {

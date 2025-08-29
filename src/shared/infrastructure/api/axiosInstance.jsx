@@ -25,7 +25,9 @@ axiosInstance.interceptors.response.use(
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
 
-            window.location.href = "/login";
+            if (window.location.pathname !== "/login") {
+                window.location.href = "/login";
+            }
 
             return Promise.reject({
                 message: "Session expired. Please log in again.",

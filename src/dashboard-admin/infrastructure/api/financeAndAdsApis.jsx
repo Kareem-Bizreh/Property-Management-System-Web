@@ -22,3 +22,13 @@ export const getAdInvoices = async () => {
     const response = await axiosInstance.get(FinanceAndAdsManagement.getAdInvoices, {baseURL});
     return response.data;
 };
+
+export const getStripe = async () => {
+    const response = await axiosInstance.get(FinanceAndAdsManagement.getStripe, {baseURL});
+    return response.data;
+};
+
+export const editStripe = async (data) => {
+    const response = await axiosInstance.put(FinanceAndAdsManagement.getStripe, data, {baseURL});
+    return response.data;
+};

@@ -9,7 +9,7 @@ const FinancialRecords = () => {
         <div className="flex flex-col px-6 py-2">
             <TableHead/>
             <div className="flex flex-col gap-4 mt-4">
-                {advertisements.map(record => (
+                {advertisements?.map(record => (
                     <FinancialRecord key={record.id} record={record}/>
                 ))}
             </div>

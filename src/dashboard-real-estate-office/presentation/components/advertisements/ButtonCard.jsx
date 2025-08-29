@@ -1,7 +1,7 @@
 const ButtonCard = ({color, bgColor, title, icon, onClick}) => {
     return (
         <div
-            className="flex flex-row flex-wrap justify-around items-center p-4 w-full max-w-[470px] h-[174px] cursor-pointer"
+            className="flex flex-row flex-wrap justify-around items-center p-4 w-full max-w-[470px] cursor-pointer"
             onClick={onClick}
             style={{
                 backgroundColor: bgColor,
@@ -9,7 +9,7 @@ const ButtonCard = ({color, bgColor, title, icon, onClick}) => {
                 border: `3px dashed ${color}`,
             }}
         >
-            <div className="h-full flex justify-center items-center">
+            <div className="flex justify-center items-center">
                 <img src={icon} className="object-cover"/>
             </div>
 
