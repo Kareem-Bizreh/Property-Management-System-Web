@@ -147,8 +147,8 @@ const OfficesPage = () => {
                                 <PublicationRequests
                                     id={item.id} type={item.type} location={item.location} officeName={item.office_name}
                                     officeLocation={item.office_location} image={item.image} postTitle={item.title}
-                                    duration={item.rental_period} listing_type={item.listing_type} amount={item.price}
-                                    onAccept={onAccept} onReject={onReject}/>
+                                    duration={item.rental_period} listing_type={item.listing_type} onAccept={onAccept}
+                                    amount={item.price || item.selling_price || item.rental_price} onReject={onReject}/>
                             ))}
                         </div>
                     </CustomTabPanel>
