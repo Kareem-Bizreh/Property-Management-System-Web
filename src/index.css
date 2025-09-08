@@ -1,0 +1,233 @@
+@import "tailwindcss";
+
+.custom-hover:hover {
+    background-color: var(--hover-bg);
+}
+
+/* animation for popup */
+
+@keyframes anvil {
+    0% {
+        transform: scale(1) translateY(0px);
+        opacity: 0;
+        box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+    }
+    1% {
+        transform: scale(0.96) translateY(10px);
+        opacity: 0;
+        box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+    }
+    100% {
+        transform: scale(1) translateY(0px);
+        opacity: 1;
+        box-shadow: 0 0 500px rgba(241, 241, 241, 0);
+    }
+}
+.popup-content {
+    -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+}
+@layer utilities {
+    .animate-spin-reverse {
+        animation: spin 1s linear infinite reverse;
+    }
+}
+
+/*===========================================================*/
+/* Calender classes */
+.react-calendar {
+    width: 100%;
+    height: auto;
+    background: white;
+    box-shadow: 0px 12px 24px 0px #00000012;
+    border: 1px solid #E5E5EF;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    direction: ltr;
+}
+
+.react-calendar--doubleView {
+    width: 700px;
+}
+
+.react-calendar--doubleView .react-calendar__viewContainer {
+    display: flex;
+    margin: -0.5em;
+}
+
+.react-calendar--doubleView .react-calendar__viewContainer > * {
+    width: 50%;
+    margin: 0.5em;
+}
+
+.react-calendar,
+.react-calendar *,
+.react-calendar *:before,
+.react-calendar *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.react-calendar button {
+    margin: 0;
+    border: 0;
+    outline: none;
+}
+
+.react-calendar button:enabled:hover {
+    cursor: pointer;
+}
+
+.react-calendar__navigation {
+    display: flex;
+    height: 44px;
+    margin-bottom: 1em;
+}
+
+.react-calendar__navigation button {
+    min-width: 44px;
+    background: none;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-align: center;
+    vertical-align: middle;
+    color: #2790A3;
+    border-radius: 18px;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__navigation button:disabled {
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+    background-color: #f0f0f0;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+    background-color: #e6e6e6;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__month-view__weekdays {
+    text-align: center;
+    font: inherit;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    letter-spacing: 0;
+    vertical-align: middle;
+    color: #9291A5;
+    margin-bottom: 25px;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+    padding: 0.5em;
+    border-bottom: none !important;
+}
+
+.react-calendar__month-view__weekNumbers .react-calendar__tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: inherit;
+    font-size: 0.75em;
+    font-weight: bold;
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: #d10000;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth,
+.react-calendar__decade-view__years__year--neighboringDecade,
+.react-calendar__century-view__decades__decade--neighboringCentury {
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+    color: #757575;
+}
+
+.react-calendar__year-view .react-calendar__tile,
+.react-calendar__decade-view .react-calendar__tile,
+.react-calendar__century-view .react-calendar__tile {
+    padding: 2em 0.5em;
+}
+
+.react-calendar__tile {
+    max-width: 100%;
+    padding: 20px 6px;
+    border-radius: 8px;
+    background: none;
+    text-align: center;
+    font: inherit;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    letter-spacing: 0;
+    vertical-align: middle;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__tile:disabled {
+    background-color: #f0f0f0;
+    color: #ababab;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth:disabled,
+.react-calendar__decade-view__years__year--neighboringDecade:disabled,
+.react-calendar__century-view__decades__decade--neighboringCentury:disabled {
+    color: #cdcdcd;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    background-color: #e6e6e6;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__tile--now {
+    background: #ffff76;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+    background: #ffffa9;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__tile--hasActive {
+    background: #76baff;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+    background: #a9d4ff;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__tile--active {
+    background: #006edc;
+    color: white;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+    background: #1087ff;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.react-calendar--selectRange .react-calendar__tile--hover {
+    background-color: #e6e6e6;
+    transition: background-color 0.17s ease-in-out, color 0.17s ease-in-out;
+}
+
+.highlighted {
+    background-color: #DBEDF6 !important;
+    color: inherit !important;
+    border-radius: 0px;
+}

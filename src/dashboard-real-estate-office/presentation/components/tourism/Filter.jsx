@@ -1,0 +1,62 @@
+import {BACKGROUND_COLORS} from "../../../../shared/colors.jsx";
+import SearchBar from "../../../../shared/presentation/components/SearchBar.jsx";
+import SelectInput from "../../../../shared/presentation/components/SelectInput.jsx";
+import {SyrianGovernorates} from "../../../../shared/shared/constants/syrianGovernorates.jsx";
+import {PropertyPostStatus} from "../../../shared/constants/statusOptions.jsx";
+import useCityStore from "../../../application/state/tourism/useCityStore.jsx";
+import useRegionStore from "../../../application/state/tourism/useRegionStore.jsx";
+import useStatusStore from "../../../application/state/tourism/useStatusStore.jsx";
+import {TouristicStatus} from "../../../shared/constants/TouristicStatus.jsx";
+
+const Filter = ({register}) => {
+    const {city, setCity} = useCityStore();
+    const {regions, setRegions, region, setRegion} = useRegionStore();
+    const {status, setStatus} = useStatusStore();
+
+
+    const handleCityChange = (cityName) => {
+        const selectedGovernorate = SyrianGovernorates.find((gov) => gov.name === cityName);
+        setCity(cityName);
+        setRegions(selectedGovernorate?.regions || []);
+        setRegion(null);
+    };
+
+    return (
+        <div
+            className="w-full py-4 px-2 md:px-4"
+            style={{backgroundColor: BACKGROUND_COLORS.filter}}
+        >
+            <div
+                className="flex flex-wrap gap-4 md:gap-6 items-center"
+                style={{minHeight: "48px"}}
+            >
+                {/*<SearchBar register={register}/>*/}
+                <SelectInput
+                    key={1}
+                    title={city || "المحافظة"}
+                    options={["إلغاء", ...SyrianGovernorates.map((gov) => gov.name)]}
+                    maxWidth={"124px"}
+                    height={"48px"}
+                    onChange={handleCityChange}
+                />
+                <SelectInput
+                    key={city}
+                    title={region || "المنطقة"}
+                    options={["إلغاء", ...regions.map((reg) => reg.name)]}
+                    maxWidth={"124px"}
+                    height={"48px"}
+                    onChange={setRegion}
+                />
+                <SelectInput
+                    key={2}
+                    title={status || "حالة"}
+                    options={["إلغاء", ...TouristicStatus, ...PropertyPostStatus]}
+                    maxWidth={"124px"}
+                    height={"48px"}
+                    onChange={setStatus}
+                />
+            </div>
+        </div>
+    )
+}
+export default Filter
